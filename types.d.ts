@@ -441,10 +441,10 @@ export type ColumnDefinitionOptList = {
   primary?: "key" | "primary key";
   comment?: KeywordComment;
   collate?: { collate: CollateExpr };
-  column_format?: { column_format: ExpressionValue };
-  storage?: { storage: ExpressionValue };
+  column_format?: { type: string; value: string };
+  storage?: { type: string; value: string };
   reference_definition?: { reference_definition: ReferenceDefinition };
-  character_set?: { type: "CHARACTER SET"; value: string; symbol?: "=" };
+  character_set?: { type: "CHARACTER SET"; value: ValueExpr; symbol: "=" | null };
   check?: {
     type: 'check';
     expr: Binary;
@@ -452,7 +452,8 @@ export type ColumnDefinitionOptList = {
   generated?: {
     type: 'generated';
     expr: ExpressionValue;
-    stored?: 'stored' | 'virtual';
+    value: string;
+    storage_type?: 'stored' | 'virtual';
   };
 };
 
@@ -623,8 +624,8 @@ export interface Create {
   user?: UserAuthOption[] | null;
   default_role?: string[] | null;
   require?: RequireOption | null;
-  resource_options?: ResourceOption[] | null;
-  password_options?: PasswordOption[] | null;
+  resource_options?: ResourceOption | null;
+  password_options?: PasswordOption | null;
   lock_option_user?: 'account lock' | 'account unlock' | null;
   comment_user?: string | null;
   attribute?: string | null;
@@ -636,16 +637,19 @@ export type TriggerEvent = {
 };
 
 export type UserAuthOption = {
-  user: string;
+  user: {
+    name: ValueExpr;
+    host: ValueExpr;
+  };
   auth_option?: {
     type: 'identified_by' | 'identified_with';
     value: string;
-  };
+  } | null;
 };
 
 export type RequireOption = {
-  type: 'require';
-  value: 'none' | 'ssl' | 'x509' | RequireOptionDetail[];
+  keyword: 'require';
+  value: ValueExpr;
 };
 
 export type RequireOptionDetail = {
@@ -654,8 +658,12 @@ export type RequireOptionDetail = {
 };
 
 export type ResourceOption = {
-  type: 'max_queries_per_hour' | 'max_updates_per_hour' | 'max_connections_per_hour' | 'max_user_connections';
-  value: number;
+  keyword: 'with';
+  value: Array<{
+    type: string;
+    value: number;
+    prefix: string;
+  }>;
 };
 
 export type PasswordOption = {
@@ -798,14 +806,16 @@ export interface LoadData {
 }
 
 export type LoadDataField = {
-  terminated_by?: string;
-  enclosed_by?: { value: string; optionally?: boolean };
-  escaped_by?: string;
+  keyword: 'FIELDS';
+  terminated?: { type: string; value: string; prefix: string };
+  enclosed?: { type: string; value: string; prefix: string };
+  escaped?: { type: string; value: string; prefix: string };
 };
 
 export type LoadDataLine = {
-  starting_by?: string;
-  terminated_by?: string;
+  keyword: 'LINES';
+  starting?: { type: string; value: string; prefix: string };
+  terminated?: { type: string; value: string; prefix: string };
 };
 
 export interface Truncate {
@@ -826,7 +836,7 @@ export interface Transaction {
   expr: {
     action: ValueExpr<"start" | "begin" | "commit" | "rollback" | "START" | "COMMIT" | "ROLLBACK">;
     keyword?: "TRANSACTION";
-    modes?: TransactionMode[] | null;
+    modes?: ValueExpr[] | null;
   };
   loc?: LocationRange;
 }

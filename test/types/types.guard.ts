@@ -1963,12 +1963,14 @@ export function isColumnDefinitionOptList(obj: unknown): obj is ColumnDefinition
             (typedObj["column_format"] !== null &&
                 typeof typedObj["column_format"] === "object" ||
                 typeof typedObj["column_format"] === "function") &&
-            isExpressionValue(typedObj["column_format"]["column_format"]) as boolean) &&
+            typeof typedObj["column_format"]["type"] === "string" &&
+            typeof typedObj["column_format"]["value"] === "string") &&
         (typeof typedObj["storage"] === "undefined" ||
             (typedObj["storage"] !== null &&
                 typeof typedObj["storage"] === "object" ||
                 typeof typedObj["storage"] === "function") &&
-            isExpressionValue(typedObj["storage"]["storage"]) as boolean) &&
+            typeof typedObj["storage"]["type"] === "string" &&
+            typeof typedObj["storage"]["value"] === "string") &&
         (typeof typedObj["reference_definition"] === "undefined" ||
             (typedObj["reference_definition"] !== null &&
                 typeof typedObj["reference_definition"] === "object" ||
@@ -1979,8 +1981,36 @@ export function isColumnDefinitionOptList(obj: unknown): obj is ColumnDefinition
                 typeof typedObj["character_set"] === "object" ||
                 typeof typedObj["character_set"] === "function") &&
             typedObj["character_set"]["type"] === "CHARACTER SET" &&
-            typeof typedObj["character_set"]["value"] === "string" &&
-            (typeof typedObj["character_set"]["symbol"] === "undefined" ||
+            (typedObj["character_set"]["value"] !== null &&
+                typeof typedObj["character_set"]["value"] === "object" ||
+                typeof typedObj["character_set"]["value"] === "function") &&
+            (typedObj["character_set"]["value"]["type"] === "string" ||
+                typedObj["character_set"]["value"]["type"] === "number" ||
+                typedObj["character_set"]["value"]["type"] === "boolean" ||
+                typedObj["character_set"]["value"]["type"] === "backticks_quote_string" ||
+                typedObj["character_set"]["value"]["type"] === "regex_string" ||
+                typedObj["character_set"]["value"]["type"] === "hex_string" ||
+                typedObj["character_set"]["value"]["type"] === "full_hex_string" ||
+                typedObj["character_set"]["value"]["type"] === "natural_string" ||
+                typedObj["character_set"]["value"]["type"] === "bit_string" ||
+                typedObj["character_set"]["value"]["type"] === "double_quote_string" ||
+                typedObj["character_set"]["value"]["type"] === "single_quote_string" ||
+                typedObj["character_set"]["value"]["type"] === "bool" ||
+                typedObj["character_set"]["value"]["type"] === "null" ||
+                typedObj["character_set"]["value"]["type"] === "star" ||
+                typedObj["character_set"]["value"]["type"] === "param" ||
+                typedObj["character_set"]["value"]["type"] === "origin" ||
+                typedObj["character_set"]["value"]["type"] === "date" ||
+                typedObj["character_set"]["value"]["type"] === "datetime" ||
+                typedObj["character_set"]["value"]["type"] === "default" ||
+                typedObj["character_set"]["value"]["type"] === "time" ||
+                typedObj["character_set"]["value"]["type"] === "timestamp" ||
+                typedObj["character_set"]["value"]["type"] === "var_string") &&
+            (typeof typedObj["character_set"]["value"]["value"] === "string" ||
+                typeof typedObj["character_set"]["value"]["value"] === "number" ||
+                typedObj["character_set"]["value"]["value"] === false ||
+                typedObj["character_set"]["value"]["value"] === true) &&
+            (typedObj["character_set"]["symbol"] === null ||
                 typedObj["character_set"]["symbol"] === "=")) &&
         (typeof typedObj["check"] === "undefined" ||
             (typedObj["check"] !== null &&
@@ -1994,9 +2024,10 @@ export function isColumnDefinitionOptList(obj: unknown): obj is ColumnDefinition
                 typeof typedObj["generated"] === "function") &&
             typedObj["generated"]["type"] === "generated" &&
             isExpressionValue(typedObj["generated"]["expr"]) as boolean &&
-            (typeof typedObj["generated"]["stored"] === "undefined" ||
-                typedObj["generated"]["stored"] === "stored" ||
-                typedObj["generated"]["stored"] === "virtual"))
+            typeof typedObj["generated"]["value"] === "string" &&
+            (typeof typedObj["generated"]["storage_type"] === "undefined" ||
+                typedObj["generated"]["storage_type"] === "stored" ||
+                typedObj["generated"]["storage_type"] === "virtual"))
     )
 }
 
@@ -2555,16 +2586,10 @@ export function isCreate(obj: unknown): obj is Create {
             isRequireOption(typedObj["require"]) as boolean) &&
         (typeof typedObj["resource_options"] === "undefined" ||
             typedObj["resource_options"] === null ||
-            Array.isArray(typedObj["resource_options"]) &&
-            typedObj["resource_options"].every((e: any) =>
-                isResourceOption(e) as boolean
-            )) &&
+            isResourceOption(typedObj["resource_options"]) as boolean) &&
         (typeof typedObj["password_options"] === "undefined" ||
             typedObj["password_options"] === null ||
-            Array.isArray(typedObj["password_options"]) &&
-            typedObj["password_options"].every((e: any) =>
-                isPasswordOption(e) as boolean
-            )) &&
+            isPasswordOption(typedObj["password_options"]) as boolean) &&
         (typeof typedObj["lock_option_user"] === "undefined" ||
             typedObj["lock_option_user"] === null ||
             typedObj["lock_option_user"] === "account lock" ||
@@ -2601,8 +2626,69 @@ export function isUserAuthOption(obj: unknown): obj is UserAuthOption {
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        typeof typedObj["user"] === "string" &&
+        (typedObj["user"] !== null &&
+            typeof typedObj["user"] === "object" ||
+            typeof typedObj["user"] === "function") &&
+        (typedObj["user"]["name"] !== null &&
+            typeof typedObj["user"]["name"] === "object" ||
+            typeof typedObj["user"]["name"] === "function") &&
+        (typedObj["user"]["name"]["type"] === "string" ||
+            typedObj["user"]["name"]["type"] === "number" ||
+            typedObj["user"]["name"]["type"] === "boolean" ||
+            typedObj["user"]["name"]["type"] === "backticks_quote_string" ||
+            typedObj["user"]["name"]["type"] === "regex_string" ||
+            typedObj["user"]["name"]["type"] === "hex_string" ||
+            typedObj["user"]["name"]["type"] === "full_hex_string" ||
+            typedObj["user"]["name"]["type"] === "natural_string" ||
+            typedObj["user"]["name"]["type"] === "bit_string" ||
+            typedObj["user"]["name"]["type"] === "double_quote_string" ||
+            typedObj["user"]["name"]["type"] === "single_quote_string" ||
+            typedObj["user"]["name"]["type"] === "bool" ||
+            typedObj["user"]["name"]["type"] === "null" ||
+            typedObj["user"]["name"]["type"] === "star" ||
+            typedObj["user"]["name"]["type"] === "param" ||
+            typedObj["user"]["name"]["type"] === "origin" ||
+            typedObj["user"]["name"]["type"] === "date" ||
+            typedObj["user"]["name"]["type"] === "datetime" ||
+            typedObj["user"]["name"]["type"] === "default" ||
+            typedObj["user"]["name"]["type"] === "time" ||
+            typedObj["user"]["name"]["type"] === "timestamp" ||
+            typedObj["user"]["name"]["type"] === "var_string") &&
+        (typeof typedObj["user"]["name"]["value"] === "string" ||
+            typeof typedObj["user"]["name"]["value"] === "number" ||
+            typedObj["user"]["name"]["value"] === false ||
+            typedObj["user"]["name"]["value"] === true) &&
+        (typedObj["user"]["host"] !== null &&
+            typeof typedObj["user"]["host"] === "object" ||
+            typeof typedObj["user"]["host"] === "function") &&
+        (typedObj["user"]["host"]["type"] === "string" ||
+            typedObj["user"]["host"]["type"] === "number" ||
+            typedObj["user"]["host"]["type"] === "boolean" ||
+            typedObj["user"]["host"]["type"] === "backticks_quote_string" ||
+            typedObj["user"]["host"]["type"] === "regex_string" ||
+            typedObj["user"]["host"]["type"] === "hex_string" ||
+            typedObj["user"]["host"]["type"] === "full_hex_string" ||
+            typedObj["user"]["host"]["type"] === "natural_string" ||
+            typedObj["user"]["host"]["type"] === "bit_string" ||
+            typedObj["user"]["host"]["type"] === "double_quote_string" ||
+            typedObj["user"]["host"]["type"] === "single_quote_string" ||
+            typedObj["user"]["host"]["type"] === "bool" ||
+            typedObj["user"]["host"]["type"] === "null" ||
+            typedObj["user"]["host"]["type"] === "star" ||
+            typedObj["user"]["host"]["type"] === "param" ||
+            typedObj["user"]["host"]["type"] === "origin" ||
+            typedObj["user"]["host"]["type"] === "date" ||
+            typedObj["user"]["host"]["type"] === "datetime" ||
+            typedObj["user"]["host"]["type"] === "default" ||
+            typedObj["user"]["host"]["type"] === "time" ||
+            typedObj["user"]["host"]["type"] === "timestamp" ||
+            typedObj["user"]["host"]["type"] === "var_string") &&
+        (typeof typedObj["user"]["host"]["value"] === "string" ||
+            typeof typedObj["user"]["host"]["value"] === "number" ||
+            typedObj["user"]["host"]["value"] === false ||
+            typedObj["user"]["host"]["value"] === true) &&
         (typeof typedObj["auth_option"] === "undefined" ||
+            typedObj["auth_option"] === null ||
             (typedObj["auth_option"] !== null &&
                 typeof typedObj["auth_option"] === "object" ||
                 typeof typedObj["auth_option"] === "function") &&
@@ -2618,14 +2704,36 @@ export function isRequireOption(obj: unknown): obj is RequireOption {
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        typedObj["type"] === "require" &&
-        (typedObj["value"] === "none" ||
-            typedObj["value"] === "ssl" ||
-            typedObj["value"] === "x509" ||
-            Array.isArray(typedObj["value"]) &&
-            typedObj["value"].every((e: any) =>
-                isRequireOptionDetail(e) as boolean
-            ))
+        typedObj["keyword"] === "require" &&
+        (typedObj["value"] !== null &&
+            typeof typedObj["value"] === "object" ||
+            typeof typedObj["value"] === "function") &&
+        (typedObj["value"]["type"] === "string" ||
+            typedObj["value"]["type"] === "number" ||
+            typedObj["value"]["type"] === "boolean" ||
+            typedObj["value"]["type"] === "backticks_quote_string" ||
+            typedObj["value"]["type"] === "regex_string" ||
+            typedObj["value"]["type"] === "hex_string" ||
+            typedObj["value"]["type"] === "full_hex_string" ||
+            typedObj["value"]["type"] === "natural_string" ||
+            typedObj["value"]["type"] === "bit_string" ||
+            typedObj["value"]["type"] === "double_quote_string" ||
+            typedObj["value"]["type"] === "single_quote_string" ||
+            typedObj["value"]["type"] === "bool" ||
+            typedObj["value"]["type"] === "null" ||
+            typedObj["value"]["type"] === "star" ||
+            typedObj["value"]["type"] === "param" ||
+            typedObj["value"]["type"] === "origin" ||
+            typedObj["value"]["type"] === "date" ||
+            typedObj["value"]["type"] === "datetime" ||
+            typedObj["value"]["type"] === "default" ||
+            typedObj["value"]["type"] === "time" ||
+            typedObj["value"]["type"] === "timestamp" ||
+            typedObj["value"]["type"] === "var_string") &&
+        (typeof typedObj["value"]["value"] === "string" ||
+            typeof typedObj["value"]["value"] === "number" ||
+            typedObj["value"]["value"] === false ||
+            typedObj["value"]["value"] === true)
     )
 }
 
@@ -2648,11 +2756,16 @@ export function isResourceOption(obj: unknown): obj is ResourceOption {
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        (typedObj["type"] === "max_queries_per_hour" ||
-            typedObj["type"] === "max_updates_per_hour" ||
-            typedObj["type"] === "max_connections_per_hour" ||
-            typedObj["type"] === "max_user_connections") &&
-        typeof typedObj["value"] === "number"
+        typedObj["keyword"] === "with" &&
+        Array.isArray(typedObj["value"]) &&
+        typedObj["value"].every((e: any) =>
+            (e !== null &&
+                typeof e === "object" ||
+                typeof e === "function") &&
+            typeof e["type"] === "string" &&
+            typeof e["value"] === "number" &&
+            typeof e["prefix"] === "string"
+        )
     )
 }
 
@@ -3264,18 +3377,28 @@ export function isLoadDataField(obj: unknown): obj is LoadDataField {
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        (typeof typedObj["terminated_by"] === "undefined" ||
-            typeof typedObj["terminated_by"] === "string") &&
-        (typeof typedObj["enclosed_by"] === "undefined" ||
-            (typedObj["enclosed_by"] !== null &&
-                typeof typedObj["enclosed_by"] === "object" ||
-                typeof typedObj["enclosed_by"] === "function") &&
-            typeof typedObj["enclosed_by"]["value"] === "string" &&
-            (typeof typedObj["enclosed_by"]["optionally"] === "undefined" ||
-                typedObj["enclosed_by"]["optionally"] === false ||
-                typedObj["enclosed_by"]["optionally"] === true)) &&
-        (typeof typedObj["escaped_by"] === "undefined" ||
-            typeof typedObj["escaped_by"] === "string")
+        typedObj["keyword"] === "FIELDS" &&
+        (typeof typedObj["terminated"] === "undefined" ||
+            (typedObj["terminated"] !== null &&
+                typeof typedObj["terminated"] === "object" ||
+                typeof typedObj["terminated"] === "function") &&
+            typeof typedObj["terminated"]["type"] === "string" &&
+            typeof typedObj["terminated"]["value"] === "string" &&
+            typeof typedObj["terminated"]["prefix"] === "string") &&
+        (typeof typedObj["enclosed"] === "undefined" ||
+            (typedObj["enclosed"] !== null &&
+                typeof typedObj["enclosed"] === "object" ||
+                typeof typedObj["enclosed"] === "function") &&
+            typeof typedObj["enclosed"]["type"] === "string" &&
+            typeof typedObj["enclosed"]["value"] === "string" &&
+            typeof typedObj["enclosed"]["prefix"] === "string") &&
+        (typeof typedObj["escaped"] === "undefined" ||
+            (typedObj["escaped"] !== null &&
+                typeof typedObj["escaped"] === "object" ||
+                typeof typedObj["escaped"] === "function") &&
+            typeof typedObj["escaped"]["type"] === "string" &&
+            typeof typedObj["escaped"]["value"] === "string" &&
+            typeof typedObj["escaped"]["prefix"] === "string")
     )
 }
 
@@ -3285,10 +3408,21 @@ export function isLoadDataLine(obj: unknown): obj is LoadDataLine {
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        (typeof typedObj["starting_by"] === "undefined" ||
-            typeof typedObj["starting_by"] === "string") &&
-        (typeof typedObj["terminated_by"] === "undefined" ||
-            typeof typedObj["terminated_by"] === "string")
+        typedObj["keyword"] === "LINES" &&
+        (typeof typedObj["starting"] === "undefined" ||
+            (typedObj["starting"] !== null &&
+                typeof typedObj["starting"] === "object" ||
+                typeof typedObj["starting"] === "function") &&
+            typeof typedObj["starting"]["type"] === "string" &&
+            typeof typedObj["starting"]["value"] === "string" &&
+            typeof typedObj["starting"]["prefix"] === "string") &&
+        (typeof typedObj["terminated"] === "undefined" ||
+            (typedObj["terminated"] !== null &&
+                typeof typedObj["terminated"] === "object" ||
+                typeof typedObj["terminated"] === "function") &&
+            typeof typedObj["terminated"]["type"] === "string" &&
+            typeof typedObj["terminated"]["value"] === "string" &&
+            typeof typedObj["terminated"]["prefix"] === "string")
     )
 }
 
@@ -3413,7 +3547,35 @@ export function isTransaction(obj: unknown): obj is Transaction {
             typedObj["expr"]["modes"] === null ||
             Array.isArray(typedObj["expr"]["modes"]) &&
             typedObj["expr"]["modes"].every((e: any) =>
-                isTransactionMode(e) as boolean
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (e["type"] === "string" ||
+                    e["type"] === "number" ||
+                    e["type"] === "boolean" ||
+                    e["type"] === "backticks_quote_string" ||
+                    e["type"] === "regex_string" ||
+                    e["type"] === "hex_string" ||
+                    e["type"] === "full_hex_string" ||
+                    e["type"] === "natural_string" ||
+                    e["type"] === "bit_string" ||
+                    e["type"] === "double_quote_string" ||
+                    e["type"] === "single_quote_string" ||
+                    e["type"] === "bool" ||
+                    e["type"] === "null" ||
+                    e["type"] === "star" ||
+                    e["type"] === "param" ||
+                    e["type"] === "origin" ||
+                    e["type"] === "date" ||
+                    e["type"] === "datetime" ||
+                    e["type"] === "default" ||
+                    e["type"] === "time" ||
+                    e["type"] === "timestamp" ||
+                    e["type"] === "var_string") &&
+                (typeof e["value"] === "string" ||
+                    typeof e["value"] === "number" ||
+                    e["value"] === false ||
+                    e["value"] === true)
             )) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
