@@ -1,0 +1,3062 @@
+/*
+ * Generated type guards for "types.d.ts".
+ * WARNING: Do not manually change this file.
+ */
+import { With, WhilteListCheckMode, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, SortDirection, ColumnRefItem, ColumnRefExpr, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionName, Function, Column, Interval, Param, Value, Binary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, WindowFrameBound, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Returning, Update, Delete, Alter, AlterExpr, Use, KW_UNSIGNED, KW_ZEROFILL, Timezone, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, LiteralNumeric, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, Create, TriggerEvent, UserAuthOption, RequireOption, RequireOptionDetail, ResourceOption, PasswordOption, TableOption, Drop, Show, Explain, Call, Set, Lock, LockTable, Unlock, Grant, PrivilegeItem, PrivilegeLevel, UserOrRole, LoadData, LoadDataField, LoadDataLine, Transaction, TransactionMode, TransactionIsolationLevel, AST } from "./types";
+
+export function isWith(obj: unknown): obj is With {
+    const typedObj = obj as With
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["name"] !== null &&
+            typeof typedObj["name"] === "object" ||
+            typeof typedObj["name"] === "function") &&
+        typeof typedObj["name"]["value"] === "string" &&
+        (typedObj["stmt"] !== null &&
+            typeof typedObj["stmt"] === "object" ||
+            typeof typedObj["stmt"] === "function") &&
+        (typeof typedObj["stmt"]["_parentheses"] === "undefined" ||
+            typedObj["stmt"]["_parentheses"] === false ||
+            typedObj["stmt"]["_parentheses"] === true) &&
+        Array.isArray(typedObj["stmt"]["tableList"]) &&
+        typedObj["stmt"]["tableList"].every((e: any) =>
+            typeof e === "string"
+        ) &&
+        Array.isArray(typedObj["stmt"]["columnList"]) &&
+        typedObj["stmt"]["columnList"].every((e: any) =>
+            typeof e === "string"
+        ) &&
+        isSelect(typedObj["stmt"]["ast"]) as boolean &&
+        (typeof typedObj["columns"] === "undefined" ||
+            Array.isArray(typedObj["columns"]) &&
+            typedObj["columns"].every((e: any) =>
+                isColumnRef(e) as boolean
+            ))
+    )
+}
+
+export function isWhilteListCheckMode(obj: unknown): obj is WhilteListCheckMode {
+    const typedObj = obj as WhilteListCheckMode
+    return (
+        (typedObj === "table" ||
+            typedObj === "column")
+    )
+}
+
+export function isParseOptions(obj: unknown): obj is ParseOptions {
+    const typedObj = obj as ParseOptions
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["includeLocations"] === "undefined" ||
+            typedObj["includeLocations"] === false ||
+            typedObj["includeLocations"] === true)
+    )
+}
+
+export function isOption(obj: unknown): obj is Option {
+    const typedObj = obj as Option
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["database"] === "undefined" ||
+            typeof typedObj["database"] === "string") &&
+        (typeof typedObj["type"] === "undefined" ||
+            typeof typedObj["type"] === "string") &&
+        (typeof typedObj["trimQuery"] === "undefined" ||
+            typedObj["trimQuery"] === false ||
+            typedObj["trimQuery"] === true) &&
+        (typeof typedObj["parseOptions"] === "undefined" ||
+            isParseOptions(typedObj["parseOptions"]) as boolean)
+    )
+}
+
+export function isTableColumnAst(obj: unknown): obj is TableColumnAst {
+    const typedObj = obj as TableColumnAst
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        Array.isArray(typedObj["tableList"]) &&
+        typedObj["tableList"].every((e: any) =>
+            typeof e === "string"
+        ) &&
+        Array.isArray(typedObj["columnList"]) &&
+        typedObj["columnList"].every((e: any) =>
+            typeof e === "string"
+        ) &&
+        (isSelect(typedObj["ast"]) as boolean ||
+            isInsert_Replace(typedObj["ast"]) as boolean ||
+            isUpdate(typedObj["ast"]) as boolean ||
+            isDelete(typedObj["ast"]) as boolean ||
+            isAlter(typedObj["ast"]) as boolean ||
+            isUse(typedObj["ast"]) as boolean ||
+            isCreate(typedObj["ast"]) as boolean ||
+            isDrop(typedObj["ast"]) as boolean ||
+            isShow(typedObj["ast"]) as boolean ||
+            isExplain(typedObj["ast"]) as boolean ||
+            isCall(typedObj["ast"]) as boolean ||
+            isSet(typedObj["ast"]) as boolean ||
+            isLock(typedObj["ast"]) as boolean ||
+            isUnlock(typedObj["ast"]) as boolean ||
+            isGrant(typedObj["ast"]) as boolean ||
+            isLoadData(typedObj["ast"]) as boolean ||
+            isTransaction(typedObj["ast"]) as boolean ||
+            Array.isArray(typedObj["ast"]) &&
+            typedObj["ast"].every((e: any) =>
+                isAST(e) as boolean
+            )) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isBaseFrom(obj: unknown): obj is BaseFrom {
+    const typedObj = obj as BaseFrom
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["db"] === null ||
+            typeof typedObj["db"] === "string") &&
+        typeof typedObj["table"] === "string" &&
+        (typedObj["as"] === null ||
+            typeof typedObj["as"] === "string") &&
+        (typeof typedObj["schema"] === "undefined" ||
+            typeof typedObj["schema"] === "string") &&
+        (typeof typedObj["addition"] === "undefined" ||
+            typedObj["addition"] === false ||
+            typedObj["addition"] === true) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isJoin(obj: unknown): obj is Join {
+    const typedObj = obj as Join
+    return (
+        isBaseFrom(typedObj) as boolean &&
+        (typedObj["join"] === "INNER JOIN" ||
+            typedObj["join"] === "LEFT JOIN" ||
+            typedObj["join"] === "RIGHT JOIN") &&
+        (typeof typedObj["using"] === "undefined" ||
+            Array.isArray(typedObj["using"]) &&
+            typedObj["using"].every((e: any) =>
+                typeof e === "string"
+            )) &&
+        (typeof typedObj["on"] === "undefined" ||
+            isBinary(typedObj["on"]) as boolean)
+    )
+}
+
+export function isTableExpr(obj: unknown): obj is TableExpr {
+    const typedObj = obj as TableExpr
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["expr"] !== null &&
+            typeof typedObj["expr"] === "object" ||
+            typeof typedObj["expr"] === "function") &&
+        isSelect(typedObj["expr"]["ast"]) as boolean &&
+        (typeof typedObj["as"] === "undefined" ||
+            typedObj["as"] === null ||
+            typeof typedObj["as"] === "string") &&
+        (typedObj["parentheses"] === false ||
+            typedObj["parentheses"] === true ||
+            (typedObj["parentheses"] !== null &&
+                typeof typedObj["parentheses"] === "object" ||
+                typeof typedObj["parentheses"] === "function") &&
+            typeof typedObj["parentheses"]["length"] === "number")
+    )
+}
+
+export function isDual(obj: unknown): obj is Dual {
+    const typedObj = obj as Dual
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "dual" &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isFrom(obj: unknown): obj is From {
+    const typedObj = obj as From
+    return (
+        (isBaseFrom(typedObj) as boolean ||
+            isJoin(typedObj) as boolean ||
+            isTableExpr(typedObj) as boolean ||
+            isDual(typedObj) as boolean)
+    )
+}
+
+export function isLimitValue(obj: unknown): obj is LimitValue {
+    const typedObj = obj as LimitValue
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["type"] === "string" &&
+        typeof typedObj["value"] === "number" &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isLimit(obj: unknown): obj is Limit {
+    const typedObj = obj as Limit
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["seperator"] === "string" &&
+        Array.isArray(typedObj["value"]) &&
+        typedObj["value"].every((e: any) =>
+            isLimitValue(e) as boolean
+        ) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isOrderBy(obj: unknown): obj is OrderBy {
+    const typedObj = obj as OrderBy
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["type"] === "ASC" ||
+            typedObj["type"] === "DESC") &&
+        isExpressionValue(typedObj["expr"]) as boolean &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isValueExpr(obj: unknown): obj is ValueExpr {
+    const typedObj = obj as ValueExpr
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["type"] === "string" ||
+            typedObj["type"] === "boolean" ||
+            typedObj["type"] === "backticks_quote_string" ||
+            typedObj["type"] === "regex_string" ||
+            typedObj["type"] === "hex_string" ||
+            typedObj["type"] === "full_hex_string" ||
+            typedObj["type"] === "natural_string" ||
+            typedObj["type"] === "bit_string" ||
+            typedObj["type"] === "double_quote_string" ||
+            typedObj["type"] === "single_quote_string" ||
+            typedObj["type"] === "bool" ||
+            typedObj["type"] === "null" ||
+            typedObj["type"] === "star" ||
+            typedObj["type"] === "param" ||
+            typedObj["type"] === "origin" ||
+            typedObj["type"] === "date" ||
+            typedObj["type"] === "datetime" ||
+            typedObj["type"] === "default" ||
+            typedObj["type"] === "time" ||
+            typedObj["type"] === "timestamp" ||
+            typedObj["type"] === "var_string") &&
+        typeof typedObj["value"] === "T"
+    )
+}
+
+export function isSortDirection(obj: unknown): obj is SortDirection {
+    const typedObj = obj as SortDirection
+    return (
+        (typedObj === "ASC" ||
+            typedObj === "DESC" ||
+            typedObj === "asc" ||
+            typedObj === "desc")
+    )
+}
+
+export function isColumnRefItem(obj: unknown): obj is ColumnRefItem {
+    const typedObj = obj as ColumnRefItem
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "column_ref" &&
+        (typedObj["table"] === null ||
+            typeof typedObj["table"] === "string") &&
+        (typeof typedObj["column"] === "string" ||
+            (typedObj["column"] !== null &&
+                typeof typedObj["column"] === "object" ||
+                typeof typedObj["column"] === "function") &&
+            (typedObj["column"]["expr"] !== null &&
+                typeof typedObj["column"]["expr"] === "object" ||
+                typeof typedObj["column"]["expr"] === "function") &&
+            (typedObj["column"]["expr"]["type"] === "string" ||
+                typedObj["column"]["expr"]["type"] === "boolean" ||
+                typedObj["column"]["expr"]["type"] === "backticks_quote_string" ||
+                typedObj["column"]["expr"]["type"] === "regex_string" ||
+                typedObj["column"]["expr"]["type"] === "hex_string" ||
+                typedObj["column"]["expr"]["type"] === "full_hex_string" ||
+                typedObj["column"]["expr"]["type"] === "natural_string" ||
+                typedObj["column"]["expr"]["type"] === "bit_string" ||
+                typedObj["column"]["expr"]["type"] === "double_quote_string" ||
+                typedObj["column"]["expr"]["type"] === "single_quote_string" ||
+                typedObj["column"]["expr"]["type"] === "bool" ||
+                typedObj["column"]["expr"]["type"] === "null" ||
+                typedObj["column"]["expr"]["type"] === "star" ||
+                typedObj["column"]["expr"]["type"] === "param" ||
+                typedObj["column"]["expr"]["type"] === "origin" ||
+                typedObj["column"]["expr"]["type"] === "date" ||
+                typedObj["column"]["expr"]["type"] === "datetime" ||
+                typedObj["column"]["expr"]["type"] === "default" ||
+                typedObj["column"]["expr"]["type"] === "time" ||
+                typedObj["column"]["expr"]["type"] === "timestamp" ||
+                typedObj["column"]["expr"]["type"] === "var_string") &&
+            (typeof typedObj["column"]["expr"]["value"] === "string" ||
+                typeof typedObj["column"]["expr"]["value"] === "number" ||
+                typedObj["column"]["expr"]["value"] === false ||
+                typedObj["column"]["expr"]["value"] === true)) &&
+        (typeof typedObj["options"] === "undefined" ||
+            isExprList(typedObj["options"]) as boolean) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number") &&
+        (typeof typedObj["collate"] === "undefined" ||
+            typedObj["collate"] === null ||
+            isCollateExpr(typedObj["collate"]) as boolean) &&
+        (typeof typedObj["order_by"] === "undefined" ||
+            typedObj["order_by"] === null ||
+            typedObj["order_by"] === "ASC" ||
+            typedObj["order_by"] === "DESC" ||
+            typedObj["order_by"] === "asc" ||
+            typedObj["order_by"] === "desc")
+    )
+}
+
+export function isColumnRefExpr(obj: unknown): obj is ColumnRefExpr {
+    const typedObj = obj as ColumnRefExpr
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "expr" &&
+        isColumnRefItem(typedObj["expr"]) as boolean &&
+        (typedObj["as"] === null ||
+            typeof typedObj["as"] === "string")
+    )
+}
+
+export function isColumnRef(obj: unknown): obj is ColumnRef {
+    const typedObj = obj as ColumnRef
+    return (
+        (isColumnRefItem(typedObj) as boolean ||
+            isColumnRefExpr(typedObj) as boolean)
+    )
+}
+
+export function isSetList(obj: unknown): obj is SetList {
+    const typedObj = obj as SetList
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["column"] === "string" &&
+        isExpressionValue(typedObj["value"]) as boolean &&
+        (typedObj["table"] === null ||
+            typeof typedObj["table"] === "string") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isInsertReplaceValue(obj: unknown): obj is InsertReplaceValue {
+    const typedObj = obj as InsertReplaceValue
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "expr_list" &&
+        Array.isArray(typedObj["value"]) &&
+        typedObj["value"].every((e: any) =>
+            isExpressionValue(e) as boolean
+        ) &&
+        (typeof typedObj["prefix"] === "undefined" ||
+            typedObj["prefix"] === null ||
+            typeof typedObj["prefix"] === "string") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isStar(obj: unknown): obj is Star {
+    const typedObj = obj as Star
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "star" &&
+        (typedObj["value"] === "" ||
+            typedObj["value"] === "*") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isCase(obj: unknown): obj is Case {
+    const typedObj = obj as Case
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "case" &&
+        typedObj["expr"] === null &&
+        Array.isArray(typedObj["args"]) &&
+        typedObj["args"].every((e: any) =>
+        ((e !== null &&
+            typeof e === "object" ||
+            typeof e === "function") &&
+            isBinary(e["cond"]) as boolean &&
+            isExpressionValue(e["result"]) as boolean &&
+            e["type"] === "when" ||
+            (e !== null &&
+                typeof e === "object" ||
+                typeof e === "function") &&
+            isExpressionValue(e["result"]) as boolean &&
+            e["type"] === "else")
+        )
+    )
+}
+
+export function isCast(obj: unknown): obj is Cast {
+    const typedObj = obj as Cast
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "cast" &&
+        typedObj["keyword"] === "cast" &&
+        isExpressionValue(typedObj["expr"]) as boolean &&
+        typedObj["symbol"] === "as" &&
+        Array.isArray(typedObj["target"]) &&
+        typedObj["target"].every((e: any) =>
+            (e !== null &&
+                typeof e === "object" ||
+                typeof e === "function") &&
+            typeof e["dataType"] === "string" &&
+            (typeof e["quoted"] === "undefined" ||
+                typeof e["quoted"] === "string")
+        )
+    )
+}
+
+export function isAggrFunc(obj: unknown): obj is AggrFunc {
+    const typedObj = obj as AggrFunc
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "aggr_func" &&
+        typeof typedObj["name"] === "string" &&
+        (typedObj["args"] !== null &&
+            typeof typedObj["args"] === "object" ||
+            typeof typedObj["args"] === "function") &&
+        isExpressionValue(typedObj["args"]["expr"]) as boolean &&
+        (typedObj["args"]["distinct"] === null ||
+            typedObj["args"]["distinct"] === "DISTINCT") &&
+        (typedObj["args"]["orderby"] === null ||
+            Array.isArray(typedObj["args"]["orderby"]) &&
+            typedObj["args"]["orderby"].every((e: any) =>
+                isOrderBy(e) as boolean
+            )) &&
+        (typeof typedObj["args"]["parentheses"] === "undefined" ||
+            typedObj["args"]["parentheses"] === false ||
+            typedObj["args"]["parentheses"] === true) &&
+        (typeof typedObj["args"]["separator"] === "undefined" ||
+            typeof typedObj["args"]["separator"] === "string") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isFunctionName(obj: unknown): obj is FunctionName {
+    const typedObj = obj as FunctionName
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["schema"] === "undefined" ||
+            (typedObj["schema"] !== null &&
+                typeof typedObj["schema"] === "object" ||
+                typeof typedObj["schema"] === "function") &&
+            typeof typedObj["schema"]["value"] === "string" &&
+            typeof typedObj["schema"]["type"] === "string") &&
+        Array.isArray(typedObj["name"]) &&
+        typedObj["name"].every((e: any) =>
+            (e !== null &&
+                typeof e === "object" ||
+                typeof e === "function") &&
+            (e["type"] === "string" ||
+                e["type"] === "boolean" ||
+                e["type"] === "backticks_quote_string" ||
+                e["type"] === "regex_string" ||
+                e["type"] === "hex_string" ||
+                e["type"] === "full_hex_string" ||
+                e["type"] === "natural_string" ||
+                e["type"] === "bit_string" ||
+                e["type"] === "double_quote_string" ||
+                e["type"] === "single_quote_string" ||
+                e["type"] === "bool" ||
+                e["type"] === "null" ||
+                e["type"] === "star" ||
+                e["type"] === "param" ||
+                e["type"] === "origin" ||
+                e["type"] === "date" ||
+                e["type"] === "datetime" ||
+                e["type"] === "default" ||
+                e["type"] === "time" ||
+                e["type"] === "timestamp" ||
+                e["type"] === "var_string") &&
+            typeof e["value"] === "string"
+        )
+    )
+}
+
+export function isFunction(obj: unknown): obj is Function {
+    const typedObj = obj as Function
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "function" &&
+        isFunctionName(typedObj["name"]) as boolean &&
+        (typeof typedObj["args"] === "undefined" ||
+            isExprList(typedObj["args"]) as boolean) &&
+        (typeof typedObj["suffix"] === "undefined" ||
+            typedObj["suffix"] === null ||
+            isOnUpdateCurrentTimestamp(typedObj["suffix"]) as boolean) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isColumn(obj: unknown): obj is Column {
+    const typedObj = obj as Column
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        isExpressionValue(typedObj["expr"]) as boolean &&
+        (typedObj["as"] === null ||
+            typeof typedObj["as"] === "string" ||
+            (typedObj["as"] !== null &&
+                typeof typedObj["as"] === "object" ||
+                typeof typedObj["as"] === "function") &&
+            (typedObj["as"]["type"] === "string" ||
+                typedObj["as"]["type"] === "boolean" ||
+                typedObj["as"]["type"] === "backticks_quote_string" ||
+                typedObj["as"]["type"] === "regex_string" ||
+                typedObj["as"]["type"] === "hex_string" ||
+                typedObj["as"]["type"] === "full_hex_string" ||
+                typedObj["as"]["type"] === "natural_string" ||
+                typedObj["as"]["type"] === "bit_string" ||
+                typedObj["as"]["type"] === "double_quote_string" ||
+                typedObj["as"]["type"] === "single_quote_string" ||
+                typedObj["as"]["type"] === "bool" ||
+                typedObj["as"]["type"] === "null" ||
+                typedObj["as"]["type"] === "star" ||
+                typedObj["as"]["type"] === "param" ||
+                typedObj["as"]["type"] === "origin" ||
+                typedObj["as"]["type"] === "date" ||
+                typedObj["as"]["type"] === "datetime" ||
+                typedObj["as"]["type"] === "default" ||
+                typedObj["as"]["type"] === "time" ||
+                typedObj["as"]["type"] === "timestamp" ||
+                typedObj["as"]["type"] === "var_string") &&
+            typeof typedObj["as"]["value"] === "string") &&
+        (typeof typedObj["type"] === "undefined" ||
+            typeof typedObj["type"] === "string") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isInterval(obj: unknown): obj is Interval {
+    const typedObj = obj as Interval
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "interval" &&
+        typeof typedObj["unit"] === "string" &&
+        (typedObj["expr"] !== null &&
+            typeof typedObj["expr"] === "object" ||
+            typeof typedObj["expr"] === "function") &&
+        (typedObj["expr"]["type"] === "string" ||
+            typedObj["expr"]["type"] === "boolean" ||
+            typedObj["expr"]["type"] === "backticks_quote_string" ||
+            typedObj["expr"]["type"] === "regex_string" ||
+            typedObj["expr"]["type"] === "hex_string" ||
+            typedObj["expr"]["type"] === "full_hex_string" ||
+            typedObj["expr"]["type"] === "natural_string" ||
+            typedObj["expr"]["type"] === "bit_string" ||
+            typedObj["expr"]["type"] === "double_quote_string" ||
+            typedObj["expr"]["type"] === "single_quote_string" ||
+            typedObj["expr"]["type"] === "bool" ||
+            typedObj["expr"]["type"] === "null" ||
+            typedObj["expr"]["type"] === "star" ||
+            typedObj["expr"]["type"] === "param" ||
+            typedObj["expr"]["type"] === "origin" ||
+            typedObj["expr"]["type"] === "date" ||
+            typedObj["expr"]["type"] === "datetime" ||
+            typedObj["expr"]["type"] === "default" ||
+            typedObj["expr"]["type"] === "time" ||
+            typedObj["expr"]["type"] === "timestamp" ||
+            typedObj["expr"]["type"] === "var_string") &&
+        (typeof typedObj["expr"]["value"] === "string" ||
+            typeof typedObj["expr"]["value"] === "number" ||
+            typedObj["expr"]["value"] === false ||
+            typedObj["expr"]["value"] === true) &&
+        (typedObj["expr"] !== null &&
+            typeof typedObj["expr"] === "object" ||
+            typeof typedObj["expr"] === "function") &&
+        (typeof typedObj["expr"]["loc"] === "undefined" ||
+            (typedObj["expr"]["loc"] !== null &&
+                typeof typedObj["expr"]["loc"] === "object" ||
+                typeof typedObj["expr"]["loc"] === "function") &&
+            (typedObj["expr"]["loc"]["start"] !== null &&
+                typeof typedObj["expr"]["loc"]["start"] === "object" ||
+                typeof typedObj["expr"]["loc"]["start"] === "function") &&
+            typeof typedObj["expr"]["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["expr"]["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["expr"]["loc"]["start"]["offset"] === "number" &&
+            (typedObj["expr"]["loc"]["end"] !== null &&
+                typeof typedObj["expr"]["loc"]["end"] === "object" ||
+                typeof typedObj["expr"]["loc"]["end"] === "function") &&
+            typeof typedObj["expr"]["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["expr"]["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["expr"]["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isParam(obj: unknown): obj is Param {
+    const typedObj = obj as Param
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "param" &&
+        typeof typedObj["value"] === "string" &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isValue(obj: unknown): obj is Value {
+    const typedObj = obj as Value
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["type"] === "string" &&
+        (typedObj["value"] === null ||
+            typeof typedObj["value"] === "string" ||
+            typeof typedObj["value"] === "number" ||
+            typedObj["value"] === false ||
+            typedObj["value"] === true) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isBinary(obj: unknown): obj is Binary {
+    const typedObj = obj as Binary
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "binary_expr" &&
+        typeof typedObj["operator"] === "string" &&
+        (isColumnRefItem(typedObj["left"]) as boolean ||
+            isColumnRefExpr(typedObj["left"]) as boolean ||
+            isCase(typedObj["left"]) as boolean ||
+            isCast(typedObj["left"]) as boolean ||
+            isAggrFunc(typedObj["left"]) as boolean ||
+            isFunction(typedObj["left"]) as boolean ||
+            isInterval(typedObj["left"]) as boolean ||
+            isParam(typedObj["left"]) as boolean ||
+            isValue(typedObj["left"]) as boolean ||
+            isBinary(typedObj["left"]) as boolean ||
+            isExprList(typedObj["left"]) as boolean) &&
+        (isColumnRefItem(typedObj["right"]) as boolean ||
+            isColumnRefExpr(typedObj["right"]) as boolean ||
+            isCase(typedObj["right"]) as boolean ||
+            isCast(typedObj["right"]) as boolean ||
+            isAggrFunc(typedObj["right"]) as boolean ||
+            isFunction(typedObj["right"]) as boolean ||
+            isInterval(typedObj["right"]) as boolean ||
+            isParam(typedObj["right"]) as boolean ||
+            isValue(typedObj["right"]) as boolean ||
+            isBinary(typedObj["right"]) as boolean ||
+            isExprList(typedObj["right"]) as boolean) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number") &&
+        (typeof typedObj["parentheses"] === "undefined" ||
+            typedObj["parentheses"] === false ||
+            typedObj["parentheses"] === true)
+    )
+}
+
+export function isExpr(obj: unknown): obj is Expr {
+    const typedObj = obj as Expr
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "binary_expr" &&
+        typeof typedObj["operator"] === "string" &&
+        (isColumnRefItem(typedObj["left"]) as boolean ||
+            isColumnRefExpr(typedObj["left"]) as boolean ||
+            isCase(typedObj["left"]) as boolean ||
+            isCast(typedObj["left"]) as boolean ||
+            isAggrFunc(typedObj["left"]) as boolean ||
+            isFunction(typedObj["left"]) as boolean ||
+            isInterval(typedObj["left"]) as boolean ||
+            isParam(typedObj["left"]) as boolean ||
+            isValue(typedObj["left"]) as boolean ||
+            isBinary(typedObj["left"]) as boolean ||
+            isExprList(typedObj["left"]) as boolean) &&
+        (isColumnRefItem(typedObj["right"]) as boolean ||
+            isColumnRefExpr(typedObj["right"]) as boolean ||
+            isCase(typedObj["right"]) as boolean ||
+            isCast(typedObj["right"]) as boolean ||
+            isAggrFunc(typedObj["right"]) as boolean ||
+            isFunction(typedObj["right"]) as boolean ||
+            isInterval(typedObj["right"]) as boolean ||
+            isParam(typedObj["right"]) as boolean ||
+            isValue(typedObj["right"]) as boolean ||
+            isBinary(typedObj["right"]) as boolean ||
+            isExprList(typedObj["right"]) as boolean) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number") &&
+        (typeof typedObj["parentheses"] === "undefined" ||
+            typedObj["parentheses"] === false ||
+            typedObj["parentheses"] === true)
+    )
+}
+
+export function isExpressionValue(obj: unknown): obj is ExpressionValue {
+    const typedObj = obj as ExpressionValue
+    return (
+        (isColumnRefItem(typedObj) as boolean ||
+            isColumnRefExpr(typedObj) as boolean ||
+            isCase(typedObj) as boolean ||
+            isCast(typedObj) as boolean ||
+            isAggrFunc(typedObj) as boolean ||
+            isFunction(typedObj) as boolean ||
+            isInterval(typedObj) as boolean ||
+            isParam(typedObj) as boolean ||
+            isValue(typedObj) as boolean ||
+            isBinary(typedObj) as boolean)
+    )
+}
+
+export function isExprList(obj: unknown): obj is ExprList {
+    const typedObj = obj as ExprList
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "expr_list" &&
+        Array.isArray(typedObj["value"]) &&
+        typedObj["value"].every((e: any) =>
+            isExpressionValue(e) as boolean
+        ) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number") &&
+        (typeof typedObj["parentheses"] === "undefined" ||
+            typedObj["parentheses"] === false ||
+            typedObj["parentheses"] === true) &&
+        (typeof typedObj["separator"] === "undefined" ||
+            typeof typedObj["separator"] === "string")
+    )
+}
+
+export function isPartitionBy(obj: unknown): obj is PartitionBy {
+    const typedObj = obj as PartitionBy
+    return (
+        Array.isArray(typedObj) &&
+        typedObj.every((e: any) =>
+            (e !== null &&
+                typeof e === "object" ||
+                typeof e === "function") &&
+            e["type"] === "expr" &&
+            Array.isArray(e["expr"]) &&
+            e["expr"].every((e: any) =>
+                isColumnRef(e) as boolean
+            )
+        )
+    )
+}
+
+export function isWindowSpec(obj: unknown): obj is WindowSpec {
+    const typedObj = obj as WindowSpec
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["name"] === null &&
+        isPartitionBy(typedObj["partitionby"]) as boolean &&
+        (typedObj["orderby"] === null ||
+            Array.isArray(typedObj["orderby"]) &&
+            typedObj["orderby"].every((e: any) =>
+                isOrderBy(e) as boolean
+            )) &&
+        (typedObj["window_frame_clause"] === null ||
+            isWindowFrameClause(typedObj["window_frame_clause"]) as boolean)
+    )
+}
+
+export function isWindowFrameClause(obj: unknown): obj is WindowFrameClause {
+    const typedObj = obj as WindowFrameClause
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["type"] === "rows" ||
+            typedObj["type"] === "range" ||
+            typedObj["type"] === "groups") &&
+        (typeof typedObj["between"] === "undefined" ||
+            typedObj["between"] === "between") &&
+        isWindowFrameBound(typedObj["start"]) as boolean &&
+        (typeof typedObj["end"] === "undefined" ||
+            isWindowFrameBound(typedObj["end"]) as boolean)
+    )
+}
+
+export function isWindowFrameBound(obj: unknown): obj is WindowFrameBound {
+    const typedObj = obj as WindowFrameBound
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["type"] === "preceding" ||
+            typedObj["type"] === "following" ||
+            typedObj["type"] === "current_row") &&
+        (typeof typedObj["value"] === "undefined" ||
+            isColumnRefItem(typedObj["value"]) as boolean ||
+            isColumnRefExpr(typedObj["value"]) as boolean ||
+            isCase(typedObj["value"]) as boolean ||
+            isCast(typedObj["value"]) as boolean ||
+            isAggrFunc(typedObj["value"]) as boolean ||
+            isFunction(typedObj["value"]) as boolean ||
+            isInterval(typedObj["value"]) as boolean ||
+            isParam(typedObj["value"]) as boolean ||
+            isValue(typedObj["value"]) as boolean ||
+            isBinary(typedObj["value"]) as boolean ||
+            typedObj["value"] === "unbounded")
+    )
+}
+
+export function isAsWindowSpec(obj: unknown): obj is AsWindowSpec {
+    const typedObj = obj as AsWindowSpec
+    return (
+        (typeof typedObj === "string" ||
+            (typedObj !== null &&
+                typeof typedObj === "object" ||
+                typeof typedObj === "function") &&
+            isWindowSpec(typedObj["window_specification"]) as boolean &&
+            typeof typedObj["parentheses"] === "boolean")
+    )
+}
+
+export function isNamedWindowExpr(obj: unknown): obj is NamedWindowExpr {
+    const typedObj = obj as NamedWindowExpr
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["name"] === "string" &&
+        isAsWindowSpec(typedObj["as_window_specification"]) as boolean
+    )
+}
+
+export function isWindowExpr(obj: unknown): obj is WindowExpr {
+    const typedObj = obj as WindowExpr
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["keyword"] === "window" &&
+        typedObj["type"] === "window" &&
+        Array.isArray(typedObj["expr"]) &&
+        typedObj["expr"].every((e: any) =>
+            isNamedWindowExpr(e) as boolean
+        )
+    )
+}
+
+export function isSelect(obj: unknown): obj is Select {
+    const typedObj = obj as Select
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["with"] === null ||
+            Array.isArray(typedObj["with"]) &&
+            typedObj["with"].every((e: any) =>
+                isWith(e) as boolean
+            )) &&
+        typedObj["type"] === "select" &&
+        (typedObj["options"] === null ||
+            Array.isArray(typedObj["options"]) &&
+            typedObj["options"].every((e: any) =>
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (e["type"] === "string" ||
+                    e["type"] === "boolean" ||
+                    e["type"] === "backticks_quote_string" ||
+                    e["type"] === "regex_string" ||
+                    e["type"] === "hex_string" ||
+                    e["type"] === "full_hex_string" ||
+                    e["type"] === "natural_string" ||
+                    e["type"] === "bit_string" ||
+                    e["type"] === "double_quote_string" ||
+                    e["type"] === "single_quote_string" ||
+                    e["type"] === "bool" ||
+                    e["type"] === "null" ||
+                    e["type"] === "star" ||
+                    e["type"] === "param" ||
+                    e["type"] === "origin" ||
+                    e["type"] === "date" ||
+                    e["type"] === "datetime" ||
+                    e["type"] === "default" ||
+                    e["type"] === "time" ||
+                    e["type"] === "timestamp" ||
+                    e["type"] === "var_string") &&
+                typeof e["value"] === "string"
+            )) &&
+        (typedObj["distinct"] === null ||
+            typedObj["distinct"] === "DISTINCT") &&
+        Array.isArray(typedObj["columns"]) &&
+        typedObj["columns"].every((e: any) =>
+            isColumn(e) as boolean
+        ) &&
+        (typeof typedObj["into"] === "undefined" ||
+            (typedObj["into"] !== null &&
+                typeof typedObj["into"] === "object" ||
+                typeof typedObj["into"] === "function") &&
+            (typedObj["into"]["position"] === null ||
+                typedObj["into"]["position"] === "column" ||
+                typedObj["into"]["position"] === "from" ||
+                typedObj["into"]["position"] === "end")) &&
+        (typedObj["from"] === null ||
+            isTableExpr(typedObj["from"]) as boolean ||
+            Array.isArray(typedObj["from"]) &&
+            typedObj["from"].every((e: any) =>
+                isFrom(e) as boolean
+            ) ||
+            (typedObj["from"] !== null &&
+                typeof typedObj["from"] === "object" ||
+                typeof typedObj["from"] === "function") &&
+            Array.isArray(typedObj["from"]["expr"]) &&
+            typedObj["from"]["expr"].every((e: any) =>
+                isFrom(e) as boolean
+            ) &&
+            (typedObj["from"]["parentheses"] !== null &&
+                typeof typedObj["from"]["parentheses"] === "object" ||
+                typeof typedObj["from"]["parentheses"] === "function") &&
+            typeof typedObj["from"]["parentheses"]["length"] === "number" &&
+            Array.isArray(typedObj["from"]["joins"]) &&
+            typedObj["from"]["joins"].every((e: any) =>
+                isFrom(e) as boolean
+            )) &&
+        (typedObj["where"] === null ||
+            isFunction(typedObj["where"]) as boolean ||
+            isBinary(typedObj["where"]) as boolean) &&
+        (typedObj["groupby"] === null ||
+            (typedObj["groupby"] !== null &&
+                typeof typedObj["groupby"] === "object" ||
+                typeof typedObj["groupby"] === "function") &&
+            (typedObj["groupby"]["columns"] === null ||
+                Array.isArray(typedObj["groupby"]["columns"]) &&
+                typedObj["groupby"]["columns"].every((e: any) =>
+                    isColumnRef(e) as boolean
+                )) &&
+            Array.isArray(typedObj["groupby"]["modifiers"]) &&
+            typedObj["groupby"]["modifiers"].every((e: any) =>
+            (e === null ||
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (e["type"] === "string" ||
+                    e["type"] === "boolean" ||
+                    e["type"] === "backticks_quote_string" ||
+                    e["type"] === "regex_string" ||
+                    e["type"] === "hex_string" ||
+                    e["type"] === "full_hex_string" ||
+                    e["type"] === "natural_string" ||
+                    e["type"] === "bit_string" ||
+                    e["type"] === "double_quote_string" ||
+                    e["type"] === "single_quote_string" ||
+                    e["type"] === "bool" ||
+                    e["type"] === "null" ||
+                    e["type"] === "star" ||
+                    e["type"] === "param" ||
+                    e["type"] === "origin" ||
+                    e["type"] === "date" ||
+                    e["type"] === "datetime" ||
+                    e["type"] === "default" ||
+                    e["type"] === "time" ||
+                    e["type"] === "timestamp" ||
+                    e["type"] === "var_string") &&
+                typeof e["value"] === "string")
+            )) &&
+        (typedObj["having"] === null ||
+            Array.isArray(typedObj["having"]) &&
+            typedObj["having"].every((e: any) =>
+                isBinary(e) as boolean
+            )) &&
+        (typedObj["orderby"] === null ||
+            Array.isArray(typedObj["orderby"]) &&
+            typedObj["orderby"].every((e: any) =>
+                isOrderBy(e) as boolean
+            )) &&
+        (typedObj["limit"] === null ||
+            isLimit(typedObj["limit"]) as boolean) &&
+        (typeof typedObj["window"] === "undefined" ||
+            typedObj["window"] === null ||
+            isWindowExpr(typedObj["window"]) as boolean) &&
+        (typeof typedObj["qualify"] === "undefined" ||
+            typedObj["qualify"] === null ||
+            Array.isArray(typedObj["qualify"]) &&
+            typedObj["qualify"].every((e: any) =>
+                isBinary(e) as boolean
+            )) &&
+        (typeof typedObj["_orderby"] === "undefined" ||
+            typedObj["_orderby"] === null ||
+            Array.isArray(typedObj["_orderby"]) &&
+            typedObj["_orderby"].every((e: any) =>
+                isOrderBy(e) as boolean
+            )) &&
+        (typeof typedObj["_limit"] === "undefined" ||
+            typedObj["_limit"] === null ||
+            isLimit(typedObj["_limit"]) as boolean) &&
+        (typeof typedObj["parentheses_symbol"] === "undefined" ||
+            typedObj["parentheses_symbol"] === false ||
+            typedObj["parentheses_symbol"] === true) &&
+        (typeof typedObj["_parentheses"] === "undefined" ||
+            typedObj["_parentheses"] === false ||
+            typedObj["_parentheses"] === true) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number") &&
+        (typeof typedObj["_next"] === "undefined" ||
+            isSelect(typedObj["_next"]) as boolean) &&
+        (typeof typedObj["set_op"] === "undefined" ||
+            typeof typedObj["set_op"] === "string") &&
+        (typeof typedObj["collate"] === "undefined" ||
+            typedObj["collate"] === null ||
+            isCollateExpr(typedObj["collate"]) as boolean) &&
+        (typeof typedObj["locking_read"] === "undefined" ||
+            typedObj["locking_read"] === null ||
+            (typedObj["locking_read"] !== null &&
+                typeof typedObj["locking_read"] === "object" ||
+                typeof typedObj["locking_read"] === "function") &&
+            (typedObj["locking_read"]["type"] === "for_update" ||
+                typedObj["locking_read"]["type"] === "lock_in_share_mode") &&
+            (typeof typedObj["locking_read"]["of_tables"] === "undefined" ||
+                Array.isArray(typedObj["locking_read"]["of_tables"]) &&
+                typedObj["locking_read"]["of_tables"].every((e: any) =>
+                    isFrom(e) as boolean
+                )) &&
+            (typeof typedObj["locking_read"]["wait"] === "undefined" ||
+                typedObj["locking_read"]["wait"] === null ||
+                typedObj["locking_read"]["wait"] === "nowait" ||
+                typedObj["locking_read"]["wait"] === "skip_locked"))
+    )
+}
+
+export function isInsert_Replace(obj: unknown): obj is Insert_Replace {
+    const typedObj = obj as Insert_Replace
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["type"] === "replace" ||
+            typedObj["type"] === "insert") &&
+        (isBaseFrom(typedObj["table"]) as boolean ||
+            isJoin(typedObj["table"]) as boolean ||
+            isTableExpr(typedObj["table"]) as boolean ||
+            isDual(typedObj["table"]) as boolean ||
+            Array.isArray(typedObj["table"]) &&
+            typedObj["table"].every((e: any) =>
+                isFrom(e) as boolean
+            )) &&
+        (typedObj["columns"] === null ||
+            Array.isArray(typedObj["columns"]) &&
+            typedObj["columns"].every((e: any) =>
+                typeof e === "string"
+            )) &&
+        (isSelect(typedObj["values"]) as boolean ||
+            (typedObj["values"] !== null &&
+                typeof typedObj["values"] === "object" ||
+                typeof typedObj["values"] === "function") &&
+            typedObj["values"]["type"] === "values" &&
+            Array.isArray(typedObj["values"]["values"]) &&
+            typedObj["values"]["values"].every((e: any) =>
+                isInsertReplaceValue(e) as boolean
+            )) &&
+        (typeof typedObj["set"] === "undefined" ||
+            Array.isArray(typedObj["set"]) &&
+            typedObj["set"].every((e: any) =>
+                isSetList(e) as boolean
+            )) &&
+        (typedObj["partition"] === null ||
+            Array.isArray(typedObj["partition"]) &&
+            typedObj["partition"].every((e: any) =>
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (e["type"] === "string" ||
+                    e["type"] === "boolean" ||
+                    e["type"] === "backticks_quote_string" ||
+                    e["type"] === "regex_string" ||
+                    e["type"] === "hex_string" ||
+                    e["type"] === "full_hex_string" ||
+                    e["type"] === "natural_string" ||
+                    e["type"] === "bit_string" ||
+                    e["type"] === "double_quote_string" ||
+                    e["type"] === "single_quote_string" ||
+                    e["type"] === "bool" ||
+                    e["type"] === "null" ||
+                    e["type"] === "star" ||
+                    e["type"] === "param" ||
+                    e["type"] === "origin" ||
+                    e["type"] === "date" ||
+                    e["type"] === "datetime" ||
+                    e["type"] === "default" ||
+                    e["type"] === "time" ||
+                    e["type"] === "timestamp" ||
+                    e["type"] === "var_string") &&
+                typeof e["value"] === "string"
+            )) &&
+        typeof typedObj["prefix"] === "string" &&
+        (typeof typedObj["on_duplicate_update"] === "undefined" ||
+            typedObj["on_duplicate_update"] === null ||
+            (typedObj["on_duplicate_update"] !== null &&
+                typeof typedObj["on_duplicate_update"] === "object" ||
+                typeof typedObj["on_duplicate_update"] === "function") &&
+            typedObj["on_duplicate_update"]["keyword"] === "on duplicate key update" &&
+            Array.isArray(typedObj["on_duplicate_update"]["set"]) &&
+            typedObj["on_duplicate_update"]["set"].every((e: any) =>
+                isSetList(e) as boolean
+            )) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number") &&
+        (typeof typedObj["returning"] === "undefined" ||
+            isReturning(typedObj["returning"]) as boolean)
+    )
+}
+
+export function isReturning(obj: unknown): obj is Returning {
+    const typedObj = obj as Returning
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "returning" &&
+        (isColumnRefItem(typedObj["columns"]) as boolean ||
+            isColumnRefExpr(typedObj["columns"]) as boolean ||
+            isSelect(typedObj["columns"]) as boolean)
+    )
+}
+
+export function isUpdate(obj: unknown): obj is Update {
+    const typedObj = obj as Update
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["with"] === null ||
+            Array.isArray(typedObj["with"]) &&
+            typedObj["with"].every((e: any) =>
+                isWith(e) as boolean
+            )) &&
+        typedObj["type"] === "update" &&
+        (typeof typedObj["db"] === "undefined" ||
+            typedObj["db"] === null ||
+            typeof typedObj["db"] === "string") &&
+        (typedObj["table"] === null ||
+            Array.isArray(typedObj["table"]) &&
+            typedObj["table"].every((e: any) =>
+                isFrom(e) as boolean
+            )) &&
+        Array.isArray(typedObj["set"]) &&
+        typedObj["set"].every((e: any) =>
+            isSetList(e) as boolean
+        ) &&
+        (typedObj["where"] === null ||
+            isFunction(typedObj["where"]) as boolean ||
+            isBinary(typedObj["where"]) as boolean) &&
+        (typedObj["orderby"] === null ||
+            Array.isArray(typedObj["orderby"]) &&
+            typedObj["orderby"].every((e: any) =>
+                isOrderBy(e) as boolean
+            )) &&
+        (typedObj["limit"] === null ||
+            isLimit(typedObj["limit"]) as boolean) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number") &&
+        (typeof typedObj["returning"] === "undefined" ||
+            isReturning(typedObj["returning"]) as boolean)
+    )
+}
+
+export function isDelete(obj: unknown): obj is Delete {
+    const typedObj = obj as Delete
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["with"] === null ||
+            Array.isArray(typedObj["with"]) &&
+            typedObj["with"].every((e: any) =>
+                isWith(e) as boolean
+            )) &&
+        typedObj["type"] === "delete" &&
+        (typedObj["table"] === null ||
+            Array.isArray(typedObj["table"]) &&
+            typedObj["table"].every((e: any) =>
+            (isBaseFrom(e) as boolean &&
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (typeof e["addition"] === "undefined" ||
+                    e["addition"] === false ||
+                    e["addition"] === true) ||
+                isJoin(e) as boolean &&
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (typeof e["addition"] === "undefined" ||
+                    e["addition"] === false ||
+                    e["addition"] === true) ||
+                isTableExpr(e) as boolean &&
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (typeof e["addition"] === "undefined" ||
+                    e["addition"] === false ||
+                    e["addition"] === true) ||
+                isDual(e) as boolean &&
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (typeof e["addition"] === "undefined" ||
+                    e["addition"] === false ||
+                    e["addition"] === true))
+            )) &&
+        Array.isArray(typedObj["from"]) &&
+        typedObj["from"].every((e: any) =>
+            isFrom(e) as boolean
+        ) &&
+        (typedObj["where"] === null ||
+            isFunction(typedObj["where"]) as boolean ||
+            isBinary(typedObj["where"]) as boolean) &&
+        (typedObj["orderby"] === null ||
+            Array.isArray(typedObj["orderby"]) &&
+            typedObj["orderby"].every((e: any) =>
+                isOrderBy(e) as boolean
+            )) &&
+        (typedObj["limit"] === null ||
+            isLimit(typedObj["limit"]) as boolean) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number") &&
+        (typeof typedObj["returning"] === "undefined" ||
+            isReturning(typedObj["returning"]) as boolean)
+    )
+}
+
+export function isAlter(obj: unknown): obj is Alter {
+    const typedObj = obj as Alter
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "alter" &&
+        Array.isArray(typedObj["table"]) &&
+        typedObj["table"].every((e: any) =>
+            isFrom(e) as boolean
+        ) &&
+        isAlterExpr(typedObj["expr"]) as boolean &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isAlterExpr(obj: unknown): obj is AlterExpr {
+    const typedObj = obj as AlterExpr
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["action"] === "string" &&
+        (typeof typedObj["keyword"] === "undefined" ||
+            typeof typedObj["keyword"] === "string") &&
+        (typeof typedObj["resource"] === "undefined" ||
+            typeof typedObj["resource"] === "string") &&
+        (typeof typedObj["type"] === "undefined" ||
+            typeof typedObj["type"] === "string") &&
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        Object.entries<any>(typedObj)
+            .every(([key, value]) => ((typeof value === "undefined" ||
+                value === null ||
+                typeof value === "string" ||
+                isColumnRefItem(value) as boolean ||
+                isColumnRefExpr(value) as boolean ||
+                isCase(value) as boolean ||
+                isCast(value) as boolean ||
+                isAggrFunc(value) as boolean ||
+                isFunction(value) as boolean ||
+                isInterval(value) as boolean ||
+                isParam(value) as boolean ||
+                isValue(value) as boolean ||
+                isBinary(value) as boolean) &&
+                typeof key === "string"))
+    )
+}
+
+export function isUse(obj: unknown): obj is Use {
+    const typedObj = obj as Use
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "use" &&
+        typeof typedObj["db"] === "string" &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isKW_UNSIGNED(obj: unknown): obj is KW_UNSIGNED {
+    const typedObj = obj as KW_UNSIGNED
+    return (
+        typedObj === "UNSIGNED"
+    )
+}
+
+export function isKW_ZEROFILL(obj: unknown): obj is KW_ZEROFILL {
+    const typedObj = obj as KW_ZEROFILL
+    return (
+        typedObj === "ZEROFILL"
+    )
+}
+
+export function isTimezone(obj: unknown): obj is Timezone {
+    const typedObj = obj as Timezone
+    return (
+        Array.isArray(typedObj) &&
+        (typedObj[0] === "WITHOUT" ||
+            typedObj[0] === "WITH") &&
+        typedObj[1] === "TIME" &&
+        typedObj[2] === "ZONE"
+    )
+}
+
+export function isKeywordComment(obj: unknown): obj is KeywordComment {
+    const typedObj = obj as KeywordComment
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "comment" &&
+        typedObj["keyword"] === "comment" &&
+        (typeof typedObj["symbol"] === "undefined" ||
+            typedObj["symbol"] === "=") &&
+        typeof typedObj["value"] === "string"
+    )
+}
+
+export function isCollateExpr(obj: unknown): obj is CollateExpr {
+    const typedObj = obj as CollateExpr
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "collate" &&
+        (typeof typedObj["symbol"] === "undefined" ||
+            typedObj["symbol"] === "=") &&
+        typeof typedObj["value"] === "string"
+    )
+}
+
+export function isDataType(obj: unknown): obj is DataType {
+    const typedObj = obj as DataType
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["dataType"] === "string" &&
+        (typeof typedObj["length"] === "undefined" ||
+            typeof typedObj["length"] === "number") &&
+        (typeof typedObj["parentheses"] === "undefined" ||
+            typedObj["parentheses"] === true) &&
+        (typeof typedObj["scale"] === "undefined" ||
+            typeof typedObj["scale"] === "number") &&
+        (typeof typedObj["suffix"] === "undefined" ||
+            isTimezone(typedObj["suffix"]) as boolean ||
+            isOnUpdateCurrentTimestamp(typedObj["suffix"]) as boolean ||
+            Array.isArray(typedObj["suffix"]) &&
+            typedObj["suffix"].every((e: any) =>
+            (isKW_UNSIGNED(e) as boolean ||
+                isKW_ZEROFILL(e) as boolean)
+            )) &&
+        (typeof typedObj["array"] === "undefined" ||
+            typedObj["array"] === "one" ||
+            typedObj["array"] === "two") &&
+        (typeof typedObj["expr"] === "undefined" ||
+            isBinary(typedObj["expr"]) as boolean ||
+            isExprList(typedObj["expr"]) as boolean) &&
+        (typeof typedObj["quoted"] === "undefined" ||
+            typeof typedObj["quoted"] === "string")
+    )
+}
+
+export function isOnUpdateCurrentTimestamp(obj: unknown): obj is OnUpdateCurrentTimestamp {
+    const typedObj = obj as OnUpdateCurrentTimestamp
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "on_update_current_timestamp" &&
+        typedObj["keyword"] === "on update" &&
+        isFunction(typedObj["expr"]) as boolean
+    )
+}
+
+export function isLiteralNotNull(obj: unknown): obj is LiteralNotNull {
+    const typedObj = obj as LiteralNotNull
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "not null" &&
+        typedObj["value"] === "not null"
+    )
+}
+
+export function isLiteralNull(obj: unknown): obj is LiteralNull {
+    const typedObj = obj as LiteralNull
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "null" &&
+        (typedObj["value"] === null ||
+            typedObj["value"] === "null")
+    )
+}
+
+export function isLiteralNumeric(obj: unknown): obj is LiteralNumeric {
+    const typedObj = obj as LiteralNumeric
+    return (
+        (typeof typedObj === "number" ||
+            (typedObj !== null &&
+                typeof typedObj === "object" ||
+                typeof typedObj === "function") &&
+            typedObj["type"] === "bigint" &&
+            typeof typedObj["value"] === "string")
+    )
+}
+
+export function isColumnConstraint(obj: unknown): obj is ColumnConstraint {
+    const typedObj = obj as ColumnConstraint
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["default_val"] !== null &&
+            typeof typedObj["default_val"] === "object" ||
+            typeof typedObj["default_val"] === "function") &&
+        typedObj["default_val"]["type"] === "default" &&
+        isExpressionValue(typedObj["default_val"]["value"]) as boolean &&
+        (isLiteralNotNull(typedObj["nullable"]) as boolean ||
+            isLiteralNull(typedObj["nullable"]) as boolean)
+    )
+}
+
+export function isColumnDefinitionOptList(obj: unknown): obj is ColumnDefinitionOptList {
+    const typedObj = obj as ColumnDefinitionOptList
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["nullable"] === "undefined" ||
+            isLiteralNotNull(typedObj["nullable"]) as boolean ||
+            isLiteralNull(typedObj["nullable"]) as boolean) &&
+        (typeof typedObj["default_val"] === "undefined" ||
+            (typedObj["default_val"] !== null &&
+                typeof typedObj["default_val"] === "object" ||
+                typeof typedObj["default_val"] === "function") &&
+            typedObj["default_val"]["type"] === "default" &&
+            isExpressionValue(typedObj["default_val"]["value"]) as boolean) &&
+        (typeof typedObj["auto_increment"] === "undefined" ||
+            typedObj["auto_increment"] === "auto_increment") &&
+        (typeof typedObj["unique"] === "undefined" ||
+            typedObj["unique"] === "unique" ||
+            typedObj["unique"] === "unique key") &&
+        (typeof typedObj["primary"] === "undefined" ||
+            typedObj["primary"] === "key" ||
+            typedObj["primary"] === "primary key") &&
+        (typeof typedObj["comment"] === "undefined" ||
+            isKeywordComment(typedObj["comment"]) as boolean) &&
+        (typeof typedObj["collate"] === "undefined" ||
+            (typedObj["collate"] !== null &&
+                typeof typedObj["collate"] === "object" ||
+                typeof typedObj["collate"] === "function") &&
+            isCollateExpr(typedObj["collate"]["collate"]) as boolean) &&
+        (typeof typedObj["column_format"] === "undefined" ||
+            (typedObj["column_format"] !== null &&
+                typeof typedObj["column_format"] === "object" ||
+                typeof typedObj["column_format"] === "function") &&
+            isExpressionValue(typedObj["column_format"]["column_format"]) as boolean) &&
+        (typeof typedObj["storage"] === "undefined" ||
+            (typedObj["storage"] !== null &&
+                typeof typedObj["storage"] === "object" ||
+                typeof typedObj["storage"] === "function") &&
+            isExpressionValue(typedObj["storage"]["storage"]) as boolean) &&
+        (typeof typedObj["reference_definition"] === "undefined" ||
+            (typedObj["reference_definition"] !== null &&
+                typeof typedObj["reference_definition"] === "object" ||
+                typeof typedObj["reference_definition"] === "function") &&
+            isReferenceDefinition(typedObj["reference_definition"]["reference_definition"]) as boolean) &&
+        (typeof typedObj["character_set"] === "undefined" ||
+            (typedObj["character_set"] !== null &&
+                typeof typedObj["character_set"] === "object" ||
+                typeof typedObj["character_set"] === "function") &&
+            typedObj["character_set"]["type"] === "CHARACTER SET" &&
+            typeof typedObj["character_set"]["value"] === "string" &&
+            (typeof typedObj["character_set"]["symbol"] === "undefined" ||
+                typedObj["character_set"]["symbol"] === "=")) &&
+        (typeof typedObj["check"] === "undefined" ||
+            (typedObj["check"] !== null &&
+                typeof typedObj["check"] === "object" ||
+                typeof typedObj["check"] === "function") &&
+            typedObj["check"]["type"] === "check" &&
+            isBinary(typedObj["check"]["expr"]) as boolean) &&
+        (typeof typedObj["generated"] === "undefined" ||
+            (typedObj["generated"] !== null &&
+                typeof typedObj["generated"] === "object" ||
+                typeof typedObj["generated"] === "function") &&
+            typedObj["generated"]["type"] === "generated" &&
+            isExpressionValue(typedObj["generated"]["expr"]) as boolean &&
+            (typeof typedObj["generated"]["stored"] === "undefined" ||
+                typedObj["generated"]["stored"] === "stored" ||
+                typedObj["generated"]["stored"] === "virtual"))
+    )
+}
+
+export function isReferenceDefinition(obj: unknown): obj is ReferenceDefinition {
+    const typedObj = obj as ReferenceDefinition
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "reference_definition" &&
+        isFrom(typedObj["table"]) as boolean &&
+        Array.isArray(typedObj["columns"]) &&
+        typedObj["columns"].every((e: any) =>
+            isColumnRef(e) as boolean
+        ) &&
+        (typeof typedObj["on_action"] === "undefined" ||
+            Array.isArray(typedObj["on_action"]) &&
+            typedObj["on_action"].every((e: any) =>
+                isOnReference(e) as boolean
+            ))
+    )
+}
+
+export function isOnReference(obj: unknown): obj is OnReference {
+    const typedObj = obj as OnReference
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "on_reference" &&
+        (typedObj["keyword"] === "on update" ||
+            typedObj["keyword"] === "on delete") &&
+        (typedObj["value"] === "restrict" ||
+            typedObj["value"] === "cascade" ||
+            typedObj["value"] === "set null" ||
+            typedObj["value"] === "no action" ||
+            typedObj["value"] === "set default")
+    )
+}
+
+export function isCreateColumnDefinition(obj: unknown): obj is CreateColumnDefinition {
+    const typedObj = obj as CreateColumnDefinition
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        isColumnRef(typedObj["column"]) as boolean &&
+        isDataType(typedObj["definition"]) as boolean &&
+        typedObj["resource"] === "column" &&
+        isColumnDefinitionOptList(typedObj) as boolean
+    )
+}
+
+export function isIndexType(obj: unknown): obj is IndexType {
+    const typedObj = obj as IndexType
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["keyword"] === "using" &&
+        (typedObj["type"] === "btree" ||
+            typedObj["type"] === "hash" ||
+            typedObj["type"] === "gist" ||
+            typedObj["type"] === "gin")
+    )
+}
+
+export function isIndexOption(obj: unknown): obj is IndexOption {
+    const typedObj = obj as IndexOption
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "key_block_size" &&
+        (typeof typedObj["symbol"] === "undefined" ||
+            typedObj["symbol"] === "=") &&
+        isLiteralNumeric(typedObj["expr"]) as boolean
+    )
+}
+
+export function isCreateIndexDefinition(obj: unknown): obj is CreateIndexDefinition {
+    const typedObj = obj as CreateIndexDefinition
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["index"] === "undefined" ||
+            typeof typedObj["index"] === "string") &&
+        Array.isArray(typedObj["definition"]) &&
+        typedObj["definition"].every((e: any) =>
+            isColumnRef(e) as boolean
+        ) &&
+        (typedObj["keyword"] === "key" ||
+            typedObj["keyword"] === "index") &&
+        (typeof typedObj["index_type"] === "undefined" ||
+            isIndexType(typedObj["index_type"]) as boolean) &&
+        typedObj["resource"] === "index" &&
+        (typeof typedObj["index_options"] === "undefined" ||
+            Array.isArray(typedObj["index_options"]) &&
+            typedObj["index_options"].every((e: any) =>
+                isIndexOption(e) as boolean
+            ))
+    )
+}
+
+export function isCreateFulltextSpatialIndexDefinition(obj: unknown): obj is CreateFulltextSpatialIndexDefinition {
+    const typedObj = obj as CreateFulltextSpatialIndexDefinition
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["index"] === "undefined" ||
+            typeof typedObj["index"] === "string") &&
+        Array.isArray(typedObj["definition"]) &&
+        typedObj["definition"].every((e: any) =>
+            isColumnRef(e) as boolean
+        ) &&
+        (typeof typedObj["keyword"] === "undefined" ||
+            typedObj["keyword"] === "fulltext" ||
+            typedObj["keyword"] === "spatial" ||
+            typedObj["keyword"] === "fulltext key" ||
+            typedObj["keyword"] === "spatial key" ||
+            typedObj["keyword"] === "fulltext index" ||
+            typedObj["keyword"] === "spatial index") &&
+        (typeof typedObj["index_options"] === "undefined" ||
+            Array.isArray(typedObj["index_options"]) &&
+            typedObj["index_options"].every((e: any) =>
+                isIndexOption(e) as boolean
+            )) &&
+        typedObj["resource"] === "index"
+    )
+}
+
+export function isConstraintName(obj: unknown): obj is ConstraintName {
+    const typedObj = obj as ConstraintName
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["keyword"] === "constraint" &&
+        typeof typedObj["constraint"] === "string"
+    )
+}
+
+export function isCreateConstraintPrimary(obj: unknown): obj is CreateConstraintPrimary {
+    const typedObj = obj as CreateConstraintPrimary
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["constraint"] === "undefined" ||
+            typeof typedObj["constraint"] === "string") &&
+        Array.isArray(typedObj["definition"]) &&
+        typedObj["definition"].every((e: any) =>
+            isColumnRef(e) as boolean
+        ) &&
+        typedObj["constraint_type"] === "primary key" &&
+        (typeof typedObj["keyword"] === "undefined" ||
+            typedObj["keyword"] === "constraint") &&
+        (typeof typedObj["index_type"] === "undefined" ||
+            isIndexType(typedObj["index_type"]) as boolean) &&
+        typedObj["resource"] === "constraint" &&
+        (typeof typedObj["index_options"] === "undefined" ||
+            Array.isArray(typedObj["index_options"]) &&
+            typedObj["index_options"].every((e: any) =>
+                isIndexOption(e) as boolean
+            ))
+    )
+}
+
+export function isCreateConstraintUnique(obj: unknown): obj is CreateConstraintUnique {
+    const typedObj = obj as CreateConstraintUnique
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["constraint"] === "undefined" ||
+            typeof typedObj["constraint"] === "string") &&
+        Array.isArray(typedObj["definition"]) &&
+        typedObj["definition"].every((e: any) =>
+            isColumnRef(e) as boolean
+        ) &&
+        (typedObj["constraint_type"] === "unique" ||
+            typedObj["constraint_type"] === "unique key" ||
+            typedObj["constraint_type"] === "unique index") &&
+        (typeof typedObj["keyword"] === "undefined" ||
+            typedObj["keyword"] === "constraint") &&
+        (typeof typedObj["index_type"] === "undefined" ||
+            isIndexType(typedObj["index_type"]) as boolean) &&
+        (typeof typedObj["index"] === "undefined" ||
+            typeof typedObj["index"] === "string") &&
+        typedObj["resource"] === "constraint" &&
+        (typeof typedObj["index_options"] === "undefined" ||
+            Array.isArray(typedObj["index_options"]) &&
+            typedObj["index_options"].every((e: any) =>
+                isIndexOption(e) as boolean
+            ))
+    )
+}
+
+export function isCreateConstraintForeign(obj: unknown): obj is CreateConstraintForeign {
+    const typedObj = obj as CreateConstraintForeign
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["constraint"] === "undefined" ||
+            typeof typedObj["constraint"] === "string") &&
+        Array.isArray(typedObj["definition"]) &&
+        typedObj["definition"].every((e: any) =>
+            isColumnRef(e) as boolean
+        ) &&
+        typedObj["constraint_type"] === "foreign key" &&
+        (typeof typedObj["keyword"] === "undefined" ||
+            typedObj["keyword"] === "constraint") &&
+        (typeof typedObj["index"] === "undefined" ||
+            typeof typedObj["index"] === "string") &&
+        typedObj["resource"] === "constraint" &&
+        (typeof typedObj["reference_definition"] === "undefined" ||
+            isReferenceDefinition(typedObj["reference_definition"]) as boolean)
+    )
+}
+
+export function isCreateConstraintCheck(obj: unknown): obj is CreateConstraintCheck {
+    const typedObj = obj as CreateConstraintCheck
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["constraint"] === "undefined" ||
+            typeof typedObj["constraint"] === "string") &&
+        Array.isArray(typedObj["definition"]) &&
+        typedObj["definition"].every((e: any) =>
+            isBinary(e) as boolean
+        ) &&
+        typedObj["constraint_type"] === "check" &&
+        (typeof typedObj["keyword"] === "undefined" ||
+            typedObj["keyword"] === "constraint") &&
+        typedObj["resource"] === "constraint"
+    )
+}
+
+export function isCreateConstraintDefinition(obj: unknown): obj is CreateConstraintDefinition {
+    const typedObj = obj as CreateConstraintDefinition
+    return (
+        (isCreateConstraintPrimary(typedObj) as boolean ||
+            isCreateConstraintUnique(typedObj) as boolean ||
+            isCreateConstraintForeign(typedObj) as boolean ||
+            isCreateConstraintCheck(typedObj) as boolean)
+    )
+}
+
+export function isCreateDefinition(obj: unknown): obj is CreateDefinition {
+    const typedObj = obj as CreateDefinition
+    return (
+        (isCreateColumnDefinition(typedObj) as boolean ||
+            isCreateIndexDefinition(typedObj) as boolean ||
+            isCreateFulltextSpatialIndexDefinition(typedObj) as boolean ||
+            isCreateConstraintPrimary(typedObj) as boolean ||
+            isCreateConstraintUnique(typedObj) as boolean ||
+            isCreateConstraintForeign(typedObj) as boolean ||
+            isCreateConstraintCheck(typedObj) as boolean)
+    )
+}
+
+export function isCreate(obj: unknown): obj is Create {
+    const typedObj = obj as Create
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "create" &&
+        (typedObj["keyword"] === "function" ||
+            typedObj["keyword"] === "table" ||
+            typedObj["keyword"] === "index" ||
+            typedObj["keyword"] === "aggregate" ||
+            typedObj["keyword"] === "trigger" ||
+            typedObj["keyword"] === "extension" ||
+            typedObj["keyword"] === "database" ||
+            typedObj["keyword"] === "schema" ||
+            typedObj["keyword"] === "view" ||
+            typedObj["keyword"] === "domain" ||
+            typedObj["keyword"] === "type" ||
+            typedObj["keyword"] === "user") &&
+        (typeof typedObj["temporary"] === "undefined" ||
+            typedObj["temporary"] === null ||
+            typedObj["temporary"] === "temporary") &&
+        (typeof typedObj["table"] === "undefined" ||
+            Array.isArray(typedObj["table"]) &&
+            typedObj["table"].every((e: any) =>
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                typeof e["db"] === "string" &&
+                typeof e["table"] === "string"
+            ) ||
+            (typedObj["table"] !== null &&
+                typeof typedObj["table"] === "object" ||
+                typeof typedObj["table"] === "function") &&
+            (typedObj["table"]["db"] === null ||
+                typeof typedObj["table"]["db"] === "string") &&
+            typeof typedObj["table"]["table"] === "string") &&
+        (typeof typedObj["if_not_exists"] === "undefined" ||
+            typedObj["if_not_exists"] === null ||
+            typedObj["if_not_exists"] === "if not exists") &&
+        (typeof typedObj["like"] === "undefined" ||
+            typedObj["like"] === null ||
+            (typedObj["like"] !== null &&
+                typeof typedObj["like"] === "object" ||
+                typeof typedObj["like"] === "function") &&
+            typedObj["like"]["type"] === "like" &&
+            typeof typedObj["like"]["table"] === "string" &&
+            (typeof typedObj["like"]["parentheses"] === "undefined" ||
+                typedObj["like"]["parentheses"] === false ||
+                typedObj["like"]["parentheses"] === true)) &&
+        (typeof typedObj["ignore_replace"] === "undefined" ||
+            typedObj["ignore_replace"] === null ||
+            typedObj["ignore_replace"] === "replace" ||
+            typedObj["ignore_replace"] === "ignore") &&
+        (typeof typedObj["as"] === "undefined" ||
+            typedObj["as"] === null ||
+            typeof typedObj["as"] === "string") &&
+        (typeof typedObj["query_expr"] === "undefined" ||
+            typedObj["query_expr"] === null ||
+            isSelect(typedObj["query_expr"]) as boolean) &&
+        (typeof typedObj["create_definitions"] === "undefined" ||
+            typedObj["create_definitions"] === null ||
+            Array.isArray(typedObj["create_definitions"]) &&
+            typedObj["create_definitions"].every((e: any) =>
+                isCreateDefinition(e) as boolean
+            )) &&
+        (typeof typedObj["table_options"] === "undefined" ||
+            typedObj["table_options"] === null ||
+            Array.isArray(typedObj["table_options"]) &&
+            typedObj["table_options"].every((e: any) =>
+                isTableOption(e) as boolean
+            )) &&
+        (typeof typedObj["index_using"] === "undefined" ||
+            typedObj["index_using"] === null ||
+            (typedObj["index_using"] !== null &&
+                typeof typedObj["index_using"] === "object" ||
+                typeof typedObj["index_using"] === "function") &&
+            typedObj["index_using"]["keyword"] === "using" &&
+            (typedObj["index_using"]["type"] === "btree" ||
+                typedObj["index_using"]["type"] === "hash")) &&
+        (typeof typedObj["index"] === "undefined" ||
+            typedObj["index"] === null ||
+            typeof typedObj["index"] === "string" ||
+            (typedObj["index"] !== null &&
+                typeof typedObj["index"] === "object" ||
+                typeof typedObj["index"] === "function") &&
+            (typedObj["index"]["schema"] === null ||
+                typeof typedObj["index"]["schema"] === "string") &&
+            typeof typedObj["index"]["name"] === "string") &&
+        (typeof typedObj["on_kw"] === "undefined" ||
+            typedObj["on_kw"] === null ||
+            typedObj["on_kw"] === "on") &&
+        (typeof typedObj["index_columns"] === "undefined" ||
+            typedObj["index_columns"] === null ||
+            Array.isArray(typedObj["index_columns"]) &&
+            typedObj["index_columns"].every((e: any) =>
+                isColumnRefItem(e) as boolean
+            )) &&
+        (typeof typedObj["index_type"] === "undefined" ||
+            typedObj["index_type"] === null ||
+            typedObj["index_type"] === "unique" ||
+            typedObj["index_type"] === "fulltext" ||
+            typedObj["index_type"] === "spatial") &&
+        (typeof typedObj["index_options"] === "undefined" ||
+            typedObj["index_options"] === null ||
+            Array.isArray(typedObj["index_options"]) &&
+            typedObj["index_options"].every((e: any) =>
+                isIndexOption(e) as boolean
+            )) &&
+        (typeof typedObj["algorithm_option"] === "undefined" ||
+            typedObj["algorithm_option"] === null ||
+            (typedObj["algorithm_option"] !== null &&
+                typeof typedObj["algorithm_option"] === "object" ||
+                typeof typedObj["algorithm_option"] === "function") &&
+            typedObj["algorithm_option"]["type"] === "alter" &&
+            typedObj["algorithm_option"]["keyword"] === "algorithm" &&
+            typedObj["algorithm_option"]["resource"] === "algorithm" &&
+            (typedObj["algorithm_option"]["symbol"] === null ||
+                typedObj["algorithm_option"]["symbol"] === "=") &&
+            (typedObj["algorithm_option"]["algorithm"] === "default" ||
+                typedObj["algorithm_option"]["algorithm"] === "instant" ||
+                typedObj["algorithm_option"]["algorithm"] === "inplace" ||
+                typedObj["algorithm_option"]["algorithm"] === "copy")) &&
+        (typeof typedObj["lock_option"] === "undefined" ||
+            typedObj["lock_option"] === null ||
+            (typedObj["lock_option"] !== null &&
+                typeof typedObj["lock_option"] === "object" ||
+                typeof typedObj["lock_option"] === "function") &&
+            typedObj["lock_option"]["type"] === "alter" &&
+            typedObj["lock_option"]["keyword"] === "lock" &&
+            typedObj["lock_option"]["resource"] === "lock" &&
+            (typedObj["lock_option"]["symbol"] === null ||
+                typedObj["lock_option"]["symbol"] === "=") &&
+            (typedObj["lock_option"]["lock"] === "default" ||
+                typedObj["lock_option"]["lock"] === "none" ||
+                typedObj["lock_option"]["lock"] === "shared" ||
+                typedObj["lock_option"]["lock"] === "exclusive")) &&
+        (typeof typedObj["database"] === "undefined" ||
+            typeof typedObj["database"] === "string") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number") &&
+        (typeof typedObj["where"] === "undefined" ||
+            typedObj["where"] === null ||
+            isFunction(typedObj["where"]) as boolean ||
+            isBinary(typedObj["where"]) as boolean) &&
+        (typeof typedObj["definer"] === "undefined" ||
+            typedObj["definer"] === null ||
+            (typedObj["definer"] !== null &&
+                typeof typedObj["definer"] === "object" ||
+                typeof typedObj["definer"] === "function") &&
+            typedObj["definer"]["type"] === "definer" &&
+            typeof typedObj["definer"]["user"] === "string" &&
+            typeof typedObj["definer"]["host"] === "string") &&
+        (typeof typedObj["for_each"] === "undefined" ||
+            typedObj["for_each"] === null ||
+            typedObj["for_each"] === "row" ||
+            typedObj["for_each"] === "statement") &&
+        (typeof typedObj["events"] === "undefined" ||
+            typedObj["events"] === null ||
+            Array.isArray(typedObj["events"]) &&
+            typedObj["events"].every((e: any) =>
+                isTriggerEvent(e) as boolean
+            )) &&
+        (typeof typedObj["order"] === "undefined" ||
+            typedObj["order"] === null ||
+            (typedObj["order"] !== null &&
+                typeof typedObj["order"] === "object" ||
+                typeof typedObj["order"] === "function") &&
+            (typedObj["order"]["type"] === "follows" ||
+                typedObj["order"]["type"] === "precedes") &&
+            typeof typedObj["order"]["trigger"] === "string") &&
+        (typeof typedObj["execute"] === "undefined" ||
+            typedObj["execute"] === null ||
+            Array.isArray(typedObj["execute"]) &&
+            typedObj["execute"].every((e: any) =>
+                isSetList(e) as boolean
+            )) &&
+        (typeof typedObj["replace"] === "undefined" ||
+            typedObj["replace"] === false ||
+            typedObj["replace"] === true) &&
+        (typeof typedObj["algorithm"] === "undefined" ||
+            typedObj["algorithm"] === null ||
+            typedObj["algorithm"] === "undefined" ||
+            typedObj["algorithm"] === "merge" ||
+            typedObj["algorithm"] === "temptable") &&
+        (typeof typedObj["sql_security"] === "undefined" ||
+            typedObj["sql_security"] === null ||
+            typedObj["sql_security"] === "definer" ||
+            typedObj["sql_security"] === "invoker") &&
+        (typeof typedObj["select"] === "undefined" ||
+            typedObj["select"] === null ||
+            isSelect(typedObj["select"]) as boolean) &&
+        (typeof typedObj["view"] === "undefined" ||
+            typedObj["view"] === null ||
+            isBaseFrom(typedObj["view"]) as boolean ||
+            isJoin(typedObj["view"]) as boolean ||
+            isTableExpr(typedObj["view"]) as boolean ||
+            isDual(typedObj["view"]) as boolean) &&
+        (typeof typedObj["with"] === "undefined" ||
+            typedObj["with"] === null ||
+            typedObj["with"] === "cascaded" ||
+            typedObj["with"] === "local") &&
+        (typeof typedObj["user"] === "undefined" ||
+            typedObj["user"] === null ||
+            Array.isArray(typedObj["user"]) &&
+            typedObj["user"].every((e: any) =>
+                isUserAuthOption(e) as boolean
+            )) &&
+        (typeof typedObj["default_role"] === "undefined" ||
+            typedObj["default_role"] === null ||
+            Array.isArray(typedObj["default_role"]) &&
+            typedObj["default_role"].every((e: any) =>
+                typeof e === "string"
+            )) &&
+        (typeof typedObj["require"] === "undefined" ||
+            typedObj["require"] === null ||
+            isRequireOption(typedObj["require"]) as boolean) &&
+        (typeof typedObj["resource_options"] === "undefined" ||
+            typedObj["resource_options"] === null ||
+            Array.isArray(typedObj["resource_options"]) &&
+            typedObj["resource_options"].every((e: any) =>
+                isResourceOption(e) as boolean
+            )) &&
+        (typeof typedObj["password_options"] === "undefined" ||
+            typedObj["password_options"] === null ||
+            Array.isArray(typedObj["password_options"]) &&
+            typedObj["password_options"].every((e: any) =>
+                isPasswordOption(e) as boolean
+            )) &&
+        (typeof typedObj["lock_option_user"] === "undefined" ||
+            typedObj["lock_option_user"] === null ||
+            typedObj["lock_option_user"] === "account lock" ||
+            typedObj["lock_option_user"] === "account unlock") &&
+        (typeof typedObj["comment_user"] === "undefined" ||
+            typedObj["comment_user"] === null ||
+            typeof typedObj["comment_user"] === "string") &&
+        (typeof typedObj["attribute"] === "undefined" ||
+            typedObj["attribute"] === null ||
+            typeof typedObj["attribute"] === "string")
+    )
+}
+
+export function isTriggerEvent(obj: unknown): obj is TriggerEvent {
+    const typedObj = obj as TriggerEvent
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["keyword"] === "insert" ||
+            typedObj["keyword"] === "update" ||
+            typedObj["keyword"] === "delete") &&
+        (typeof typedObj["args"] === "undefined" ||
+            Array.isArray(typedObj["args"]) &&
+            typedObj["args"].every((e: any) =>
+                isColumnRef(e) as boolean
+            ))
+    )
+}
+
+export function isUserAuthOption(obj: unknown): obj is UserAuthOption {
+    const typedObj = obj as UserAuthOption
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["user"] === "string" &&
+        (typeof typedObj["auth_option"] === "undefined" ||
+            (typedObj["auth_option"] !== null &&
+                typeof typedObj["auth_option"] === "object" ||
+                typeof typedObj["auth_option"] === "function") &&
+            (typedObj["auth_option"]["type"] === "identified_by" ||
+                typedObj["auth_option"]["type"] === "identified_with") &&
+            typeof typedObj["auth_option"]["value"] === "string")
+    )
+}
+
+export function isRequireOption(obj: unknown): obj is RequireOption {
+    const typedObj = obj as RequireOption
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "require" &&
+        (typedObj["value"] === "none" ||
+            typedObj["value"] === "ssl" ||
+            typedObj["value"] === "x509" ||
+            Array.isArray(typedObj["value"]) &&
+            typedObj["value"].every((e: any) =>
+                isRequireOptionDetail(e) as boolean
+            ))
+    )
+}
+
+export function isRequireOptionDetail(obj: unknown): obj is RequireOptionDetail {
+    const typedObj = obj as RequireOptionDetail
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["type"] === "issuer" ||
+            typedObj["type"] === "subject" ||
+            typedObj["type"] === "cipher") &&
+        typeof typedObj["value"] === "string"
+    )
+}
+
+export function isResourceOption(obj: unknown): obj is ResourceOption {
+    const typedObj = obj as ResourceOption
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["type"] === "max_queries_per_hour" ||
+            typedObj["type"] === "max_updates_per_hour" ||
+            typedObj["type"] === "max_connections_per_hour" ||
+            typedObj["type"] === "max_user_connections") &&
+        typeof typedObj["value"] === "number"
+    )
+}
+
+export function isPasswordOption(obj: unknown): obj is PasswordOption {
+    const typedObj = obj as PasswordOption
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["type"] === "password_expire" ||
+            typedObj["type"] === "password_history" ||
+            typedObj["type"] === "password_reuse_interval" ||
+            typedObj["type"] === "password_require_current") &&
+        (typedObj["value"] === null ||
+            typeof typedObj["value"] === "string" ||
+            typeof typedObj["value"] === "number")
+    )
+}
+
+export function isTableOption(obj: unknown): obj is TableOption {
+    const typedObj = obj as TableOption
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["keyword"] === "string" &&
+        (typeof typedObj["symbol"] === "undefined" ||
+            typedObj["symbol"] === "=") &&
+        (typeof typedObj["value"] === "string" ||
+            typeof typedObj["value"] === "number" ||
+            isColumnRefItem(typedObj["value"]) as boolean ||
+            isColumnRefExpr(typedObj["value"]) as boolean ||
+            isCase(typedObj["value"]) as boolean ||
+            isCast(typedObj["value"]) as boolean ||
+            isAggrFunc(typedObj["value"]) as boolean ||
+            isFunction(typedObj["value"]) as boolean ||
+            isInterval(typedObj["value"]) as boolean ||
+            isParam(typedObj["value"]) as boolean ||
+            isValue(typedObj["value"]) as boolean ||
+            isBinary(typedObj["value"]) as boolean)
+    )
+}
+
+export function isDrop(obj: unknown): obj is Drop {
+    const typedObj = obj as Drop
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "drop" &&
+        typeof typedObj["keyword"] === "string" &&
+        Array.isArray(typedObj["name"]) &&
+        typedObj["name"].every((e: any) =>
+            isFrom(e) as boolean
+        ) &&
+        (typeof typedObj["prefix"] === "undefined" ||
+            typedObj["prefix"] === null ||
+            typedObj["prefix"] === "if exists") &&
+        (typeof typedObj["options"] === "undefined" ||
+            typedObj["options"] === null ||
+            typedObj["options"] === "restrict" ||
+            typedObj["options"] === "cascade") &&
+        (typeof typedObj["table"] === "undefined" ||
+            typedObj["table"] === null ||
+            isBaseFrom(typedObj["table"]) as boolean ||
+            isJoin(typedObj["table"]) as boolean ||
+            isTableExpr(typedObj["table"]) as boolean ||
+            isDual(typedObj["table"]) as boolean)
+    )
+}
+
+export function isShow(obj: unknown): obj is Show {
+    const typedObj = obj as Show
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "show" &&
+        typeof typedObj["keyword"] === "string" &&
+        (typeof typedObj["suffix"] === "undefined" ||
+            typeof typedObj["suffix"] === "string") &&
+        (typeof typedObj["from"] === "undefined" ||
+            isBaseFrom(typedObj["from"]) as boolean ||
+            isJoin(typedObj["from"]) as boolean ||
+            isTableExpr(typedObj["from"]) as boolean ||
+            isDual(typedObj["from"]) as boolean) &&
+        (typeof typedObj["where"] === "undefined" ||
+            typedObj["where"] === null ||
+            isFunction(typedObj["where"]) as boolean ||
+            isBinary(typedObj["where"]) as boolean) &&
+        (typeof typedObj["like"] === "undefined" ||
+            typedObj["like"] === null ||
+            (typedObj["like"] !== null &&
+                typeof typedObj["like"] === "object" ||
+                typeof typedObj["like"] === "function") &&
+            typedObj["like"]["type"] === "like" &&
+            typeof typedObj["like"]["value"] === "string") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isExplain(obj: unknown): obj is Explain {
+    const typedObj = obj as Explain
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "explain" &&
+        (isSelect(typedObj["statement"]) as boolean ||
+            isInsert_Replace(typedObj["statement"]) as boolean ||
+            isUpdate(typedObj["statement"]) as boolean ||
+            isDelete(typedObj["statement"]) as boolean) &&
+        (typeof typedObj["format"] === "undefined" ||
+            typeof typedObj["format"] === "string") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isCall(obj: unknown): obj is Call {
+    const typedObj = obj as Call
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "call" &&
+        isFunction(typedObj["expr"]) as boolean &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isSet(obj: unknown): obj is Set {
+    const typedObj = obj as Set
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "set" &&
+        (typeof typedObj["keyword"] === "undefined" ||
+            typeof typedObj["keyword"] === "string") &&
+        Array.isArray(typedObj["expr"]) &&
+        typedObj["expr"].every((e: any) =>
+            isSetList(e) as boolean
+        ) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isLock(obj: unknown): obj is Lock {
+    const typedObj = obj as Lock
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "lock" &&
+        typedObj["keyword"] === "tables" &&
+        Array.isArray(typedObj["tables"]) &&
+        typedObj["tables"].every((e: any) =>
+            isLockTable(e) as boolean
+        ) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isLockTable(obj: unknown): obj is LockTable {
+    const typedObj = obj as LockTable
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        isFrom(typedObj["table"]) as boolean &&
+        (typedObj["lock_type"] === "read" ||
+            typedObj["lock_type"] === "write" ||
+            typedObj["lock_type"] === "read local" ||
+            typedObj["lock_type"] === "low_priority write")
+    )
+}
+
+export function isUnlock(obj: unknown): obj is Unlock {
+    const typedObj = obj as Unlock
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "unlock" &&
+        typedObj["keyword"] === "tables" &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isGrant(obj: unknown): obj is Grant {
+    const typedObj = obj as Grant
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "grant" &&
+        Array.isArray(typedObj["privileges"]) &&
+        typedObj["privileges"].every((e: any) =>
+            isPrivilegeItem(e) as boolean
+        ) &&
+        (typeof typedObj["object_type"] === "undefined" ||
+            typedObj["object_type"] === null ||
+            typedObj["object_type"] === "function" ||
+            typedObj["object_type"] === "table" ||
+            typedObj["object_type"] === "procedure") &&
+        (typeof typedObj["on"] === "undefined" ||
+            typedObj["on"] === null ||
+            isPrivilegeLevel(typedObj["on"]) as boolean) &&
+        Array.isArray(typedObj["to"]) &&
+        typedObj["to"].every((e: any) =>
+            isUserOrRole(e) as boolean
+        ) &&
+        (typeof typedObj["with_grant_option"] === "undefined" ||
+            typedObj["with_grant_option"] === false ||
+            typedObj["with_grant_option"] === true) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isPrivilegeItem(obj: unknown): obj is PrivilegeItem {
+    const typedObj = obj as PrivilegeItem
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "privilege" &&
+        typeof typedObj["priv_type"] === "string" &&
+        (typeof typedObj["columns"] === "undefined" ||
+            Array.isArray(typedObj["columns"]) &&
+            typedObj["columns"].every((e: any) =>
+                isColumnRef(e) as boolean
+            ))
+    )
+}
+
+export function isPrivilegeLevel(obj: unknown): obj is PrivilegeLevel {
+    const typedObj = obj as PrivilegeLevel
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "priv_level" &&
+        (typeof typedObj["db"] === "undefined" ||
+            typeof typedObj["db"] === "string") &&
+        (typeof typedObj["table"] === "undefined" ||
+            typeof typedObj["table"] === "string")
+    )
+}
+
+export function isUserOrRole(obj: unknown): obj is UserOrRole {
+    const typedObj = obj as UserOrRole
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "user" &&
+        typeof typedObj["user"] === "string" &&
+        (typeof typedObj["host"] === "undefined" ||
+            typeof typedObj["host"] === "string")
+    )
+}
+
+export function isLoadData(obj: unknown): obj is LoadData {
+    const typedObj = obj as LoadData
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "load_data" &&
+        (typeof typedObj["local"] === "undefined" ||
+            typedObj["local"] === null ||
+            typedObj["local"] === "local") &&
+        typeof typedObj["infile"] === "string" &&
+        (typeof typedObj["replace_ignore"] === "undefined" ||
+            typedObj["replace_ignore"] === null ||
+            typedObj["replace_ignore"] === "replace" ||
+            typedObj["replace_ignore"] === "ignore") &&
+        isFrom(typedObj["into_table"]) as boolean &&
+        (typeof typedObj["partition"] === "undefined" ||
+            Array.isArray(typedObj["partition"]) &&
+            typedObj["partition"].every((e: any) =>
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (e["type"] === "string" ||
+                    e["type"] === "boolean" ||
+                    e["type"] === "backticks_quote_string" ||
+                    e["type"] === "regex_string" ||
+                    e["type"] === "hex_string" ||
+                    e["type"] === "full_hex_string" ||
+                    e["type"] === "natural_string" ||
+                    e["type"] === "bit_string" ||
+                    e["type"] === "double_quote_string" ||
+                    e["type"] === "single_quote_string" ||
+                    e["type"] === "bool" ||
+                    e["type"] === "null" ||
+                    e["type"] === "star" ||
+                    e["type"] === "param" ||
+                    e["type"] === "origin" ||
+                    e["type"] === "date" ||
+                    e["type"] === "datetime" ||
+                    e["type"] === "default" ||
+                    e["type"] === "time" ||
+                    e["type"] === "timestamp" ||
+                    e["type"] === "var_string") &&
+                typeof e["value"] === "string"
+            )) &&
+        (typeof typedObj["character_set"] === "undefined" ||
+            typeof typedObj["character_set"] === "string") &&
+        (typeof typedObj["fields"] === "undefined" ||
+            isLoadDataField(typedObj["fields"]) as boolean) &&
+        (typeof typedObj["lines"] === "undefined" ||
+            isLoadDataLine(typedObj["lines"]) as boolean) &&
+        (typeof typedObj["ignore_lines"] === "undefined" ||
+            typeof typedObj["ignore_lines"] === "number") &&
+        (typeof typedObj["columns"] === "undefined" ||
+            Array.isArray(typedObj["columns"]) &&
+            typedObj["columns"].every((e: any) =>
+                isColumnRef(e) as boolean
+            )) &&
+        (typeof typedObj["set"] === "undefined" ||
+            Array.isArray(typedObj["set"]) &&
+            typedObj["set"].every((e: any) =>
+                isSetList(e) as boolean
+            )) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isLoadDataField(obj: unknown): obj is LoadDataField {
+    const typedObj = obj as LoadDataField
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["terminated_by"] === "undefined" ||
+            typeof typedObj["terminated_by"] === "string") &&
+        (typeof typedObj["enclosed_by"] === "undefined" ||
+            (typedObj["enclosed_by"] !== null &&
+                typeof typedObj["enclosed_by"] === "object" ||
+                typeof typedObj["enclosed_by"] === "function") &&
+            typeof typedObj["enclosed_by"]["value"] === "string" &&
+            (typeof typedObj["enclosed_by"]["optionally"] === "undefined" ||
+                typedObj["enclosed_by"]["optionally"] === false ||
+                typedObj["enclosed_by"]["optionally"] === true)) &&
+        (typeof typedObj["escaped_by"] === "undefined" ||
+            typeof typedObj["escaped_by"] === "string")
+    )
+}
+
+export function isLoadDataLine(obj: unknown): obj is LoadDataLine {
+    const typedObj = obj as LoadDataLine
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typeof typedObj["starting_by"] === "undefined" ||
+            typeof typedObj["starting_by"] === "string") &&
+        (typeof typedObj["terminated_by"] === "undefined" ||
+            typeof typedObj["terminated_by"] === "string")
+    )
+}
+
+export function isTransaction(obj: unknown): obj is Transaction {
+    const typedObj = obj as Transaction
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "transaction" &&
+        (typedObj["keyword"] === "start" ||
+            typedObj["keyword"] === "begin" ||
+            typedObj["keyword"] === "commit" ||
+            typedObj["keyword"] === "rollback") &&
+        (typeof typedObj["mode"] === "undefined" ||
+            Array.isArray(typedObj["mode"]) &&
+            typedObj["mode"].every((e: any) =>
+                isTransactionMode(e) as boolean
+            )) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isTransactionMode(obj: unknown): obj is TransactionMode {
+    const typedObj = obj as TransactionMode
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "transaction_mode" &&
+        (isTransactionIsolationLevel(typedObj["value"]) as boolean ||
+            typedObj["value"] === "read write" ||
+            typedObj["value"] === "read only")
+    )
+}
+
+export function isTransactionIsolationLevel(obj: unknown): obj is TransactionIsolationLevel {
+    const typedObj = obj as TransactionIsolationLevel
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["keyword"] === "isolation level" &&
+        (typedObj["value"] === "read uncommitted" ||
+            typedObj["value"] === "read committed" ||
+            typedObj["value"] === "repeatable read" ||
+            typedObj["value"] === "serializable")
+    )
+}
+
+export function isAST(obj: unknown): obj is AST {
+    const typedObj = obj as AST
+    return (
+        (isSelect(typedObj) as boolean ||
+            isInsert_Replace(typedObj) as boolean ||
+            isUpdate(typedObj) as boolean ||
+            isDelete(typedObj) as boolean ||
+            isAlter(typedObj) as boolean ||
+            isUse(typedObj) as boolean ||
+            isCreate(typedObj) as boolean ||
+            isDrop(typedObj) as boolean ||
+            isShow(typedObj) as boolean ||
+            isExplain(typedObj) as boolean ||
+            isCall(typedObj) as boolean ||
+            isSet(typedObj) as boolean ||
+            isLock(typedObj) as boolean ||
+            isUnlock(typedObj) as boolean ||
+            isGrant(typedObj) as boolean ||
+            isLoadData(typedObj) as boolean ||
+            isTransaction(typedObj) as boolean)
+    )
+}
