@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
-import type { Select, Column, AggrFunc } from '../../types.d.ts';
+import type { Select, Column, AggrFunc } from '../../../types.d.ts';
 import { isSelect } from './types.guard.ts';
 
 const parser = new Parser();
