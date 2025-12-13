@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Select, Create, CreateColumnDefinition, CreateConstraintPrimary } from '../../types.d.ts';
-import { isSelect, isCreateColumnDefinition, isCreateConstraintPrimary } from './types.guard.js';
+import { isSelect, isCreate, isCreateColumnDefinition, isCreateConstraintPrimary } from './types.guard.js';
 
 const parser = new Parser();
 
@@ -29,7 +29,8 @@ test('ColumnRefExpr with AS alias', () => {
 
 test('CollateExpr in column definition', () => {
   const sql = 'CREATE TABLE users (name VARCHAR(50) COLLATE utf8_general_ci)';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create', 'Should be Create type');
   assert.ok(ast.create_definitions, 'Should have create_definitions');
@@ -48,7 +49,8 @@ test('CollateExpr in column definition', () => {
 
 test('KeywordComment in column definition', () => {
   const sql = "CREATE TABLE users (id INT COMMENT 'User ID')";
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create', 'Should be Create type');
   assert.ok(ast.create_definitions, 'Should have create_definitions');
@@ -67,7 +69,8 @@ test('KeywordComment in column definition', () => {
 
 test('IndexType in CREATE INDEX', () => {
   const sql = 'CREATE INDEX idx_name ON users (name) USING BTREE';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create', 'Should be Create type');
   
@@ -79,7 +82,8 @@ test('IndexType in CREATE INDEX', () => {
 
 test('IndexOption in CREATE INDEX', () => {
   const sql = 'CREATE INDEX idx_name ON users (name) KEY_BLOCK_SIZE = 8';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create', 'Should be Create type');
   
@@ -93,7 +97,8 @@ test('IndexOption in CREATE INDEX', () => {
 
 test('ConstraintName in PRIMARY KEY', () => {
   const sql = 'CREATE TABLE users (id INT, CONSTRAINT pk_users PRIMARY KEY (id))';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create', 'Should be Create type');
   assert.ok(ast.create_definitions, 'Should have create_definitions');
@@ -115,7 +120,8 @@ test('ConstraintName in PRIMARY KEY', () => {
 
 test('OnReference in FOREIGN KEY', () => {
   const sql = 'CREATE TABLE orders (user_id INT, FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE RESTRICT)';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create', 'Should be Create type');
   assert.ok(ast.create_definitions, 'Should have create_definitions');
@@ -151,7 +157,8 @@ test('OnReference in FOREIGN KEY', () => {
 
 test('LiteralNull in column definition', () => {
   const sql = 'CREATE TABLE users (name VARCHAR(50) NULL)';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create', 'Should be Create type');
   assert.ok(ast.create_definitions, 'Should have create_definitions');
@@ -167,7 +174,8 @@ test('LiteralNull in column definition', () => {
 
 test('LiteralNotNull in column definition', () => {
   const sql = 'CREATE TABLE users (name VARCHAR(50) NOT NULL)';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create', 'Should be Create type');
   assert.ok(ast.create_definitions, 'Should have create_definitions');

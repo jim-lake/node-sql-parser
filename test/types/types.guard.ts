@@ -1353,7 +1353,8 @@ export function isSelect(obj: unknown): obj is Select {
             )) &&
         (typedObj["where"] === null ||
             isFunction(typedObj["where"]) as boolean ||
-            isBinary(typedObj["where"]) as boolean) &&
+            isBinary(typedObj["where"]) as boolean ||
+            isUnary(typedObj["where"]) as boolean) &&
         (typedObj["groupby"] === null ||
             (typedObj["groupby"] !== null &&
                 typeof typedObj["groupby"] === "object" ||
@@ -1581,7 +1582,8 @@ export function isUpdate(obj: unknown): obj is Update {
         ) &&
         (typedObj["where"] === null ||
             isFunction(typedObj["where"]) as boolean ||
-            isBinary(typedObj["where"]) as boolean) &&
+            isBinary(typedObj["where"]) as boolean ||
+            isUnary(typedObj["where"]) as boolean) &&
         (typedObj["orderby"] === null ||
             Array.isArray(typedObj["orderby"]) &&
             typedObj["orderby"].every((e: any) =>
@@ -1660,7 +1662,8 @@ export function isDelete(obj: unknown): obj is Delete {
         ) &&
         (typedObj["where"] === null ||
             isFunction(typedObj["where"]) as boolean ||
-            isBinary(typedObj["where"]) as boolean) &&
+            isBinary(typedObj["where"]) as boolean ||
+            isUnary(typedObj["where"]) as boolean) &&
         (typedObj["orderby"] === null ||
             Array.isArray(typedObj["orderby"]) &&
             typedObj["orderby"].every((e: any) =>
@@ -2174,13 +2177,19 @@ export function isIndexType(obj: unknown): obj is IndexType {
 export function isIndexOption(obj: unknown): obj is IndexOption {
     const typedObj = obj as IndexOption
     return (
-        (typedObj !== null &&
+        ((typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        typedObj["type"] === "key_block_size" &&
-        (typeof typedObj["symbol"] === "undefined" ||
-            typedObj["symbol"] === "=") &&
-        isLiteralNumeric(typedObj["expr"]) as boolean
+            typedObj["type"] === "key_block_size" &&
+            (typeof typedObj["symbol"] === "undefined" ||
+                typedObj["symbol"] === "=") &&
+            isValue(typedObj["expr"]) as boolean ||
+            (typedObj !== null &&
+                typeof typedObj === "object" ||
+                typeof typedObj === "function") &&
+            typedObj["keyword"] === "using" &&
+            (typedObj["type"] === "btree" ||
+                typedObj["type"] === "hash"))
     )
 }
 

@@ -1,7 +1,7 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
-import { isBinary, isExprList } from './types.guard.ts';
+import { isSelect, isBinary, isExprList } from './types.guard.ts';
 
 const parser = new Parser();
 
@@ -50,6 +50,7 @@ describe('Binary, Unary, and ExprList Types', () => {
 
   test('Unary expression with NOT', () => {
     const ast = parser.astify("SELECT * FROM t WHERE NOT active");
+    assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
     // NOT is a unary_expr type
     assert.strictEqual(where.type, 'unary_expr');
@@ -69,6 +70,7 @@ describe('Binary, Unary, and ExprList Types', () => {
 
   test('ExprList in function arguments', () => {
     const ast = parser.astify("SELECT CONCAT(first_name, ' ', last_name) FROM users");
+    assert.ok(isSelect(ast), 'Should be Select');
     const column = ast.columns[0];
     assert.strictEqual(column.expr.type, 'function');
     const args = column.expr.args;
@@ -87,6 +89,7 @@ describe('Binary, Unary, and ExprList Types', () => {
 
   test('EXISTS is a Function type', () => {
     const ast = parser.astify("SELECT * FROM t WHERE EXISTS (SELECT 1 FROM users)");
+    assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
     // EXISTS is represented as a Function
     assert.strictEqual(where.type, 'function');

@@ -8,6 +8,7 @@ const parser = new Parser();
 describe('Subquery in SELECT Column', () => {
   test('Subquery in column returns TableColumnAst', () => {
     const ast = parser.astify("SELECT id, (SELECT name FROM users WHERE users.id = t.user_id) as user_name FROM t");
+    assert.ok(isSelect(ast), 'Should be Select');
     const subqueryCol = ast.columns[1];
     
     assert.ok(isTableColumnAst(subqueryCol.expr), 'Subquery should be TableColumnAst');
@@ -19,6 +20,7 @@ describe('Subquery in SELECT Column', () => {
 
   test('Subquery ast is Select type', () => {
     const ast = parser.astify("SELECT id, (SELECT name FROM users) as user_name FROM t");
+    assert.ok(isSelect(ast), 'Should be Select');
     const subqueryCol = ast.columns[1];
     
     assert.ok(isTableColumnAst(subqueryCol.expr), 'Subquery should be TableColumnAst');

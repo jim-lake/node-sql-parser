@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Transaction, LoadData, Create, CreateColumnDefinition } from '../../types.d.ts';
-import { isTransaction, isLoadData } from './types.guard.ts';
+import { isTransaction, isLoadData, isCreate } from './types.guard.ts';
 
 const parser = new Parser();
 
@@ -55,7 +55,8 @@ test('LoadData with LINES options', () => {
 
 test('CREATE USER with REQUIRE SSL', () => {
   const sql = "CREATE USER 'user'@'localhost' REQUIRE SSL";
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create');
   assert.strictEqual(ast.keyword, 'user');
@@ -68,7 +69,8 @@ test('CREATE USER with REQUIRE SSL', () => {
 
 test('CREATE USER with resource options', () => {
   const sql = "CREATE USER 'user'@'localhost' WITH MAX_QUERIES_PER_HOUR 100";
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create');
   assert.strictEqual(ast.keyword, 'user');
@@ -81,7 +83,8 @@ test('CREATE USER with resource options', () => {
 
 test('CREATE TABLE with ENGINE option', () => {
   const sql = "CREATE TABLE users (id INT) ENGINE=InnoDB";
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create');
   assert.strictEqual(ast.keyword, 'table');
@@ -94,7 +97,8 @@ test('CREATE TABLE with ENGINE option', () => {
 
 test('Column with GENERATED ALWAYS AS', () => {
   const sql = "CREATE TABLE users (full_name VARCHAR(100) GENERATED ALWAYS AS (CONCAT(first_name, ' ', last_name)) STORED)";
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create');
   assert.strictEqual(ast.keyword, 'table');
@@ -109,7 +113,8 @@ test('Column with GENERATED ALWAYS AS', () => {
 
 test('Column with CHARACTER SET', () => {
   const sql = "CREATE TABLE users (name VARCHAR(100) CHARACTER SET utf8mb4)";
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create');
   assert.strictEqual(ast.keyword, 'table');
@@ -124,7 +129,8 @@ test('Column with CHARACTER SET', () => {
 
 test('Column with COLUMN_FORMAT', () => {
   const sql = "CREATE TABLE users (id INT COLUMN_FORMAT FIXED)";
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create');
   assert.strictEqual(ast.keyword, 'table');
@@ -137,7 +143,8 @@ test('Column with COLUMN_FORMAT', () => {
 
 test('Column with STORAGE', () => {
   const sql = "CREATE TABLE users (id INT STORAGE DISK)";
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
+  assert.ok(isCreate(ast), 'Should be Create');
   
   assert.strictEqual(ast.type, 'create');
   assert.strictEqual(ast.keyword, 'table');

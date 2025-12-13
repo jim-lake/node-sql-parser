@@ -295,7 +295,7 @@ export interface Select {
     position: 'column' | 'from' | 'end' | null;
   };
   from: From[] | TableExpr | { expr: From[], parentheses: { length: number }, joins: From[] } | null;
-  where: Binary | Function | null;
+  where: Binary | Unary | Function | null;
   groupby: { columns: ColumnRef[] | null, modifiers: (ValueExpr<string> | null)[] } | null;
   having: Binary | null;
   orderby: OrderBy[] | null;
@@ -344,7 +344,7 @@ export interface Update {
   db?: string | null;
   table: Array<From | Dual> | null;
   set: SetList[];
-  where: Binary | Function | null;
+  where: Binary | Unary | Function | null;
   orderby: OrderBy[] | null;
   limit: Limit | null;
   loc?: LocationRange;
@@ -355,7 +355,7 @@ export interface Delete {
   type: "delete";
   table: (From & { addition?: boolean })[] | null;
   from: Array<From | Dual>;
-  where: Binary | Function | null;
+  where: Binary | Unary | Function | null;
   orderby: OrderBy[] | null;
   limit: Limit | null;
   loc?: LocationRange;
@@ -494,7 +494,10 @@ export type IndexType = {
 export type IndexOption = {
   type: "key_block_size";
   symbol?: "=";
-  expr: LiteralNumeric;
+  expr: Value;
+} | {
+  keyword: "using";
+  type: "btree" | "hash";
 };
 
 export type CreateIndexDefinition = {
