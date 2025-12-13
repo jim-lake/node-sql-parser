@@ -264,11 +264,6 @@ export type WindowSpec = {
 
 export type WindowFrameClause = Binary;
 
-export type WindowFrameBound = {
-  type: 'preceding' | 'following' | 'current_row';
-  value?: 'unbounded' | ExpressionValue;
-};
-
 export type AsWindowSpec = string | { window_specification: WindowSpec; parentheses: boolean };
 
 export type NamedWindowExpr = {
@@ -432,7 +427,6 @@ export type LiteralNotNull = {
 };
 
 export type LiteralNull = { type: "null"; value: null | "null" };
-export type LiteralNumeric = number | { type: "bigint"; value: string };
 
 export type ColumnConstraint = {
   default_val: {
@@ -668,11 +662,6 @@ export type RequireOption = {
   value: ValueExpr;
 };
 
-export type RequireOptionDetail = {
-  type: 'issuer' | 'subject' | 'cipher';
-  value: string;
-};
-
 export type ResourceOption = {
   keyword: 'with';
   value: Array<{
@@ -791,24 +780,6 @@ export interface Grant {
   loc?: LocationRange;
 }
 
-export type PrivilegeItem = {
-  type: 'privilege';
-  priv_type: string;
-  columns?: ColumnRef[];
-};
-
-export type PrivilegeLevel = {
-  type: 'priv_level';
-  db?: string;
-  table?: string;
-};
-
-export type UserOrRole = {
-  type: 'user';
-  user: string;
-  host?: string;
-};
-
 export interface LoadData {
   type: "load_data";
   mode?: string | null;
@@ -861,13 +832,6 @@ export interface Transaction {
   };
   loc?: LocationRange;
 }
-
-export type TransactionMode = ValueExpr<'read write' | 'read only'> | TransactionIsolationLevel;
-
-export type TransactionIsolationLevel = {
-  keyword: 'isolation level';
-  value: 'read uncommitted' | 'read committed' | 'repeatable read' | 'serializable';
-};
 
 export type AST =
   | Use

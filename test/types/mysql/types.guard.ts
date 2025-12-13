@@ -2,7 +2,7 @@
  * Generated type guards for "types.d.ts".
  * WARNING: Do not manually change this file.
  */
-import { With, WhilteListCheckMode, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, SortDirection, ColumnRefItem, ColumnRefExpr, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionName, Function, Column, Interval, Param, Var, Value, Binary, Unary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, WindowFrameBound, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Returning, Update, Delete, Alter, AlterExpr, Use, KW_UNSIGNED, KW_ZEROFILL, Timezone, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, LiteralNumeric, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, Create, TriggerEvent, UserAuthOption, RequireOption, RequireOptionDetail, ResourceOption, PasswordOption, TableOption, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, PrivilegeItem, PrivilegeLevel, UserOrRole, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, TransactionMode, TransactionIsolationLevel, AST } from "./types";
+import { With, WhilteListCheckMode, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, SortDirection, ColumnRefItem, ColumnRefExpr, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionName, Function, Column, Interval, Param, Var, Value, Binary, Unary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Returning, Update, Delete, Alter, AlterExpr, Use, KW_UNSIGNED, KW_ZEROFILL, Timezone, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
 
 export function isWith(obj: unknown): obj is With {
     const typedObj = obj as With
@@ -1198,34 +1198,6 @@ export function isWindowFrameClause(obj: unknown): obj is WindowFrameClause {
     )
 }
 
-export function isWindowFrameBound(obj: unknown): obj is WindowFrameBound {
-    const typedObj = obj as WindowFrameBound
-    return (
-        (typedObj !== null &&
-            typeof typedObj === "object" ||
-            typeof typedObj === "function") &&
-        (typedObj["type"] === "preceding" ||
-            typedObj["type"] === "following" ||
-            typedObj["type"] === "current_row") &&
-        (typeof typedObj["value"] === "undefined" ||
-            isTableColumnAst(typedObj["value"]) as boolean ||
-            isColumnRefItem(typedObj["value"]) as boolean ||
-            isColumnRefExpr(typedObj["value"]) as boolean ||
-            isStar(typedObj["value"]) as boolean ||
-            isCase(typedObj["value"]) as boolean ||
-            isCast(typedObj["value"]) as boolean ||
-            isAggrFunc(typedObj["value"]) as boolean ||
-            isFunction(typedObj["value"]) as boolean ||
-            isInterval(typedObj["value"]) as boolean ||
-            isParam(typedObj["value"]) as boolean ||
-            isVar(typedObj["value"]) as boolean ||
-            isValue(typedObj["value"]) as boolean ||
-            isBinary(typedObj["value"]) as boolean ||
-            isUnary(typedObj["value"]) as boolean ||
-            typedObj["value"] === "unbounded")
-    )
-}
-
 export function isAsWindowSpec(obj: unknown): obj is AsWindowSpec {
     const typedObj = obj as AsWindowSpec
     return (
@@ -1943,18 +1915,6 @@ export function isLiteralNull(obj: unknown): obj is LiteralNull {
         typedObj["type"] === "null" &&
         (typedObj["value"] === null ||
             typedObj["value"] === "null")
-    )
-}
-
-export function isLiteralNumeric(obj: unknown): obj is LiteralNumeric {
-    const typedObj = obj as LiteralNumeric
-    return (
-        (typeof typedObj === "number" ||
-            (typedObj !== null &&
-                typeof typedObj === "object" ||
-                typeof typedObj === "function") &&
-            typedObj["type"] === "bigint" &&
-            typeof typedObj["value"] === "string")
     )
 }
 
@@ -2883,19 +2843,6 @@ export function isRequireOption(obj: unknown): obj is RequireOption {
     )
 }
 
-export function isRequireOptionDetail(obj: unknown): obj is RequireOptionDetail {
-    const typedObj = obj as RequireOptionDetail
-    return (
-        (typedObj !== null &&
-            typeof typedObj === "object" ||
-            typeof typedObj === "function") &&
-        (typedObj["type"] === "issuer" ||
-            typedObj["type"] === "subject" ||
-            typedObj["type"] === "cipher") &&
-        typeof typedObj["value"] === "string"
-    )
-}
-
 export function isResourceOption(obj: unknown): obj is ResourceOption {
     const typedObj = obj as ResourceOption
     return (
@@ -3355,49 +3302,6 @@ export function isGrant(obj: unknown): obj is Grant {
     )
 }
 
-export function isPrivilegeItem(obj: unknown): obj is PrivilegeItem {
-    const typedObj = obj as PrivilegeItem
-    return (
-        (typedObj !== null &&
-            typeof typedObj === "object" ||
-            typeof typedObj === "function") &&
-        typedObj["type"] === "privilege" &&
-        typeof typedObj["priv_type"] === "string" &&
-        (typeof typedObj["columns"] === "undefined" ||
-            Array.isArray(typedObj["columns"]) &&
-            typedObj["columns"].every((e: any) =>
-                isColumnRef(e) as boolean
-            ))
-    )
-}
-
-export function isPrivilegeLevel(obj: unknown): obj is PrivilegeLevel {
-    const typedObj = obj as PrivilegeLevel
-    return (
-        (typedObj !== null &&
-            typeof typedObj === "object" ||
-            typeof typedObj === "function") &&
-        typedObj["type"] === "priv_level" &&
-        (typeof typedObj["db"] === "undefined" ||
-            typeof typedObj["db"] === "string") &&
-        (typeof typedObj["table"] === "undefined" ||
-            typeof typedObj["table"] === "string")
-    )
-}
-
-export function isUserOrRole(obj: unknown): obj is UserOrRole {
-    const typedObj = obj as UserOrRole
-    return (
-        (typedObj !== null &&
-            typeof typedObj === "object" ||
-            typeof typedObj === "function") &&
-        typedObj["type"] === "user" &&
-        typeof typedObj["user"] === "string" &&
-        (typeof typedObj["host"] === "undefined" ||
-            typeof typedObj["host"] === "string")
-    )
-}
-
 export function isLoadData(obj: unknown): obj is LoadData {
     const typedObj = obj as LoadData
     return (
@@ -3746,54 +3650,6 @@ export function isTransaction(obj: unknown): obj is Transaction {
             typeof typedObj["loc"]["end"]["line"] === "number" &&
             typeof typedObj["loc"]["end"]["column"] === "number" &&
             typeof typedObj["loc"]["end"]["offset"] === "number")
-    )
-}
-
-export function isTransactionMode(obj: unknown): obj is TransactionMode {
-    const typedObj = obj as TransactionMode
-    return (
-        ((typedObj !== null &&
-            typeof typedObj === "object" ||
-            typeof typedObj === "function") &&
-            (typedObj["type"] === "string" ||
-                typedObj["type"] === "number" ||
-                typedObj["type"] === "boolean" ||
-                typedObj["type"] === "backticks_quote_string" ||
-                typedObj["type"] === "regex_string" ||
-                typedObj["type"] === "hex_string" ||
-                typedObj["type"] === "full_hex_string" ||
-                typedObj["type"] === "natural_string" ||
-                typedObj["type"] === "bit_string" ||
-                typedObj["type"] === "double_quote_string" ||
-                typedObj["type"] === "single_quote_string" ||
-                typedObj["type"] === "bool" ||
-                typedObj["type"] === "null" ||
-                typedObj["type"] === "star" ||
-                typedObj["type"] === "param" ||
-                typedObj["type"] === "origin" ||
-                typedObj["type"] === "date" ||
-                typedObj["type"] === "datetime" ||
-                typedObj["type"] === "default" ||
-                typedObj["type"] === "time" ||
-                typedObj["type"] === "timestamp" ||
-                typedObj["type"] === "var_string") &&
-            (typedObj["value"] === "read write" ||
-                typedObj["value"] === "read only") ||
-            isTransactionIsolationLevel(typedObj) as boolean)
-    )
-}
-
-export function isTransactionIsolationLevel(obj: unknown): obj is TransactionIsolationLevel {
-    const typedObj = obj as TransactionIsolationLevel
-    return (
-        (typedObj !== null &&
-            typeof typedObj === "object" ||
-            typeof typedObj === "function") &&
-        typedObj["keyword"] === "isolation level" &&
-        (typedObj["value"] === "read uncommitted" ||
-            typedObj["value"] === "read committed" ||
-            typedObj["value"] === "repeatable read" ||
-            typedObj["value"] === "serializable")
     )
 }
 
