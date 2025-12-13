@@ -586,7 +586,7 @@ export interface Create {
     symbol: "=" | null;
     lock: "default" | "none" | "shared" | "exclusive";
   } | null;
-  database?: string;
+  database?: string | { schema: ValueExpr[] };
   loc?: LocationRange;
   where?: Binary | Function | null;
   definer?: {
@@ -680,7 +680,7 @@ export interface Show {
 
 export interface Explain {
   type: "explain";
-  statement: Select | Update | Delete | Insert_Replace;
+  expr: Select | Update | Delete | Insert_Replace;
   format?: string;
   loc?: LocationRange;
 }
@@ -718,11 +718,24 @@ export interface Unlock {
 
 export interface Grant {
   type: "grant";
-  privileges: PrivilegeItem[];
-  object_type?: 'table' | 'function' | 'procedure' | null;
-  on?: PrivilegeLevel | null;
-  to: UserOrRole[];
-  with_grant_option?: boolean;
+  keyword: "priv";
+  objects: Array<{
+    priv: ValueExpr;
+    columns: ColumnRef[] | null;
+  }>;
+  on: {
+    object_type: 'table' | 'function' | 'procedure' | null;
+    priv_level: Array<{
+      prefix: string;
+      name: string;
+    }>;
+  };
+  to_from: "TO" | "FROM";
+  user_or_roles: Array<{
+    name: ValueExpr;
+    host: string | null;
+  }>;
+  with: any | null;
   loc?: LocationRange;
 }
 
@@ -746,17 +759,18 @@ export type UserOrRole = {
 
 export interface LoadData {
   type: "load_data";
+  mode?: string | null;
   local?: 'local' | null;
-  infile: string;
+  file: ValueExpr;
   replace_ignore?: 'replace' | 'ignore' | null;
-  into_table: From;
-  partition?: ValueExpr<string>[];
-  character_set?: string;
-  fields?: LoadDataField;
-  lines?: LoadDataLine;
-  ignore_lines?: number;
-  columns?: ColumnRef[];
-  set?: SetList[];
+  table: { db: string | null; table: string };
+  partition?: ValueExpr<string>[] | null;
+  character_set?: string | null;
+  fields?: LoadDataField | null;
+  lines?: LoadDataLine | null;
+  ignore?: number | null;
+  column?: ColumnRef[] | null;
+  set?: SetList[] | null;
   loc?: LocationRange;
 }
 
@@ -773,15 +787,15 @@ export type LoadDataLine = {
 
 export interface Transaction {
   type: "transaction";
-  keyword: "start" | "begin" | "commit" | "rollback";
-  mode?: TransactionMode[];
+  expr: {
+    action: ValueExpr<"start" | "begin" | "commit" | "rollback" | "START" | "COMMIT" | "ROLLBACK">;
+    keyword?: "TRANSACTION";
+    modes?: TransactionMode[] | null;
+  };
   loc?: LocationRange;
 }
 
-export type TransactionMode = {
-  type: 'transaction_mode';
-  value: 'read write' | 'read only' | TransactionIsolationLevel;
-};
+export type TransactionMode = ValueExpr<'read write' | 'read only'> | TransactionIsolationLevel;
 
 export type TransactionIsolationLevel = {
   keyword: 'isolation level';

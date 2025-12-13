@@ -2300,7 +2300,41 @@ export function isCreate(obj: unknown): obj is Create {
                 typedObj["lock_option"]["lock"] === "shared" ||
                 typedObj["lock_option"]["lock"] === "exclusive")) &&
         (typeof typedObj["database"] === "undefined" ||
-            typeof typedObj["database"] === "string") &&
+            typeof typedObj["database"] === "string" ||
+            (typedObj["database"] !== null &&
+                typeof typedObj["database"] === "object" ||
+                typeof typedObj["database"] === "function") &&
+            Array.isArray(typedObj["database"]["schema"]) &&
+            typedObj["database"]["schema"].every((e: any) =>
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (e["type"] === "string" ||
+                    e["type"] === "boolean" ||
+                    e["type"] === "backticks_quote_string" ||
+                    e["type"] === "regex_string" ||
+                    e["type"] === "hex_string" ||
+                    e["type"] === "full_hex_string" ||
+                    e["type"] === "natural_string" ||
+                    e["type"] === "bit_string" ||
+                    e["type"] === "double_quote_string" ||
+                    e["type"] === "single_quote_string" ||
+                    e["type"] === "bool" ||
+                    e["type"] === "null" ||
+                    e["type"] === "star" ||
+                    e["type"] === "param" ||
+                    e["type"] === "origin" ||
+                    e["type"] === "date" ||
+                    e["type"] === "datetime" ||
+                    e["type"] === "default" ||
+                    e["type"] === "time" ||
+                    e["type"] === "timestamp" ||
+                    e["type"] === "var_string") &&
+                (typeof e["value"] === "string" ||
+                    typeof e["value"] === "number" ||
+                    e["value"] === false ||
+                    e["value"] === true)
+            )) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
                 typeof typedObj["loc"] === "object" ||
@@ -2616,10 +2650,10 @@ export function isExplain(obj: unknown): obj is Explain {
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         typedObj["type"] === "explain" &&
-        (isSelect(typedObj["statement"]) as boolean ||
-            isInsert_Replace(typedObj["statement"]) as boolean ||
-            isUpdate(typedObj["statement"]) as boolean ||
-            isDelete(typedObj["statement"]) as boolean) &&
+        (isSelect(typedObj["expr"]) as boolean ||
+            isInsert_Replace(typedObj["expr"]) as boolean ||
+            isUpdate(typedObj["expr"]) as boolean ||
+            isDelete(typedObj["expr"]) as boolean) &&
         (typeof typedObj["format"] === "undefined" ||
             typeof typedObj["format"] === "string") &&
         (typeof typedObj["loc"] === "undefined" ||
@@ -2779,25 +2813,99 @@ export function isGrant(obj: unknown): obj is Grant {
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         typedObj["type"] === "grant" &&
-        Array.isArray(typedObj["privileges"]) &&
-        typedObj["privileges"].every((e: any) =>
-            isPrivilegeItem(e) as boolean
+        typedObj["keyword"] === "priv" &&
+        Array.isArray(typedObj["objects"]) &&
+        typedObj["objects"].every((e: any) =>
+            (e !== null &&
+                typeof e === "object" ||
+                typeof e === "function") &&
+            (e["priv"] !== null &&
+                typeof e["priv"] === "object" ||
+                typeof e["priv"] === "function") &&
+            (e["priv"]["type"] === "string" ||
+                e["priv"]["type"] === "boolean" ||
+                e["priv"]["type"] === "backticks_quote_string" ||
+                e["priv"]["type"] === "regex_string" ||
+                e["priv"]["type"] === "hex_string" ||
+                e["priv"]["type"] === "full_hex_string" ||
+                e["priv"]["type"] === "natural_string" ||
+                e["priv"]["type"] === "bit_string" ||
+                e["priv"]["type"] === "double_quote_string" ||
+                e["priv"]["type"] === "single_quote_string" ||
+                e["priv"]["type"] === "bool" ||
+                e["priv"]["type"] === "null" ||
+                e["priv"]["type"] === "star" ||
+                e["priv"]["type"] === "param" ||
+                e["priv"]["type"] === "origin" ||
+                e["priv"]["type"] === "date" ||
+                e["priv"]["type"] === "datetime" ||
+                e["priv"]["type"] === "default" ||
+                e["priv"]["type"] === "time" ||
+                e["priv"]["type"] === "timestamp" ||
+                e["priv"]["type"] === "var_string") &&
+            (typeof e["priv"]["value"] === "string" ||
+                typeof e["priv"]["value"] === "number" ||
+                e["priv"]["value"] === false ||
+                e["priv"]["value"] === true) &&
+            (e["columns"] === null ||
+                Array.isArray(e["columns"]) &&
+                e["columns"].every((e: any) =>
+                    isColumnRef(e) as boolean
+                ))
         ) &&
-        (typeof typedObj["object_type"] === "undefined" ||
-            typedObj["object_type"] === null ||
-            typedObj["object_type"] === "function" ||
-            typedObj["object_type"] === "table" ||
-            typedObj["object_type"] === "procedure") &&
-        (typeof typedObj["on"] === "undefined" ||
-            typedObj["on"] === null ||
-            isPrivilegeLevel(typedObj["on"]) as boolean) &&
-        Array.isArray(typedObj["to"]) &&
-        typedObj["to"].every((e: any) =>
-            isUserOrRole(e) as boolean
+        (typedObj["on"] !== null &&
+            typeof typedObj["on"] === "object" ||
+            typeof typedObj["on"] === "function") &&
+        (typedObj["on"]["object_type"] === null ||
+            typedObj["on"]["object_type"] === "function" ||
+            typedObj["on"]["object_type"] === "table" ||
+            typedObj["on"]["object_type"] === "procedure") &&
+        Array.isArray(typedObj["on"]["priv_level"]) &&
+        typedObj["on"]["priv_level"].every((e: any) =>
+            (e !== null &&
+                typeof e === "object" ||
+                typeof e === "function") &&
+            typeof e["prefix"] === "string" &&
+            typeof e["name"] === "string"
         ) &&
-        (typeof typedObj["with_grant_option"] === "undefined" ||
-            typedObj["with_grant_option"] === false ||
-            typedObj["with_grant_option"] === true) &&
+        (typedObj["to_from"] === "TO" ||
+            typedObj["to_from"] === "FROM") &&
+        Array.isArray(typedObj["user_or_roles"]) &&
+        typedObj["user_or_roles"].every((e: any) =>
+            (e !== null &&
+                typeof e === "object" ||
+                typeof e === "function") &&
+            (e["name"] !== null &&
+                typeof e["name"] === "object" ||
+                typeof e["name"] === "function") &&
+            (e["name"]["type"] === "string" ||
+                e["name"]["type"] === "boolean" ||
+                e["name"]["type"] === "backticks_quote_string" ||
+                e["name"]["type"] === "regex_string" ||
+                e["name"]["type"] === "hex_string" ||
+                e["name"]["type"] === "full_hex_string" ||
+                e["name"]["type"] === "natural_string" ||
+                e["name"]["type"] === "bit_string" ||
+                e["name"]["type"] === "double_quote_string" ||
+                e["name"]["type"] === "single_quote_string" ||
+                e["name"]["type"] === "bool" ||
+                e["name"]["type"] === "null" ||
+                e["name"]["type"] === "star" ||
+                e["name"]["type"] === "param" ||
+                e["name"]["type"] === "origin" ||
+                e["name"]["type"] === "date" ||
+                e["name"]["type"] === "datetime" ||
+                e["name"]["type"] === "default" ||
+                e["name"]["type"] === "time" ||
+                e["name"]["type"] === "timestamp" ||
+                e["name"]["type"] === "var_string") &&
+            (typeof e["name"]["value"] === "string" ||
+                typeof e["name"]["value"] === "number" ||
+                e["name"]["value"] === false ||
+                e["name"]["value"] === true) &&
+            (e["host"] === null ||
+                typeof e["host"] === "string")
+        ) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
                 typeof typedObj["loc"] === "object" ||
@@ -2867,16 +2975,52 @@ export function isLoadData(obj: unknown): obj is LoadData {
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         typedObj["type"] === "load_data" &&
+        (typeof typedObj["mode"] === "undefined" ||
+            typedObj["mode"] === null ||
+            typeof typedObj["mode"] === "string") &&
         (typeof typedObj["local"] === "undefined" ||
             typedObj["local"] === null ||
             typedObj["local"] === "local") &&
-        typeof typedObj["infile"] === "string" &&
+        (typedObj["file"] !== null &&
+            typeof typedObj["file"] === "object" ||
+            typeof typedObj["file"] === "function") &&
+        (typedObj["file"]["type"] === "string" ||
+            typedObj["file"]["type"] === "boolean" ||
+            typedObj["file"]["type"] === "backticks_quote_string" ||
+            typedObj["file"]["type"] === "regex_string" ||
+            typedObj["file"]["type"] === "hex_string" ||
+            typedObj["file"]["type"] === "full_hex_string" ||
+            typedObj["file"]["type"] === "natural_string" ||
+            typedObj["file"]["type"] === "bit_string" ||
+            typedObj["file"]["type"] === "double_quote_string" ||
+            typedObj["file"]["type"] === "single_quote_string" ||
+            typedObj["file"]["type"] === "bool" ||
+            typedObj["file"]["type"] === "null" ||
+            typedObj["file"]["type"] === "star" ||
+            typedObj["file"]["type"] === "param" ||
+            typedObj["file"]["type"] === "origin" ||
+            typedObj["file"]["type"] === "date" ||
+            typedObj["file"]["type"] === "datetime" ||
+            typedObj["file"]["type"] === "default" ||
+            typedObj["file"]["type"] === "time" ||
+            typedObj["file"]["type"] === "timestamp" ||
+            typedObj["file"]["type"] === "var_string") &&
+        (typeof typedObj["file"]["value"] === "string" ||
+            typeof typedObj["file"]["value"] === "number" ||
+            typedObj["file"]["value"] === false ||
+            typedObj["file"]["value"] === true) &&
         (typeof typedObj["replace_ignore"] === "undefined" ||
             typedObj["replace_ignore"] === null ||
             typedObj["replace_ignore"] === "replace" ||
             typedObj["replace_ignore"] === "ignore") &&
-        isFrom(typedObj["into_table"]) as boolean &&
+        (typedObj["table"] !== null &&
+            typeof typedObj["table"] === "object" ||
+            typeof typedObj["table"] === "function") &&
+        (typedObj["table"]["db"] === null ||
+            typeof typedObj["table"]["db"] === "string") &&
+        typeof typedObj["table"]["table"] === "string" &&
         (typeof typedObj["partition"] === "undefined" ||
+            typedObj["partition"] === null ||
             Array.isArray(typedObj["partition"]) &&
             typedObj["partition"].every((e: any) =>
                 (e !== null &&
@@ -2906,19 +3050,25 @@ export function isLoadData(obj: unknown): obj is LoadData {
                 typeof e["value"] === "string"
             )) &&
         (typeof typedObj["character_set"] === "undefined" ||
+            typedObj["character_set"] === null ||
             typeof typedObj["character_set"] === "string") &&
         (typeof typedObj["fields"] === "undefined" ||
+            typedObj["fields"] === null ||
             isLoadDataField(typedObj["fields"]) as boolean) &&
         (typeof typedObj["lines"] === "undefined" ||
+            typedObj["lines"] === null ||
             isLoadDataLine(typedObj["lines"]) as boolean) &&
-        (typeof typedObj["ignore_lines"] === "undefined" ||
-            typeof typedObj["ignore_lines"] === "number") &&
-        (typeof typedObj["columns"] === "undefined" ||
-            Array.isArray(typedObj["columns"]) &&
-            typedObj["columns"].every((e: any) =>
+        (typeof typedObj["ignore"] === "undefined" ||
+            typedObj["ignore"] === null ||
+            typeof typedObj["ignore"] === "number") &&
+        (typeof typedObj["column"] === "undefined" ||
+            typedObj["column"] === null ||
+            Array.isArray(typedObj["column"]) &&
+            typedObj["column"].every((e: any) =>
                 isColumnRef(e) as boolean
             )) &&
         (typeof typedObj["set"] === "undefined" ||
+            typedObj["set"] === null ||
             Array.isArray(typedObj["set"]) &&
             typedObj["set"].every((e: any) =>
                 isSetList(e) as boolean
@@ -2983,13 +3133,46 @@ export function isTransaction(obj: unknown): obj is Transaction {
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         typedObj["type"] === "transaction" &&
-        (typedObj["keyword"] === "start" ||
-            typedObj["keyword"] === "begin" ||
-            typedObj["keyword"] === "commit" ||
-            typedObj["keyword"] === "rollback") &&
-        (typeof typedObj["mode"] === "undefined" ||
-            Array.isArray(typedObj["mode"]) &&
-            typedObj["mode"].every((e: any) =>
+        (typedObj["expr"] !== null &&
+            typeof typedObj["expr"] === "object" ||
+            typeof typedObj["expr"] === "function") &&
+        (typedObj["expr"]["action"] !== null &&
+            typeof typedObj["expr"]["action"] === "object" ||
+            typeof typedObj["expr"]["action"] === "function") &&
+        (typedObj["expr"]["action"]["type"] === "string" ||
+            typedObj["expr"]["action"]["type"] === "boolean" ||
+            typedObj["expr"]["action"]["type"] === "backticks_quote_string" ||
+            typedObj["expr"]["action"]["type"] === "regex_string" ||
+            typedObj["expr"]["action"]["type"] === "hex_string" ||
+            typedObj["expr"]["action"]["type"] === "full_hex_string" ||
+            typedObj["expr"]["action"]["type"] === "natural_string" ||
+            typedObj["expr"]["action"]["type"] === "bit_string" ||
+            typedObj["expr"]["action"]["type"] === "double_quote_string" ||
+            typedObj["expr"]["action"]["type"] === "single_quote_string" ||
+            typedObj["expr"]["action"]["type"] === "bool" ||
+            typedObj["expr"]["action"]["type"] === "null" ||
+            typedObj["expr"]["action"]["type"] === "star" ||
+            typedObj["expr"]["action"]["type"] === "param" ||
+            typedObj["expr"]["action"]["type"] === "origin" ||
+            typedObj["expr"]["action"]["type"] === "date" ||
+            typedObj["expr"]["action"]["type"] === "datetime" ||
+            typedObj["expr"]["action"]["type"] === "default" ||
+            typedObj["expr"]["action"]["type"] === "time" ||
+            typedObj["expr"]["action"]["type"] === "timestamp" ||
+            typedObj["expr"]["action"]["type"] === "var_string") &&
+        (typedObj["expr"]["action"]["value"] === "start" ||
+            typedObj["expr"]["action"]["value"] === "begin" ||
+            typedObj["expr"]["action"]["value"] === "commit" ||
+            typedObj["expr"]["action"]["value"] === "rollback" ||
+            typedObj["expr"]["action"]["value"] === "START" ||
+            typedObj["expr"]["action"]["value"] === "COMMIT" ||
+            typedObj["expr"]["action"]["value"] === "ROLLBACK") &&
+        (typeof typedObj["expr"]["keyword"] === "undefined" ||
+            typedObj["expr"]["keyword"] === "TRANSACTION") &&
+        (typeof typedObj["expr"]["modes"] === "undefined" ||
+            typedObj["expr"]["modes"] === null ||
+            Array.isArray(typedObj["expr"]["modes"]) &&
+            typedObj["expr"]["modes"].every((e: any) =>
                 isTransactionMode(e) as boolean
             )) &&
         (typeof typedObj["loc"] === "undefined" ||
@@ -3014,13 +3197,33 @@ export function isTransaction(obj: unknown): obj is Transaction {
 export function isTransactionMode(obj: unknown): obj is TransactionMode {
     const typedObj = obj as TransactionMode
     return (
-        (typedObj !== null &&
+        ((typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        typedObj["type"] === "transaction_mode" &&
-        (isTransactionIsolationLevel(typedObj["value"]) as boolean ||
-            typedObj["value"] === "read write" ||
-            typedObj["value"] === "read only")
+            (typedObj["type"] === "string" ||
+                typedObj["type"] === "boolean" ||
+                typedObj["type"] === "backticks_quote_string" ||
+                typedObj["type"] === "regex_string" ||
+                typedObj["type"] === "hex_string" ||
+                typedObj["type"] === "full_hex_string" ||
+                typedObj["type"] === "natural_string" ||
+                typedObj["type"] === "bit_string" ||
+                typedObj["type"] === "double_quote_string" ||
+                typedObj["type"] === "single_quote_string" ||
+                typedObj["type"] === "bool" ||
+                typedObj["type"] === "null" ||
+                typedObj["type"] === "star" ||
+                typedObj["type"] === "param" ||
+                typedObj["type"] === "origin" ||
+                typedObj["type"] === "date" ||
+                typedObj["type"] === "datetime" ||
+                typedObj["type"] === "default" ||
+                typedObj["type"] === "time" ||
+                typedObj["type"] === "timestamp" ||
+                typedObj["type"] === "var_string") &&
+            (typedObj["value"] === "read write" ||
+                typedObj["value"] === "read only") ||
+            isTransactionIsolationLevel(typedObj) as boolean)
     )
 }
 
