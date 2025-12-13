@@ -2012,10 +2012,7 @@ export function isColumnDefinitionOptList(obj: unknown): obj is ColumnDefinition
             typeof typedObj["storage"]["type"] === "string" &&
             typeof typedObj["storage"]["value"] === "string") &&
         (typeof typedObj["reference_definition"] === "undefined" ||
-            (typedObj["reference_definition"] !== null &&
-                typeof typedObj["reference_definition"] === "object" ||
-                typeof typedObj["reference_definition"] === "function") &&
-            isReferenceDefinition(typedObj["reference_definition"]["reference_definition"]) as boolean) &&
+            isReferenceDefinition(typedObj["reference_definition"]) as boolean) &&
         (typeof typedObj["character_set"] === "undefined" ||
             (typedObj["character_set"] !== null &&
                 typeof typedObj["character_set"] === "object" ||
@@ -2077,16 +2074,20 @@ export function isReferenceDefinition(obj: unknown): obj is ReferenceDefinition 
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        Array.isArray(typedObj["definition"]) &&
-        typedObj["definition"].every((e: any) =>
-            isColumnRef(e) as boolean
-        ) &&
-        Array.isArray(typedObj["table"]) &&
-        typedObj["table"].every((e: any) =>
-            isFrom(e) as boolean
-        ) &&
-        typeof typedObj["keyword"] === "string" &&
-        (typedObj["match"] === null ||
+        (typeof typedObj["definition"] === "undefined" ||
+            Array.isArray(typedObj["definition"]) &&
+            typedObj["definition"].every((e: any) =>
+                isColumnRef(e) as boolean
+            )) &&
+        (typeof typedObj["table"] === "undefined" ||
+            Array.isArray(typedObj["table"]) &&
+            typedObj["table"].every((e: any) =>
+                isFrom(e) as boolean
+            )) &&
+        (typeof typedObj["keyword"] === "undefined" ||
+            typeof typedObj["keyword"] === "string") &&
+        (typeof typedObj["match"] === "undefined" ||
+            typedObj["match"] === null ||
             typeof typedObj["match"] === "string") &&
         Array.isArray(typedObj["on_action"]) &&
         typedObj["on_action"].every((e: any) =>
@@ -2101,10 +2102,42 @@ export function isOnReference(obj: unknown): obj is OnReference {
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        typedObj["type"] === "on_reference" &&
-        (typedObj["keyword"] === "on update" ||
+        (typedObj["type"] === "on update" ||
+            typedObj["type"] === "on delete" ||
+            typedObj["type"] === "on_reference") &&
+        (typeof typedObj["keyword"] === "undefined" ||
+            typedObj["keyword"] === "on update" ||
             typedObj["keyword"] === "on delete") &&
-        (typedObj["value"] === "restrict" ||
+        ((typedObj["value"] !== null &&
+            typeof typedObj["value"] === "object" ||
+            typeof typedObj["value"] === "function") &&
+            (typedObj["value"]["type"] === "string" ||
+                typedObj["value"]["type"] === "number" ||
+                typedObj["value"]["type"] === "boolean" ||
+                typedObj["value"]["type"] === "backticks_quote_string" ||
+                typedObj["value"]["type"] === "regex_string" ||
+                typedObj["value"]["type"] === "hex_string" ||
+                typedObj["value"]["type"] === "full_hex_string" ||
+                typedObj["value"]["type"] === "natural_string" ||
+                typedObj["value"]["type"] === "bit_string" ||
+                typedObj["value"]["type"] === "double_quote_string" ||
+                typedObj["value"]["type"] === "single_quote_string" ||
+                typedObj["value"]["type"] === "bool" ||
+                typedObj["value"]["type"] === "null" ||
+                typedObj["value"]["type"] === "star" ||
+                typedObj["value"]["type"] === "param" ||
+                typedObj["value"]["type"] === "origin" ||
+                typedObj["value"]["type"] === "date" ||
+                typedObj["value"]["type"] === "datetime" ||
+                typedObj["value"]["type"] === "default" ||
+                typedObj["value"]["type"] === "time" ||
+                typedObj["value"]["type"] === "timestamp" ||
+                typedObj["value"]["type"] === "var_string") &&
+            (typeof typedObj["value"]["value"] === "string" ||
+                typeof typedObj["value"]["value"] === "number" ||
+                typedObj["value"]["value"] === false ||
+                typedObj["value"]["value"] === true) ||
+            typedObj["value"] === "restrict" ||
             typedObj["value"] === "cascade" ||
             typedObj["value"] === "set null" ||
             typedObj["value"] === "no action" ||

@@ -449,7 +449,7 @@ export type ColumnDefinitionOptList = {
   collate?: CollateExpr;
   column_format?: { type: string; value: string };
   storage?: { type: string; value: string };
-  reference_definition?: { reference_definition: ReferenceDefinition };
+  reference_definition?: ReferenceDefinition;
   character_set?: { type: "CHARACTER SET"; value: ValueExpr; symbol: "=" | null };
   check?: {
     type: 'check';
@@ -464,17 +464,17 @@ export type ColumnDefinitionOptList = {
 };
 
 export type ReferenceDefinition = {
-  definition: ColumnRef[];
-  table: From[];
-  keyword: string;
-  match: string | null;
+  definition?: ColumnRef[];
+  table?: From[];
+  keyword?: string;
+  match?: string | null;
   on_action: OnReference[];
 };
 
 export type OnReference = {
-  type: 'on_reference';
-  keyword: 'on delete' | 'on update';
-  value: 'restrict' | 'cascade' | 'set null' | 'no action' | 'set default';
+  type: 'on update' | 'on delete' | 'on_reference';
+  keyword?: 'on delete' | 'on update';
+  value: 'restrict' | 'cascade' | 'set null' | 'no action' | 'set default' | ValueExpr;
 };
 
 export type CreateColumnDefinition = {
