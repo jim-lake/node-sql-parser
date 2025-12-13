@@ -1814,8 +1814,38 @@ export function isKeywordComment(obj: unknown): obj is KeywordComment {
         typedObj["type"] === "comment" &&
         typedObj["keyword"] === "comment" &&
         (typeof typedObj["symbol"] === "undefined" ||
+            typedObj["symbol"] === null ||
             typedObj["symbol"] === "=") &&
-        typeof typedObj["value"] === "string"
+        (typeof typedObj["value"] === "string" ||
+            (typedObj["value"] !== null &&
+                typeof typedObj["value"] === "object" ||
+                typeof typedObj["value"] === "function") &&
+            (typedObj["value"]["type"] === "string" ||
+                typedObj["value"]["type"] === "number" ||
+                typedObj["value"]["type"] === "boolean" ||
+                typedObj["value"]["type"] === "backticks_quote_string" ||
+                typedObj["value"]["type"] === "regex_string" ||
+                typedObj["value"]["type"] === "hex_string" ||
+                typedObj["value"]["type"] === "full_hex_string" ||
+                typedObj["value"]["type"] === "natural_string" ||
+                typedObj["value"]["type"] === "bit_string" ||
+                typedObj["value"]["type"] === "double_quote_string" ||
+                typedObj["value"]["type"] === "single_quote_string" ||
+                typedObj["value"]["type"] === "bool" ||
+                typedObj["value"]["type"] === "null" ||
+                typedObj["value"]["type"] === "star" ||
+                typedObj["value"]["type"] === "param" ||
+                typedObj["value"]["type"] === "origin" ||
+                typedObj["value"]["type"] === "date" ||
+                typedObj["value"]["type"] === "datetime" ||
+                typedObj["value"]["type"] === "default" ||
+                typedObj["value"]["type"] === "time" ||
+                typedObj["value"]["type"] === "timestamp" ||
+                typedObj["value"]["type"] === "var_string") &&
+            (typeof typedObj["value"]["value"] === "string" ||
+                typeof typedObj["value"]["value"] === "number" ||
+                typedObj["value"]["value"] === false ||
+                typedObj["value"]["value"] === true))
     )
 }
 
@@ -1826,9 +1856,22 @@ export function isCollateExpr(obj: unknown): obj is CollateExpr {
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         typedObj["type"] === "collate" &&
+        (typeof typedObj["keyword"] === "undefined" ||
+            typedObj["keyword"] === "collate") &&
         (typeof typedObj["symbol"] === "undefined" ||
+            typedObj["symbol"] === null ||
             typedObj["symbol"] === "=") &&
-        typeof typedObj["value"] === "string"
+        (typeof typedObj["value"] === "undefined" ||
+            typeof typedObj["value"] === "string") &&
+        (typeof typedObj["collate"] === "undefined" ||
+            (typedObj["collate"] !== null &&
+                typeof typedObj["collate"] === "object" ||
+                typeof typedObj["collate"] === "function") &&
+            typeof typedObj["collate"]["name"] === "string" &&
+            (typedObj["collate"]["symbol"] === null ||
+                typedObj["collate"]["symbol"] === "=")) &&
+        (typeof typedObj["name"] === "undefined" ||
+            typeof typedObj["name"] === "string")
     )
 }
 
@@ -1955,10 +1998,7 @@ export function isColumnDefinitionOptList(obj: unknown): obj is ColumnDefinition
         (typeof typedObj["comment"] === "undefined" ||
             isKeywordComment(typedObj["comment"]) as boolean) &&
         (typeof typedObj["collate"] === "undefined" ||
-            (typedObj["collate"] !== null &&
-                typeof typedObj["collate"] === "object" ||
-                typeof typedObj["collate"] === "function") &&
-            isCollateExpr(typedObj["collate"]["collate"]) as boolean) &&
+            isCollateExpr(typedObj["collate"]) as boolean) &&
         (typeof typedObj["column_format"] === "undefined" ||
             (typedObj["column_format"] !== null &&
                 typeof typedObj["column_format"] === "object" ||

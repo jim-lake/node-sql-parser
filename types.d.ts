@@ -390,14 +390,20 @@ export type Timezone = ["WITHOUT" | "WITH", "TIME", "ZONE"];
 export type KeywordComment = {
   type: "comment";
   keyword: "comment";
-  symbol?: "=";
-  value: string;
+  symbol?: "=" | null;
+  value: ValueExpr | string;
 };
 
 export type CollateExpr = {
   type: "collate";
-  symbol?: "=";
-  value: string;
+  keyword?: "collate";
+  symbol?: "=" | null;
+  value?: string;
+  collate?: {
+    name: string;
+    symbol: "=" | null;
+  };
+  name?: string;
 };
 
 export type DataType = {
@@ -440,7 +446,7 @@ export type ColumnDefinitionOptList = {
   unique?: "unique" | "unique key";
   primary?: "key" | "primary key";
   comment?: KeywordComment;
-  collate?: { collate: CollateExpr };
+  collate?: CollateExpr;
   column_format?: { type: string; value: string };
   storage?: { type: string; value: string };
   reference_definition?: { reference_definition: ReferenceDefinition };
