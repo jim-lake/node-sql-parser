@@ -1,14 +1,13 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
-import mysql from '../../build/mysql.js';
-import { isDesc } from './types.guard.js';
+import { Parser } from './parser-loader.mjs';
+import { isDesc } from './types.guard.ts';
 
-const { parse } = mysql;
+const parser = new Parser();
 
 describe('Desc Statement', () => {
   test('DESCRIBE statement', () => {
-    const result = parse("DESCRIBE users");
-    const ast = result.ast;
+    const ast = parser.astify("DESCRIBE users");
     
     assert.ok(isDesc(ast), 'Should be Desc type');
     assert.strictEqual(ast.type, 'desc');
@@ -16,8 +15,7 @@ describe('Desc Statement', () => {
   });
 
   test('DESC statement (short form)', () => {
-    const result = parse("DESC users");
-    const ast = result.ast;
+    const ast = parser.astify("DESC users");
     
     assert.ok(isDesc(ast), 'Should be Desc type');
     assert.strictEqual(ast.type, 'desc');

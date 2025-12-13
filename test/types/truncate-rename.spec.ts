@@ -1,14 +1,13 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
-import mysql from '../../build/mysql.js';
-import { isTruncate, isRename } from './types.guard.js';
+import { Parser } from './parser-loader.mjs';
+import { isTruncate, isRename } from './types.guard.ts';
 
-const { parse } = mysql;
+const parser = new Parser();
 
 describe('Truncate and Rename Statements', () => {
   test('TRUNCATE TABLE statement', () => {
-    const result = parse("TRUNCATE TABLE users");
-    const ast = result.ast;
+    const ast = parser.astify("TRUNCATE TABLE users");
     
     assert.ok(isTruncate(ast), 'Should be Truncate type');
     assert.strictEqual(ast.type, 'truncate');
@@ -18,8 +17,7 @@ describe('Truncate and Rename Statements', () => {
   });
 
   test('TRUNCATE with database prefix', () => {
-    const result = parse("TRUNCATE TABLE mydb.users");
-    const ast = result.ast;
+    const ast = parser.astify("TRUNCATE TABLE mydb.users");
     
     assert.ok(isTruncate(ast), 'Should be Truncate type');
     assert.strictEqual(ast.name[0].db, 'mydb');
@@ -27,8 +25,7 @@ describe('Truncate and Rename Statements', () => {
   });
 
   test('RENAME TABLE statement', () => {
-    const result = parse("RENAME TABLE old_name TO new_name");
-    const ast = result.ast;
+    const ast = parser.astify("RENAME TABLE old_name TO new_name");
     
     assert.ok(isRename(ast), 'Should be Rename type');
     assert.strictEqual(ast.type, 'rename');
@@ -38,8 +35,7 @@ describe('Truncate and Rename Statements', () => {
   });
 
   test('RENAME multiple tables', () => {
-    const result = parse("RENAME TABLE t1 TO t2, t3 TO t4");
-    const ast = result.ast;
+    const ast = parser.astify("RENAME TABLE t1 TO t2, t3 TO t4");
     
     assert.ok(isRename(ast), 'Should be Rename type');
     assert.strictEqual(ast.table.length, 2);
