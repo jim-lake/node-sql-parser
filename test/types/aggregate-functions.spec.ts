@@ -15,3 +15,35 @@ test('GROUP_CONCAT with separator', () => {
   assert.ok(aggrFunc.args.separator);
   assert.strictEqual(typeof aggrFunc.args.separator, 'object');
 });
+
+test('COUNT without DISTINCT or ORDER BY - check if properties exist', () => {
+  const sql = "SELECT COUNT(id) FROM users";
+  const ast = parser.astify(sql) as Select;
+  
+  const col = (ast.columns as Column[])[0];
+  const aggrFunc = col.expr as AggrFunc;
+  assert.strictEqual(aggrFunc.type, 'aggr_func');
+  assert.ok('distinct' in aggrFunc.args);
+  assert.ok('orderby' in aggrFunc.args);
+});
+
+test('COUNT with DISTINCT', () => {
+  const sql = "SELECT COUNT(DISTINCT id) FROM users";
+  const ast = parser.astify(sql) as Select;
+  
+  const col = (ast.columns as Column[])[0];
+  const aggrFunc = col.expr as AggrFunc;
+  assert.strictEqual(aggrFunc.type, 'aggr_func');
+  assert.strictEqual(aggrFunc.args.distinct, 'DISTINCT');
+});
+
+test('GROUP_CONCAT with ORDER BY', () => {
+  const sql = "SELECT GROUP_CONCAT(name ORDER BY name) FROM users";
+  const ast = parser.astify(sql) as Select;
+  
+  const col = (ast.columns as Column[])[0];
+  const aggrFunc = col.expr as AggrFunc;
+  assert.strictEqual(aggrFunc.type, 'aggr_func');
+  assert.ok(aggrFunc.args.orderby);
+  assert.ok(Array.isArray(aggrFunc.args.orderby));
+});

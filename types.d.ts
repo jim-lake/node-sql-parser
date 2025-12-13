@@ -32,6 +32,7 @@ export interface TableColumnAst {
   tableList: string[];
   columnList: string[];
   ast: AST[] | AST;
+  parentheses?: boolean;
   loc?: LocationRange;
 }
 export interface BaseFrom {
@@ -170,12 +171,13 @@ export interface AggrFunc {
   name: string;
   args: {
     expr: ExpressionValue;
-    distinct: "DISTINCT" | null;
-    orderby: OrderBy[] | null;
+    distinct?: "DISTINCT" | null;
+    orderby?: OrderBy[] | null;
     parentheses?: boolean;
     separator?: string;
   };
   loc?: LocationRange;
+  over?: { type: 'window'; as_window_specification: AsWindowSpec } | null;
 }
 
 export type FunctionName = {
@@ -187,7 +189,7 @@ export interface Function {
   name: FunctionName;
   args?: ExprList;
   suffix?: OnUpdateCurrentTimestamp | null;
-  over?: WindowSpec | null;
+  over?: { type: 'window'; as_window_specification: AsWindowSpec } | null;
   loc?: LocationRange;
 }
 export interface Column {
@@ -205,6 +207,8 @@ export interface Interval {
 
 export type Param = { type: "param"; value: string; loc?: LocationRange };
 
+export type Var = { type: "var"; name: string; members: string[]; prefix: string; loc?: LocationRange };
+
 export type Value = { type: string; value: string | number | boolean | null; loc?: LocationRange };
 
 export type Binary = {
@@ -216,18 +220,30 @@ export type Binary = {
   parentheses?: boolean;
 };
 
-export type Expr = Binary;
+export type Unary = {
+  type: "unary_expr";
+  operator: string;
+  expr: ExpressionValue;
+  loc?: LocationRange;
+  parentheses?: boolean;
+};
+
+export type Expr = Binary | Unary;
 
 export type ExpressionValue =
   | ColumnRef
   | Param
+  | Var
   | Function
   | Case
   | AggrFunc
   | Value
   | Binary
+  | Unary
   | Cast
-  | Interval;
+  | Interval
+  | Star
+  | TableColumnAst;
 
 export type ExprList = {
   type: "expr_list";
@@ -273,12 +289,15 @@ export interface Select {
   distinct: "DISTINCT" | null;
   columns: Column[];
   into?: {
+    keyword?: string;
+    type?: string;
+    expr?: Var[] | Value;
     position: 'column' | 'from' | 'end' | null;
   };
   from: From[] | TableExpr | { expr: From[], parentheses: { length: number }, joins: From[] } | null;
   where: Binary | Function | null;
   groupby: { columns: ColumnRef[] | null, modifiers: (ValueExpr<string> | null)[] } | null;
-  having: Binary[] | null;
+  having: Binary | null;
   orderby: OrderBy[] | null;
   limit: Limit | null;
   window?: WindowExpr | null;
@@ -306,7 +325,7 @@ export interface Insert_Replace {
     values: InsertReplaceValue[]
   } | Select;
   set?: SetList[];
-  partition: ValueExpr<string>[] | null;
+  partition: string[] | null;
   prefix: string;
   on_duplicate_update?: {
     keyword: "on duplicate key update",
@@ -346,7 +365,7 @@ export interface Delete {
 export interface Alter {
   type: "alter";
   table: From[];
-  expr: AlterExpr;
+  expr: AlterExpr[];
   loc?: LocationRange;
 }
 
@@ -553,7 +572,7 @@ export interface Create {
   if_not_exists?: "if not exists" | null;
   like?: {
     type: "like";
-    table: string;
+    table: From[];
     parentheses?: boolean;
   } | null;
   ignore_replace?: "ignore" | "replace" | null;
@@ -587,11 +606,7 @@ export interface Create {
   database?: string | { schema: ValueExpr[] };
   loc?: LocationRange;
   where?: Binary | Function | null;
-  definer?: {
-    type: 'definer';
-    user: string;
-    host: string;
-  } | null;
+  definer?: Binary | null;
   for_each?: 'row' | 'statement' | null;
   events?: TriggerEvent[] | null;
   order?: {
@@ -676,6 +691,12 @@ export interface Show {
   loc?: LocationRange;
 }
 
+export interface Desc {
+  type: "desc";
+  table: string;
+  loc?: LocationRange;
+}
+
 export interface Explain {
   type: "explain";
   expr: Select | Update | Delete | Insert_Replace;
@@ -705,7 +726,11 @@ export interface Lock {
 
 export type LockTable = {
   table: From;
-  lock_type: 'read' | 'write' | 'read local' | 'low_priority write';
+  lock_type: {
+    type: 'read' | 'write';
+    suffix?: null;
+    prefix?: null;
+  };
 };
 
 export interface Unlock {
@@ -783,6 +808,19 @@ export type LoadDataLine = {
   terminated_by?: string;
 };
 
+export interface Truncate {
+  type: "truncate";
+  keyword: "table";
+  name: From[];
+  loc?: LocationRange;
+}
+
+export interface Rename {
+  type: "rename";
+  table: Array<[{ db: string | null; table: string }, { db: string | null; table: string }]>;
+  loc?: LocationRange;
+}
+
 export interface Transaction {
   type: "transaction";
   expr: {
@@ -810,6 +848,7 @@ export type AST =
   | Create
   | Drop
   | Show
+  | Desc
   | Explain
   | Call
   | Set
@@ -817,6 +856,8 @@ export type AST =
   | Unlock
   | Grant
   | LoadData
+  | Truncate
+  | Rename
   | Transaction;
 
 export class Parser {
