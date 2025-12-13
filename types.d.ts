@@ -18,7 +18,6 @@ import { LocationRange } from "pegjs";
 
 export { LocationRange, Location } from "pegjs";
 
-export type WhilteListCheckMode = "table" | "column";
 export interface ParseOptions {
   includeLocations?: boolean;
 }

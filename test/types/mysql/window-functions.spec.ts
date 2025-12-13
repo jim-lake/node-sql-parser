@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
-import type { Select, Column, AggrFunc, WindowSpec, WindowFrameClause, WindowFrameBound } from '../../types.d.ts';
+import type { Select, Column, AggrFunc, WindowSpec, WindowFrameClause } from '../../types.d.ts';
 import { isSelect } from './types.guard.ts';
 
 const parser = new Parser();
@@ -20,19 +20,10 @@ test('Window function with frame clause', () => {
   const over = aggrFunc.over;
   assert.ok(over === undefined || typeof over === 'object');
   
-  // WindowFrameClause and WindowFrameBound types are defined in types.d.ts
+  // WindowFrameClause type is defined in types.d.ts
   // The actual structure may vary, but the types should compile
   if (over && typeof over === 'object' && 'window_specification' in over) {
     const spec = (over as any).window_specification as WindowSpec;
     assert.ok(spec === undefined || typeof spec === 'object');
   }
-});
-
-test('WindowFrameBound type exists', () => {
-  // WindowFrameBound type is defined in types.d.ts
-  const bound: WindowFrameBound = {
-    type: 'preceding',
-    value: 'unbounded'
-  };
-  assert.strictEqual(bound.type, 'preceding');
 });
