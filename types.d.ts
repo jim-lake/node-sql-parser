@@ -49,10 +49,12 @@ export interface Join extends BaseFrom {
 }
 export interface TableExpr {
   expr: {
+    tableList: string[];
+    columnList: string[];
     ast: Select;
+    parentheses: boolean;
   };
   as?: string | null;
-  parentheses: boolean | { length: number }
 }
 export interface Dual {
   type: "dual";
@@ -70,7 +72,7 @@ export interface Limit {
   loc?: LocationRange;
 }
 export interface OrderBy {
-  type: "ASC" | "DESC";
+  type: "ASC" | "DESC" | null;
   expr: ExpressionValue;
   loc?: LocationRange;
 }
@@ -79,6 +81,7 @@ export interface ValueExpr<T = string | number | boolean> {
   type:
     | "backticks_quote_string"
     | "string"
+    | "number"
     | "regex_string"
     | "hex_string"
     | "full_hex_string"
@@ -105,7 +108,7 @@ export type SortDirection = 'ASC' | 'DESC' | 'asc' | 'desc';
 
 export interface ColumnRefItem {
   type: "column_ref";
-  table: string | null;
+  table?: string | null;
   column: string | { expr: ValueExpr };
   options?: ExprList;
   loc?: LocationRange;
@@ -184,6 +187,7 @@ export interface Function {
   name: FunctionName;
   args?: ExprList;
   suffix?: OnUpdateCurrentTimestamp | null;
+  over?: WindowSpec | null;
   loc?: LocationRange;
 }
 export interface Column {
@@ -233,24 +237,16 @@ export type ExprList = {
   separator?: string;
 };
 
-export type PartitionBy = {
-  type: 'expr';
-  expr: ColumnRef[];
-}[];
+export type PartitionBy = Column[];
 
 export type WindowSpec = {
-  name: null;
-  partitionby: PartitionBy;
+  name: string | null;
+  partitionby: PartitionBy | null;
   orderby: OrderBy[] | null;
   window_frame_clause: WindowFrameClause | null;
 };
 
-export type WindowFrameClause = {
-  type: 'rows' | 'range' | 'groups';
-  between?: 'between';
-  start: WindowFrameBound;
-  end?: WindowFrameBound;
-};
+export type WindowFrameClause = Binary;
 
 export type WindowFrameBound = {
   type: 'preceding' | 'following' | 'current_row';
@@ -321,7 +317,7 @@ export interface Insert_Replace {
 }
 export interface Returning {
   type: 'returning';
-  columns: ColumnRef | Select;
+  columns: Column[];
 }
 export interface Update {
   with: With[] | null;
@@ -390,7 +386,7 @@ export type DataType = {
   length?: number;
   parentheses?: true;
   scale?: number;
-  suffix?: Timezone | (KW_UNSIGNED | KW_ZEROFILL)[] | OnUpdateCurrentTimestamp;
+  suffix?: Timezone | (KW_UNSIGNED | KW_ZEROFILL)[] | OnUpdateCurrentTimestamp | null;
   array?: "one" | "two";
   expr?: Expr | ExprList;
   quoted?: string;
@@ -442,10 +438,11 @@ export type ColumnDefinitionOptList = {
 };
 
 export type ReferenceDefinition = {
-  type: 'reference_definition';
-  table: From;
-  columns: ColumnRef[];
-  on_action?: OnReference[];
+  definition: ColumnRef[];
+  table: From[];
+  keyword: string;
+  match: string | null;
+  on_action: OnReference[];
 };
 
 export type OnReference = {
@@ -472,16 +469,16 @@ export type IndexOption = {
 };
 
 export type CreateIndexDefinition = {
-  index?: string;
+  index?: string | null;
   definition: ColumnRef[];
   keyword: "index" | "key";
-  index_type?: IndexType;
+  index_type?: IndexType | null;
   resource: "index";
-  index_options?: IndexOption[];
+  index_options?: IndexOption[] | null;
 };
 
 export type CreateFulltextSpatialIndexDefinition = {
-  index?: string;
+  index?: string | null;
   definition: ColumnRef[];
   keyword?:
     | "fulltext"
@@ -490,49 +487,50 @@ export type CreateFulltextSpatialIndexDefinition = {
     | "spatial key"
     | "fulltext index"
     | "spatial index";
-  index_options?: IndexOption[];
+  index_options?: IndexOption[] | null;
   resource: "index";
 };
 
 export type ConstraintName = { keyword: "constraint"; constraint: string };
 
 export type CreateConstraintPrimary = {
-  constraint?: ConstraintName["constraint"];
+  constraint?: ConstraintName["constraint"] | null;
   definition: ColumnRef[];
   constraint_type: "primary key";
-  keyword?: ConstraintName["keyword"];
-  index_type?: IndexType;
+  keyword?: ConstraintName["keyword"] | null;
+  index_type?: IndexType | null;
   resource: "constraint";
-  index_options?: IndexOption[];
+  index_options?: IndexOption[] | null;
 };
 
 export type CreateConstraintUnique = {
-  constraint?: ConstraintName["constraint"];
+  constraint?: ConstraintName["constraint"] | null;
   definition: ColumnRef[];
   constraint_type: "unique key" | "unique" | "unique index";
-  keyword?: ConstraintName["keyword"];
-  index_type?: IndexType;
-  index?: string;
+  keyword?: ConstraintName["keyword"] | null;
+  index_type?: IndexType | null;
+  index?: string | null;
   resource: "constraint";
-  index_options?: IndexOption[];
+  index_options?: IndexOption[] | null;
 };
 
 export type CreateConstraintForeign = {
-  constraint?: ConstraintName["constraint"];
+  constraint?: ConstraintName["constraint"] | null;
   definition: ColumnRef[];
-  constraint_type: "foreign key";
-  keyword?: ConstraintName["keyword"];
-  index?: string;
+  constraint_type: "foreign key" | "FOREIGN KEY";
+  keyword?: ConstraintName["keyword"] | null;
+  index?: string | null;
   resource: "constraint";
   reference_definition?: ReferenceDefinition;
 };
 
 export type CreateConstraintCheck = {
-  constraint?: ConstraintName["constraint"];
+  constraint?: ConstraintName["constraint"] | null;
   definition: Binary[];
   constraint_type: "check";
-  keyword?: ConstraintName["keyword"];
+  keyword?: ConstraintName["keyword"] | null;
   resource: "constraint";
+  index_type?: IndexType | null;
 };
 
 export type CreateConstraintDefinition =
