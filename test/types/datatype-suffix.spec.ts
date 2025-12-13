@@ -2,18 +2,20 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Create, CreateColumnDefinition } from '../../types.d.ts';
-import { isCreateColumnDefinition } from './types.guard.js';
+import { isCreate, isCreateColumnDefinition } from './types.guard.js';
 
 const parser = new Parser();
 
 test('DataType with UNSIGNED suffix', () => {
   const sql = 'CREATE TABLE users (age INT UNSIGNED)';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
   
-  assert.strictEqual(ast.type, 'create', 'Should be Create type');
-  assert.ok(ast.create_definitions, 'Should have create_definitions');
+  assert.ok(isCreate(ast), 'AST should be a Create type');
+  const createAst = ast as Create;
+  assert.strictEqual(createAst.type, 'create', 'Should be Create type');
+  assert.ok(createAst.create_definitions, 'Should have create_definitions');
   
-  const colDef = ast.create_definitions[0] as CreateColumnDefinition;
+  const colDef = createAst.create_definitions[0] as CreateColumnDefinition;
   assert.ok(isCreateColumnDefinition(colDef), 'Should be CreateColumnDefinition');
   
   const dataType = colDef.definition;
@@ -24,12 +26,14 @@ test('DataType with UNSIGNED suffix', () => {
 
 test('DataType with UNSIGNED ZEROFILL suffix', () => {
   const sql = 'CREATE TABLE users (age INT UNSIGNED ZEROFILL)';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
   
-  assert.strictEqual(ast.type, 'create', 'Should be Create type');
-  assert.ok(ast.create_definitions, 'Should have create_definitions');
+  assert.ok(isCreate(ast), 'AST should be a Create type');
+  const createAst = ast as Create;
+  assert.strictEqual(createAst.type, 'create', 'Should be Create type');
+  assert.ok(createAst.create_definitions, 'Should have create_definitions');
   
-  const colDef = ast.create_definitions[0] as CreateColumnDefinition;
+  const colDef = createAst.create_definitions[0] as CreateColumnDefinition;
   assert.ok(isCreateColumnDefinition(colDef), 'Should be CreateColumnDefinition');
   
   const dataType = colDef.definition;
@@ -41,12 +45,14 @@ test('DataType with UNSIGNED ZEROFILL suffix', () => {
 
 test('DataType with ON UPDATE in reference_definition', () => {
   const sql = 'CREATE TABLE users (updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
   
-  assert.strictEqual(ast.type, 'create', 'Should be Create type');
-  assert.ok(ast.create_definitions, 'Should have create_definitions');
+  assert.ok(isCreate(ast), 'AST should be a Create type');
+  const createAst = ast as Create;
+  assert.strictEqual(createAst.type, 'create', 'Should be Create type');
+  assert.ok(createAst.create_definitions, 'Should have create_definitions');
   
-  const colDef = ast.create_definitions[0] as CreateColumnDefinition;
+  const colDef = createAst.create_definitions[0] as CreateColumnDefinition;
   assert.ok(isCreateColumnDefinition(colDef), 'Should be CreateColumnDefinition');
   
   const dataType = colDef.definition;

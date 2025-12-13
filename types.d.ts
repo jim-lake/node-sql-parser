@@ -174,7 +174,7 @@ export interface AggrFunc {
     distinct?: "DISTINCT" | null;
     orderby?: OrderBy[] | null;
     parentheses?: boolean;
-    separator?: string;
+    separator?: { keyword: string; value: Value } | string | null;
   };
   loc?: LocationRange;
   over?: { type: 'window'; as_window_specification: AsWindowSpec } | null;
@@ -247,7 +247,7 @@ export type ExpressionValue =
 
 export type ExprList = {
   type: "expr_list";
-  value: ExpressionValue[];
+  value: ExpressionValue[] | null;
   loc?: LocationRange;
   parentheses?: boolean;
   separator?: string;
@@ -320,7 +320,7 @@ export interface Insert_Replace {
   type: "replace" | "insert";
   table: From[] | From;
   columns: string[] | null;
-  values: {
+  values?: {
     type: 'values',
     values: InsertReplaceValue[]
   } | Select;
@@ -364,7 +364,7 @@ export interface Delete {
 
 export interface Alter {
   type: "alter";
-  table: From[];
+  table: Array<{ db: string | null; table: string }>;
   expr: AlterExpr[];
   loc?: LocationRange;
 }
@@ -374,7 +374,10 @@ export type AlterExpr = {
   keyword?: string;
   resource?: string;
   type?: string;
-} & Record<string, ExpressionValue | string | null | undefined>;
+  column?: ColumnRef;
+  definition?: DataType;
+  suffix?: string | null;
+};
 
 export interface Use {
   type: "use";
@@ -575,7 +578,7 @@ export interface Create {
   type: "create";
   keyword: "aggregate" | "table" | "trigger" | "extension" | "function" | "index" | "database" | "schema" | "view" | "domain" | "type" | "user";
   temporary?: "temporary" | null;
-  table?: { db: string; table: string }[] | { db: string | null, table: string };
+  table?: { db: string | null; table: string }[] | { db: string | null, table: string };
   if_not_exists?: "if not exists" | null;
   like?: {
     type: "like";
@@ -601,31 +604,34 @@ export interface Create {
     keyword: "algorithm";
     resource: "algorithm";
     symbol: "=" | null;
-    algorithm: "default" | "instant" | "inplace" | "copy";
+    algorithm: string;
   } | null;
   lock_option?: {
     type: "alter";
     keyword: "lock";
     resource: "lock";
     symbol: "=" | null;
-    lock: "default" | "none" | "shared" | "exclusive";
+    lock: string;
   } | null;
   database?: string | { schema: ValueExpr[] };
   loc?: LocationRange;
   where?: Binary | Function | null;
   definer?: Binary | null;
-  for_each?: 'row' | 'statement' | null;
+  trigger?: { db: string | null; table: string };
+  time?: string;
+  for_each?: { keyword: string; args: string } | 'row' | 'statement' | null;
   events?: TriggerEvent[] | null;
   order?: {
     type: 'follows' | 'precedes';
     trigger: string;
   } | null;
-  execute?: SetList[] | null;
-  replace?: boolean;
+  execute?: { type: "set"; expr: SetList[] } | SetList[] | null;
+  replace?: boolean | null;
   algorithm?: 'undefined' | 'merge' | 'temptable' | null;
   sql_security?: 'definer' | 'invoker' | null;
+  columns?: string[] | null;
   select?: Select | null;
-  view?: From | null;
+  view?: { db: string | null; view: string } | From | null;
   with?: 'cascaded' | 'local' | null;
   user?: UserAuthOption[] | null;
   default_role?: string[] | null;
@@ -648,8 +654,9 @@ export type UserAuthOption = {
     host: ValueExpr;
   };
   auth_option?: {
-    type: 'identified_by' | 'identified_with';
-    value: string;
+    keyword: string;
+    auth_plugin?: string | null;
+    value: ValueExpr & { prefix?: string };
   } | null;
 };
 
@@ -726,8 +733,13 @@ export interface Call {
 
 export interface Set {
   type: "set";
-  keyword?: string;
-  expr: SetList[];
+  keyword?: string | null;
+  expr: Array<{
+    type: "assign";
+    left: Var;
+    symbol: string;
+    right: ExpressionValue;
+  }>;
   loc?: LocationRange;
 }
 

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Select, Insert_Replace, Drop, Create } from '../../types.d.ts';
-import { isSelect, isInsert_Replace, isDrop } from './types.guard.js';
+import { isSelect, isInsert_Replace, isDrop, isCreate } from './types.guard.js';
 
 const parser = new Parser();
 
@@ -72,12 +72,14 @@ test('INSERT with IGNORE prefix', () => {
 
 test('DataType with length and scale', () => {
   const sql = 'CREATE TABLE products (price DECIMAL(10, 2))';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
   
-  assert.strictEqual(ast.type, 'create', 'Should be Create type');
-  assert.ok(ast.create_definitions, 'Should have create_definitions');
+  assert.ok(isCreate(ast), 'AST should be a Create type');
+  const createAst = ast as Create;
+  assert.strictEqual(createAst.type, 'create', 'Should be Create type');
+  assert.ok(createAst.create_definitions, 'Should have create_definitions');
   
-  const colDef = ast.create_definitions[0];
+  const colDef = createAst.create_definitions[0];
   if ('definition' in colDef) {
     const dataType = colDef.definition;
     assert.strictEqual(dataType.dataType, 'DECIMAL', 'Should be DECIMAL type');
@@ -88,12 +90,14 @@ test('DataType with length and scale', () => {
 
 test('DataType with parentheses flag', () => {
   const sql = 'CREATE TABLE users (name VARCHAR(50))';
-  const ast = parser.astify(sql) as Create;
+  const ast = parser.astify(sql);
   
-  assert.strictEqual(ast.type, 'create', 'Should be Create type');
-  assert.ok(ast.create_definitions, 'Should have create_definitions');
+  assert.ok(isCreate(ast), 'AST should be a Create type');
+  const createAst = ast as Create;
+  assert.strictEqual(createAst.type, 'create', 'Should be Create type');
+  assert.ok(createAst.create_definitions, 'Should have create_definitions');
   
-  const colDef = ast.create_definitions[0];
+  const colDef = createAst.create_definitions[0];
   if ('definition' in colDef) {
     const dataType = colDef.definition;
     assert.strictEqual(dataType.dataType, 'VARCHAR', 'Should be VARCHAR type');

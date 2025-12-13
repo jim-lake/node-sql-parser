@@ -2,14 +2,17 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Select, Column, AggrFunc, WindowSpec, WindowFrameClause, WindowFrameBound } from '../../types.d.ts';
+import { isSelect } from './types.guard.ts';
 
 const parser = new Parser();
 
 test('Window function with frame clause', () => {
   const sql = 'SELECT SUM(amount) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) FROM orders';
-  const ast = parser.astify(sql) as Select;
+  const ast = parser.astify(sql);
   
-  const col = (ast.columns as Column[])[0];
+  assert.ok(isSelect(ast), 'AST should be a Select type');
+  const selectAst = ast as Select;
+  const col = (selectAst.columns as Column[])[0];
   const aggrFunc = col.expr as AggrFunc;
   assert.strictEqual(aggrFunc.type, 'aggr_func');
   
