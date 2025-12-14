@@ -579,7 +579,7 @@ export type ColumnDefinitionOptList = {
   default_val?: ColumnConstraint["default_val"];
   auto_increment?: "auto_increment";
   unique?: "unique" | "unique key";
-  primary?: "key" | "primary key";
+  primary_key?: "key" | "primary key";
   comment?: KeywordComment;
   collate?: CollateExpr;
   column_format?: { type: string; value: string };
@@ -587,8 +587,12 @@ export type ColumnDefinitionOptList = {
   reference_definition?: ReferenceDefinition;
   character_set?: { type: "CHARACTER SET"; value: ValueExpr; symbol: "=" | null };
   check?: {
-    type: 'check';
-    expr: Binary;
+    constraint_type: 'check';
+    keyword: 'constraint' | null;
+    constraint: string | null;
+    definition: ExpressionValue[];
+    enforced: 'enforced' | 'not enforced' | '';
+    resource: 'constraint';
   };
   generated?: {
     type: 'generated';
@@ -757,7 +761,7 @@ export interface CreateIndex {
     keyword: "using";
     type: "btree" | "hash";
   } | null;
-  index?: string | null | { schema: string | null, name: string};
+  index?: string | null;
   on_kw?: "on" | null;
   table?: { db: string | null; table: string }[] | { db: string | null, table: string };
   index_columns?: ColumnRefItem[] | null;

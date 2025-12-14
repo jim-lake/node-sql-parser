@@ -2244,9 +2244,9 @@ export function isColumnDefinitionOptList(obj: unknown): obj is ColumnDefinition
         (typeof typedObj["unique"] === "undefined" ||
             typedObj["unique"] === "unique" ||
             typedObj["unique"] === "unique key") &&
-        (typeof typedObj["primary"] === "undefined" ||
-            typedObj["primary"] === "key" ||
-            typedObj["primary"] === "primary key") &&
+        (typeof typedObj["primary_key"] === "undefined" ||
+            typedObj["primary_key"] === "key" ||
+            typedObj["primary_key"] === "primary key") &&
         (typeof typedObj["comment"] === "undefined" ||
             isKeywordComment(typedObj["comment"]) as boolean) &&
         (typeof typedObj["collate"] === "undefined" ||
@@ -2303,8 +2303,19 @@ export function isColumnDefinitionOptList(obj: unknown): obj is ColumnDefinition
             (typedObj["check"] !== null &&
                 typeof typedObj["check"] === "object" ||
                 typeof typedObj["check"] === "function") &&
-            typedObj["check"]["type"] === "check" &&
-            isBinary(typedObj["check"]["expr"]) as boolean) &&
+            typedObj["check"]["constraint_type"] === "check" &&
+            (typedObj["check"]["keyword"] === null ||
+                typedObj["check"]["keyword"] === "constraint") &&
+            (typedObj["check"]["constraint"] === null ||
+                typeof typedObj["check"]["constraint"] === "string") &&
+            Array.isArray(typedObj["check"]["definition"]) &&
+            typedObj["check"]["definition"].every((e: any) =>
+                isExpressionValue(e) as boolean
+            ) &&
+            (typedObj["check"]["enforced"] === "" ||
+                typedObj["check"]["enforced"] === "enforced" ||
+                typedObj["check"]["enforced"] === "not enforced") &&
+            typedObj["check"]["resource"] === "constraint") &&
         (typeof typedObj["generated"] === "undefined" ||
             (typedObj["generated"] !== null &&
                 typeof typedObj["generated"] === "object" ||
@@ -2884,13 +2895,7 @@ export function isCreateIndex(obj: unknown): obj is CreateIndex {
                 typedObj["index_using"]["type"] === "hash")) &&
         (typeof typedObj["index"] === "undefined" ||
             typedObj["index"] === null ||
-            typeof typedObj["index"] === "string" ||
-            (typedObj["index"] !== null &&
-                typeof typedObj["index"] === "object" ||
-                typeof typedObj["index"] === "function") &&
-            (typedObj["index"]["schema"] === null ||
-                typeof typedObj["index"]["schema"] === "string") &&
-            typeof typedObj["index"]["name"] === "string") &&
+            typeof typedObj["index"] === "string") &&
         (typeof typedObj["on_kw"] === "undefined" ||
             typedObj["on_kw"] === null ||
             typedObj["on_kw"] === "on") &&
