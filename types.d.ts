@@ -356,14 +356,168 @@ export interface Alter {
   loc?: LocationRange;
 }
 
-export type AlterExpr = {
-  action: string;
+export type AlterExpr = 
+  | AlterAddColumn
+  | AlterDropColumn
+  | AlterModifyColumn
+  | AlterChangeColumn
+  | AlterRenameTable
+  | AlterRenameColumn
+  | AlterAddIndex
+  | AlterDropIndex
+  | AlterDropKey
+  | AlterAddConstraint
+  | AlterDropConstraint
+  | AlterAddPartition
+  | AlterDropPartition
+  | AlterAlgorithm
+  | AlterLock
+  | AlterTableOption;
+
+export type AlterAddColumn = {
+  type: 'alter';
+  resource: 'column';
+  action: 'add';
+  keyword?: 'COLUMN';
+  column: ColumnRef;
+  definition: DataType;
+  suffix: string | null | { keyword: string };
+};
+
+export type AlterDropColumn = {
+  type: 'alter';
+  resource: 'column';
+  action: 'drop';
+  keyword?: 'COLUMN';
+  column: ColumnRef;
+};
+
+export type AlterModifyColumn = {
+  type: 'alter';
+  resource: 'column';
+  action: 'modify';
+  keyword: 'COLUMN' | null;
+  column: ColumnRef;
+  definition: DataType;
+  suffix: string | null | { keyword: string };
+};
+
+export type AlterChangeColumn = {
+  type: 'alter';
+  resource: 'column';
+  action: 'change';
+  keyword: 'COLUMN' | null;
+  old_column: ColumnRef;
+  column: ColumnRef;
+  definition: DataType;
+  suffix: string | null | { keyword: string };
+};
+
+export type AlterRenameTable = {
+  type: 'alter';
+  resource: 'table';
+  action: 'rename';
   keyword: string;
+  table: string;
+};
+
+export type AlterRenameColumn = {
+  type: 'alter';
+  resource: 'column';
+  action: 'rename';
+  keyword: 'column';
+  old_column: ColumnRef;
+  prefix: string;
+  column: ColumnRef;
+};
+
+export type AlterAddIndex = {
+  type: 'alter';
+  resource: 'index';
+  action: 'add';
+  keyword: string;
+  index: string;
+  definition: ColumnRef[];
+  index_type: IndexType | null;
+  index_options: IndexOption[] | null;
+};
+
+export type AlterDropIndex = {
+  type: 'alter';
+  resource: 'index';
+  action: 'drop';
+  keyword: string;
+  index: string;
+};
+
+export type AlterDropKey = {
+  type: 'alter';
+  resource: 'key';
+  action: 'drop';
+  keyword: string;
+  key: string;
+};
+
+export type AlterAddConstraint = {
+  type: 'alter';
+  resource: 'constraint';
+  action: 'add';
+  create_definitions: CreateConstraintDefinition;
+};
+
+export type AlterDropConstraint = {
+  type: 'alter';
+  resource: 'constraint';
+  action: 'drop';
+  keyword: string;
+  constraint: string;
+};
+
+export type AlterAddPartition = {
+  type: 'alter';
+  resource: 'partition';
+  action: 'add';
+  keyword: 'PARTITION';
+  partitions: Array<{
+    name: ValueExpr;
+    value: {
+      type: string;
+      expr: Value;
+      parentheses: boolean;
+    };
+  }>;
+};
+
+export type AlterDropPartition = {
+  type: 'alter';
+  resource: 'partition';
+  action: 'drop';
+  keyword: 'PARTITION';
+  partitions: Column[];
+};
+
+export type AlterAlgorithm = {
+  type: 'alter';
+  resource: 'algorithm';
+  keyword: 'algorithm';
+  symbol: string;
+  algorithm: string;
+};
+
+export type AlterLock = {
+  type: 'alter';
+  resource: 'lock';
+  keyword: 'lock';
+  symbol: string;
+  lock: string;
+};
+
+export type AlterTableOption = {
+  type: 'alter';
   resource: string;
-  type: string;
-  column?: ColumnRef;
-  definition?: DataType;
-  suffix?: string | null;
+  keyword: string;
+  symbol: string;
+  engine?: string;
 };
 
 export interface Use {
@@ -565,7 +719,7 @@ export interface CreateTable {
   keyword: "table";
   temporary: "temporary" | null;
   table: { db: string | null; table: string }[] | { db: string | null, table: string };
-  if_not_exists: "if not exists" | null;
+  if_not_exists: "IF NOT EXISTS" | null;
   like?: {
     type: "like";
     table: From[];
@@ -582,7 +736,7 @@ export interface CreateTable {
 export interface CreateDatabase {
   type: "create";
   keyword: "database";
-  if_not_exists?: "if not exists" | null;
+  if_not_exists?: "IF NOT EXISTS" | null;
   database?: string | { schema: ValueExpr[] };
   loc?: LocationRange;
 }
@@ -590,7 +744,7 @@ export interface CreateDatabase {
 export interface CreateSchema {
   type: "create";
   keyword: "schema";
-  if_not_exists?: "if not exists" | null;
+  if_not_exists?: "IF NOT EXISTS" | null;
   database?: string | { schema: ValueExpr[] };
   loc?: LocationRange;
 }
@@ -649,7 +803,7 @@ export interface CreateTrigger {
   table?: { db: string | null; table: string }[] | { db: string | null, table: string };
   for_each?: { keyword: string; args: string } | 'row' | 'statement' | null;
   order?: {
-    type: 'follows' | 'precedes';
+    keyword: 'FOLLOWS' | 'PRECEDES';
     trigger: string;
   } | null;
   execute?: { type: "set"; expr: SetList[] } | SetList[] | null;
@@ -659,7 +813,7 @@ export interface CreateTrigger {
 export interface CreateUser {
   type: "create";
   keyword: "user";
-  if_not_exists?: "if not exists" | null;
+  if_not_exists?: "IF NOT EXISTS" | null;
   user?: UserAuthOption[] | null;
   default_role?: string[] | null;
   require?: RequireOption | null;
@@ -842,7 +996,7 @@ export interface Grant {
   to_from: "TO" | "FROM";
   user_or_roles: Array<{
     name: ValueExpr;
-    host: string | null;
+    host: ValueExpr | null;
   }>;
   with: any | null;
   loc?: LocationRange;
@@ -867,15 +1021,15 @@ export interface LoadData {
 
 export type LoadDataField = {
   keyword: 'FIELDS';
-  terminated?: { type: string; value: string; prefix: string };
-  enclosed?: { type: string; value: string; prefix: string };
-  escaped?: { type: string; value: string; prefix: string };
+  terminated: ValueExpr & { prefix: string } | null;
+  enclosed: ValueExpr & { prefix: string } | null;
+  escaped: ValueExpr & { prefix: string } | null;
 };
 
 export type LoadDataLine = {
   keyword: 'LINES';
-  starting?: { type: string; value: string; prefix: string };
-  terminated?: { type: string; value: string; prefix: string };
+  starting?: ValueExpr & { prefix: string };
+  terminated: ValueExpr & { prefix: string } | null;
 };
 
 export interface Truncate {
