@@ -8,6 +8,7 @@ const parser = new Parser();
 describe('Binary, Unary, and ExprList Types', () => {
   test('Binary expression with AND operator', () => {
     const ast = parser.astify("SELECT * FROM t WHERE a AND b");
+    assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
     assert.ok(isBinary(where), 'WHERE clause should be Binary');
     assert.strictEqual(where.operator, 'AND');
@@ -15,6 +16,7 @@ describe('Binary, Unary, and ExprList Types', () => {
 
   test('Binary expression with OR operator', () => {
     const ast = parser.astify("SELECT * FROM t WHERE a OR b");
+    assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
     assert.ok(isBinary(where), 'WHERE clause should be Binary');
     assert.strictEqual(where.operator, 'OR');
@@ -22,6 +24,7 @@ describe('Binary, Unary, and ExprList Types', () => {
 
   test('Binary expression with comparison operators', () => {
     const ast = parser.astify("SELECT * FROM t WHERE age > 18");
+    assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
     assert.ok(isBinary(where), 'WHERE clause should be Binary');
     assert.strictEqual(where.operator, '>');
@@ -29,6 +32,7 @@ describe('Binary, Unary, and ExprList Types', () => {
 
   test('Binary expression with BETWEEN', () => {
     const ast = parser.astify("SELECT * FROM t WHERE age BETWEEN 18 AND 65");
+    assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
     assert.ok(isBinary(where), 'WHERE clause should be Binary');
     assert.strictEqual(where.operator, 'BETWEEN');
@@ -36,6 +40,7 @@ describe('Binary, Unary, and ExprList Types', () => {
 
   test('Binary expression with IS NULL', () => {
     const ast = parser.astify("SELECT * FROM t WHERE name IS NULL");
+    assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
     assert.ok(isBinary(where), 'WHERE clause should be Binary');
     assert.strictEqual(where.operator, 'IS');
@@ -43,6 +48,7 @@ describe('Binary, Unary, and ExprList Types', () => {
 
   test('Binary expression with IS NOT NULL', () => {
     const ast = parser.astify("SELECT * FROM t WHERE name IS NOT NULL");
+    assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
     assert.ok(isBinary(where), 'WHERE clause should be Binary');
     assert.strictEqual(where.operator, 'IS NOT');
@@ -52,7 +58,6 @@ describe('Binary, Unary, and ExprList Types', () => {
     const ast = parser.astify("SELECT * FROM t WHERE NOT active");
     assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
-    // NOT is a unary_expr type
     assert.strictEqual(where.type, 'unary_expr');
     assert.strictEqual(where.operator, 'NOT');
     assert.ok(where.expr, 'Should have expr property');
@@ -60,6 +65,7 @@ describe('Binary, Unary, and ExprList Types', () => {
 
   test('ExprList in IN clause', () => {
     const ast = parser.astify("SELECT * FROM t WHERE id IN (1, 2, 3)");
+    assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
     assert.ok(isBinary(where), 'WHERE clause should be Binary');
     assert.strictEqual(where.operator, 'IN');
@@ -80,6 +86,7 @@ describe('Binary, Unary, and ExprList Types', () => {
 
   test('Binary expression with nested structure', () => {
     const ast = parser.astify("SELECT * FROM t WHERE (a AND b) OR c");
+    assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
     assert.ok(isBinary(where), 'WHERE clause should be Binary');
     assert.strictEqual(where.operator, 'OR');
@@ -91,7 +98,6 @@ describe('Binary, Unary, and ExprList Types', () => {
     const ast = parser.astify("SELECT * FROM t WHERE EXISTS (SELECT 1 FROM users)");
     assert.ok(isSelect(ast), 'Should be Select');
     const where = ast.where;
-    // EXISTS is represented as a Function
     assert.strictEqual(where.type, 'function');
     assert.strictEqual(where.name.name[0].value, 'EXISTS');
   });
