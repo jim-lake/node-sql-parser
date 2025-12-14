@@ -570,9 +570,9 @@ export type CreateDefinition =
   | CreateFulltextSpatialIndexDefinition
   | CreateConstraintDefinition;
 
-export interface Create {
+export interface CreateTable {
   type: "create";
-  keyword: "aggregate" | "table" | "trigger" | "extension" | "function" | "index" | "database" | "schema" | "view" | "domain" | "type" | "user";
+  keyword: "table";
   temporary?: "temporary" | null;
   table?: { db: string | null; table: string }[] | { db: string | null, table: string };
   if_not_exists?: "if not exists" | null;
@@ -586,12 +586,35 @@ export interface Create {
   query_expr?: Select | null;
   create_definitions?: CreateDefinition[] | null;
   table_options?: TableOption[] | null;
+  loc?: LocationRange;
+}
+
+export interface CreateDatabase {
+  type: "create";
+  keyword: "database";
+  if_not_exists?: "if not exists" | null;
+  database?: string | { schema: ValueExpr[] };
+  loc?: LocationRange;
+}
+
+export interface CreateSchema {
+  type: "create";
+  keyword: "schema";
+  if_not_exists?: "if not exists" | null;
+  database?: string | { schema: ValueExpr[] };
+  loc?: LocationRange;
+}
+
+export interface CreateIndex {
+  type: "create";
+  keyword: "index";
   index_using?: {
     keyword: "using";
     type: "btree" | "hash";
   } | null;
   index?: string | null | { schema: string | null, name: string};
   on_kw?: "on" | null;
+  table?: { db: string | null; table: string }[] | { db: string | null, table: string };
   index_columns?: ColumnRefItem[] | null;
   index_type?: "unique" | "fulltext" | "spatial" | null;
   index_options?: IndexOption[] | null;
@@ -609,26 +632,44 @@ export interface Create {
     symbol: "=" | null;
     lock: string;
   } | null;
-  database?: string | { schema: ValueExpr[] };
   loc?: LocationRange;
-  where?: Binary | Function | null;
+}
+
+export interface CreateView {
+  type: "create";
+  keyword: "view";
+  replace?: boolean | null;
+  algorithm?: 'undefined' | 'merge' | 'temptable' | null;
+  definer?: Binary | null;
+  sql_security?: 'definer' | 'invoker' | null;
+  view?: { db: string | null; view: string } | From | null;
+  columns?: string[] | null;
+  select?: Select | null;
+  with?: 'cascaded' | 'local' | null;
+  loc?: LocationRange;
+}
+
+export interface CreateTrigger {
+  type: "create";
+  keyword: "trigger";
   definer?: Binary | null;
   trigger?: { db: string | null; table: string };
   time?: string;
-  for_each?: { keyword: string; args: string } | 'row' | 'statement' | null;
   events?: TriggerEvent[] | null;
+  table?: { db: string | null; table: string }[] | { db: string | null, table: string };
+  for_each?: { keyword: string; args: string } | 'row' | 'statement' | null;
   order?: {
     type: 'follows' | 'precedes';
     trigger: string;
   } | null;
   execute?: { type: "set"; expr: SetList[] } | SetList[] | null;
-  replace?: boolean | null;
-  algorithm?: 'undefined' | 'merge' | 'temptable' | null;
-  sql_security?: 'definer' | 'invoker' | null;
-  columns?: string[] | null;
-  select?: Select | null;
-  view?: { db: string | null; view: string } | From | null;
-  with?: 'cascaded' | 'local' | null;
+  loc?: LocationRange;
+}
+
+export interface CreateUser {
+  type: "create";
+  keyword: "user";
+  if_not_exists?: "if not exists" | null;
   user?: UserAuthOption[] | null;
   default_role?: string[] | null;
   require?: RequireOption | null;
@@ -637,7 +678,10 @@ export interface Create {
   lock_option_user?: 'account lock' | 'account unlock' | null;
   comment_user?: string | null;
   attribute?: string | null;
+  loc?: LocationRange;
 }
+
+export type Create = CreateTable | CreateDatabase | CreateSchema | CreateIndex | CreateView | CreateTrigger | CreateUser;
 
 export type TriggerEvent = {
   keyword: 'insert' | 'update' | 'delete';

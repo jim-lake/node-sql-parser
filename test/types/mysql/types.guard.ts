@@ -2,7 +2,7 @@
  * Generated type guards for "types.d.ts".
  * WARNING: Do not manually change this file.
  */
-import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, SortDirection, ColumnRefItem, ColumnRefExpr, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionName, Function, Column, Interval, Param, Var, Value, Binary, Unary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Returning, Update, Delete, Alter, AlterExpr, Use, KW_UNSIGNED, KW_ZEROFILL, Timezone, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
+import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, SortDirection, ColumnRefItem, ColumnRefExpr, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionName, Function, Column, Interval, Param, Var, Value, Binary, Unary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Returning, Update, Delete, Alter, AlterExpr, Use, KW_UNSIGNED, KW_ZEROFILL, Timezone, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, CreateTable, CreateDatabase, CreateSchema, CreateIndex, CreateView, CreateTrigger, CreateUser, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
 
 export function isWith(obj: unknown): obj is With {
     const typedObj = obj as With
@@ -87,7 +87,13 @@ export function isTableColumnAst(obj: unknown): obj is TableColumnAst {
             isDelete(typedObj["ast"]) as boolean ||
             isAlter(typedObj["ast"]) as boolean ||
             isUse(typedObj["ast"]) as boolean ||
-            isCreate(typedObj["ast"]) as boolean ||
+            isCreateTable(typedObj["ast"]) as boolean ||
+            isCreateDatabase(typedObj["ast"]) as boolean ||
+            isCreateSchema(typedObj["ast"]) as boolean ||
+            isCreateIndex(typedObj["ast"]) as boolean ||
+            isCreateView(typedObj["ast"]) as boolean ||
+            isCreateTrigger(typedObj["ast"]) as boolean ||
+            isCreateUser(typedObj["ast"]) as boolean ||
             isDrop(typedObj["ast"]) as boolean ||
             isShow(typedObj["ast"]) as boolean ||
             isDesc(typedObj["ast"]) as boolean ||
@@ -2353,25 +2359,14 @@ export function isCreateDefinition(obj: unknown): obj is CreateDefinition {
     )
 }
 
-export function isCreate(obj: unknown): obj is Create {
-    const typedObj = obj as Create
+export function isCreateTable(obj: unknown): obj is CreateTable {
+    const typedObj = obj as CreateTable
     return (
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         typedObj["type"] === "create" &&
-        (typedObj["keyword"] === "function" ||
-            typedObj["keyword"] === "index" ||
-            typedObj["keyword"] === "aggregate" ||
-            typedObj["keyword"] === "table" ||
-            typedObj["keyword"] === "trigger" ||
-            typedObj["keyword"] === "extension" ||
-            typedObj["keyword"] === "database" ||
-            typedObj["keyword"] === "schema" ||
-            typedObj["keyword"] === "view" ||
-            typedObj["keyword"] === "domain" ||
-            typedObj["keyword"] === "type" ||
-            typedObj["keyword"] === "user") &&
+        typedObj["keyword"] === "table" &&
         (typeof typedObj["temporary"] === "undefined" ||
             typedObj["temporary"] === null ||
             typedObj["temporary"] === "temporary") &&
@@ -2429,65 +2424,36 @@ export function isCreate(obj: unknown): obj is Create {
             typedObj["table_options"].every((e: any) =>
                 isTableOption(e) as boolean
             )) &&
-        (typeof typedObj["index_using"] === "undefined" ||
-            typedObj["index_using"] === null ||
-            (typedObj["index_using"] !== null &&
-                typeof typedObj["index_using"] === "object" ||
-                typeof typedObj["index_using"] === "function") &&
-            typedObj["index_using"]["keyword"] === "using" &&
-            (typedObj["index_using"]["type"] === "btree" ||
-                typedObj["index_using"]["type"] === "hash")) &&
-        (typeof typedObj["index"] === "undefined" ||
-            typedObj["index"] === null ||
-            typeof typedObj["index"] === "string" ||
-            (typedObj["index"] !== null &&
-                typeof typedObj["index"] === "object" ||
-                typeof typedObj["index"] === "function") &&
-            (typedObj["index"]["schema"] === null ||
-                typeof typedObj["index"]["schema"] === "string") &&
-            typeof typedObj["index"]["name"] === "string") &&
-        (typeof typedObj["on_kw"] === "undefined" ||
-            typedObj["on_kw"] === null ||
-            typedObj["on_kw"] === "on") &&
-        (typeof typedObj["index_columns"] === "undefined" ||
-            typedObj["index_columns"] === null ||
-            Array.isArray(typedObj["index_columns"]) &&
-            typedObj["index_columns"].every((e: any) =>
-                isColumnRefItem(e) as boolean
-            )) &&
-        (typeof typedObj["index_type"] === "undefined" ||
-            typedObj["index_type"] === null ||
-            typedObj["index_type"] === "unique" ||
-            typedObj["index_type"] === "fulltext" ||
-            typedObj["index_type"] === "spatial") &&
-        (typeof typedObj["index_options"] === "undefined" ||
-            typedObj["index_options"] === null ||
-            Array.isArray(typedObj["index_options"]) &&
-            typedObj["index_options"].every((e: any) =>
-                isIndexOption(e) as boolean
-            )) &&
-        (typeof typedObj["algorithm_option"] === "undefined" ||
-            typedObj["algorithm_option"] === null ||
-            (typedObj["algorithm_option"] !== null &&
-                typeof typedObj["algorithm_option"] === "object" ||
-                typeof typedObj["algorithm_option"] === "function") &&
-            typedObj["algorithm_option"]["type"] === "alter" &&
-            typedObj["algorithm_option"]["keyword"] === "algorithm" &&
-            typedObj["algorithm_option"]["resource"] === "algorithm" &&
-            (typedObj["algorithm_option"]["symbol"] === null ||
-                typedObj["algorithm_option"]["symbol"] === "=") &&
-            typeof typedObj["algorithm_option"]["algorithm"] === "string") &&
-        (typeof typedObj["lock_option"] === "undefined" ||
-            typedObj["lock_option"] === null ||
-            (typedObj["lock_option"] !== null &&
-                typeof typedObj["lock_option"] === "object" ||
-                typeof typedObj["lock_option"] === "function") &&
-            typedObj["lock_option"]["type"] === "alter" &&
-            typedObj["lock_option"]["keyword"] === "lock" &&
-            typedObj["lock_option"]["resource"] === "lock" &&
-            (typedObj["lock_option"]["symbol"] === null ||
-                typedObj["lock_option"]["symbol"] === "=") &&
-            typeof typedObj["lock_option"]["lock"] === "string") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isCreateDatabase(obj: unknown): obj is CreateDatabase {
+    const typedObj = obj as CreateDatabase
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "create" &&
+        typedObj["keyword"] === "database" &&
+        (typeof typedObj["if_not_exists"] === "undefined" ||
+            typedObj["if_not_exists"] === null ||
+            typedObj["if_not_exists"] === "if not exists") &&
         (typeof typedObj["database"] === "undefined" ||
             typeof typedObj["database"] === "string" ||
             (typedObj["database"] !== null &&
@@ -2540,11 +2506,255 @@ export function isCreate(obj: unknown): obj is Create {
                 typeof typedObj["loc"]["end"] === "function") &&
             typeof typedObj["loc"]["end"]["line"] === "number" &&
             typeof typedObj["loc"]["end"]["column"] === "number" &&
-            typeof typedObj["loc"]["end"]["offset"] === "number") &&
-        (typeof typedObj["where"] === "undefined" ||
-            typedObj["where"] === null ||
-            isFunction(typedObj["where"]) as boolean ||
-            isBinary(typedObj["where"]) as boolean) &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isCreateSchema(obj: unknown): obj is CreateSchema {
+    const typedObj = obj as CreateSchema
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "create" &&
+        typedObj["keyword"] === "schema" &&
+        (typeof typedObj["if_not_exists"] === "undefined" ||
+            typedObj["if_not_exists"] === null ||
+            typedObj["if_not_exists"] === "if not exists") &&
+        (typeof typedObj["database"] === "undefined" ||
+            typeof typedObj["database"] === "string" ||
+            (typedObj["database"] !== null &&
+                typeof typedObj["database"] === "object" ||
+                typeof typedObj["database"] === "function") &&
+            Array.isArray(typedObj["database"]["schema"]) &&
+            typedObj["database"]["schema"].every((e: any) =>
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (e["type"] === "string" ||
+                    e["type"] === "number" ||
+                    e["type"] === "boolean" ||
+                    e["type"] === "backticks_quote_string" ||
+                    e["type"] === "regex_string" ||
+                    e["type"] === "hex_string" ||
+                    e["type"] === "full_hex_string" ||
+                    e["type"] === "natural_string" ||
+                    e["type"] === "bit_string" ||
+                    e["type"] === "double_quote_string" ||
+                    e["type"] === "single_quote_string" ||
+                    e["type"] === "bool" ||
+                    e["type"] === "null" ||
+                    e["type"] === "star" ||
+                    e["type"] === "param" ||
+                    e["type"] === "origin" ||
+                    e["type"] === "date" ||
+                    e["type"] === "datetime" ||
+                    e["type"] === "default" ||
+                    e["type"] === "time" ||
+                    e["type"] === "timestamp" ||
+                    e["type"] === "var_string") &&
+                (typeof e["value"] === "string" ||
+                    typeof e["value"] === "number" ||
+                    e["value"] === false ||
+                    e["value"] === true)
+            )) &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isCreateIndex(obj: unknown): obj is CreateIndex {
+    const typedObj = obj as CreateIndex
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "create" &&
+        typedObj["keyword"] === "index" &&
+        (typeof typedObj["index_using"] === "undefined" ||
+            typedObj["index_using"] === null ||
+            (typedObj["index_using"] !== null &&
+                typeof typedObj["index_using"] === "object" ||
+                typeof typedObj["index_using"] === "function") &&
+            typedObj["index_using"]["keyword"] === "using" &&
+            (typedObj["index_using"]["type"] === "btree" ||
+                typedObj["index_using"]["type"] === "hash")) &&
+        (typeof typedObj["index"] === "undefined" ||
+            typedObj["index"] === null ||
+            typeof typedObj["index"] === "string" ||
+            (typedObj["index"] !== null &&
+                typeof typedObj["index"] === "object" ||
+                typeof typedObj["index"] === "function") &&
+            (typedObj["index"]["schema"] === null ||
+                typeof typedObj["index"]["schema"] === "string") &&
+            typeof typedObj["index"]["name"] === "string") &&
+        (typeof typedObj["on_kw"] === "undefined" ||
+            typedObj["on_kw"] === null ||
+            typedObj["on_kw"] === "on") &&
+        (typeof typedObj["table"] === "undefined" ||
+            Array.isArray(typedObj["table"]) &&
+            typedObj["table"].every((e: any) =>
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (e["db"] === null ||
+                    typeof e["db"] === "string") &&
+                typeof e["table"] === "string"
+            ) ||
+            (typedObj["table"] !== null &&
+                typeof typedObj["table"] === "object" ||
+                typeof typedObj["table"] === "function") &&
+            (typedObj["table"]["db"] === null ||
+                typeof typedObj["table"]["db"] === "string") &&
+            typeof typedObj["table"]["table"] === "string") &&
+        (typeof typedObj["index_columns"] === "undefined" ||
+            typedObj["index_columns"] === null ||
+            Array.isArray(typedObj["index_columns"]) &&
+            typedObj["index_columns"].every((e: any) =>
+                isColumnRefItem(e) as boolean
+            )) &&
+        (typeof typedObj["index_type"] === "undefined" ||
+            typedObj["index_type"] === null ||
+            typedObj["index_type"] === "unique" ||
+            typedObj["index_type"] === "fulltext" ||
+            typedObj["index_type"] === "spatial") &&
+        (typeof typedObj["index_options"] === "undefined" ||
+            typedObj["index_options"] === null ||
+            Array.isArray(typedObj["index_options"]) &&
+            typedObj["index_options"].every((e: any) =>
+                isIndexOption(e) as boolean
+            )) &&
+        (typeof typedObj["algorithm_option"] === "undefined" ||
+            typedObj["algorithm_option"] === null ||
+            (typedObj["algorithm_option"] !== null &&
+                typeof typedObj["algorithm_option"] === "object" ||
+                typeof typedObj["algorithm_option"] === "function") &&
+            typedObj["algorithm_option"]["type"] === "alter" &&
+            typedObj["algorithm_option"]["keyword"] === "algorithm" &&
+            typedObj["algorithm_option"]["resource"] === "algorithm" &&
+            (typedObj["algorithm_option"]["symbol"] === null ||
+                typedObj["algorithm_option"]["symbol"] === "=") &&
+            typeof typedObj["algorithm_option"]["algorithm"] === "string") &&
+        (typeof typedObj["lock_option"] === "undefined" ||
+            typedObj["lock_option"] === null ||
+            (typedObj["lock_option"] !== null &&
+                typeof typedObj["lock_option"] === "object" ||
+                typeof typedObj["lock_option"] === "function") &&
+            typedObj["lock_option"]["type"] === "alter" &&
+            typedObj["lock_option"]["keyword"] === "lock" &&
+            typedObj["lock_option"]["resource"] === "lock" &&
+            (typedObj["lock_option"]["symbol"] === null ||
+                typedObj["lock_option"]["symbol"] === "=") &&
+            typeof typedObj["lock_option"]["lock"] === "string") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isCreateView(obj: unknown): obj is CreateView {
+    const typedObj = obj as CreateView
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "create" &&
+        typedObj["keyword"] === "view" &&
+        (typeof typedObj["replace"] === "undefined" ||
+            typedObj["replace"] === null ||
+            typedObj["replace"] === false ||
+            typedObj["replace"] === true) &&
+        (typeof typedObj["algorithm"] === "undefined" ||
+            typedObj["algorithm"] === null ||
+            typedObj["algorithm"] === "undefined" ||
+            typedObj["algorithm"] === "merge" ||
+            typedObj["algorithm"] === "temptable") &&
+        (typeof typedObj["definer"] === "undefined" ||
+            typedObj["definer"] === null ||
+            isBinary(typedObj["definer"]) as boolean) &&
+        (typeof typedObj["sql_security"] === "undefined" ||
+            typedObj["sql_security"] === null ||
+            typedObj["sql_security"] === "definer" ||
+            typedObj["sql_security"] === "invoker") &&
+        (typeof typedObj["view"] === "undefined" ||
+            typedObj["view"] === null ||
+            isBaseFrom(typedObj["view"]) as boolean ||
+            isJoin(typedObj["view"]) as boolean ||
+            isTableExpr(typedObj["view"]) as boolean ||
+            isDual(typedObj["view"]) as boolean ||
+            (typedObj["view"] !== null &&
+                typeof typedObj["view"] === "object" ||
+                typeof typedObj["view"] === "function") &&
+            (typedObj["view"]["db"] === null ||
+                typeof typedObj["view"]["db"] === "string") &&
+            typeof typedObj["view"]["view"] === "string") &&
+        (typeof typedObj["columns"] === "undefined" ||
+            typedObj["columns"] === null ||
+            Array.isArray(typedObj["columns"]) &&
+            typedObj["columns"].every((e: any) =>
+                typeof e === "string"
+            )) &&
+        (typeof typedObj["select"] === "undefined" ||
+            typedObj["select"] === null ||
+            isSelect(typedObj["select"]) as boolean) &&
+        (typeof typedObj["with"] === "undefined" ||
+            typedObj["with"] === null ||
+            typedObj["with"] === "cascaded" ||
+            typedObj["with"] === "local") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isCreateTrigger(obj: unknown): obj is CreateTrigger {
+    const typedObj = obj as CreateTrigger
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "create" &&
+        typedObj["keyword"] === "trigger" &&
         (typeof typedObj["definer"] === "undefined" ||
             typedObj["definer"] === null ||
             isBinary(typedObj["definer"]) as boolean) &&
@@ -2557,6 +2767,28 @@ export function isCreate(obj: unknown): obj is Create {
             typeof typedObj["trigger"]["table"] === "string") &&
         (typeof typedObj["time"] === "undefined" ||
             typeof typedObj["time"] === "string") &&
+        (typeof typedObj["events"] === "undefined" ||
+            typedObj["events"] === null ||
+            Array.isArray(typedObj["events"]) &&
+            typedObj["events"].every((e: any) =>
+                isTriggerEvent(e) as boolean
+            )) &&
+        (typeof typedObj["table"] === "undefined" ||
+            Array.isArray(typedObj["table"]) &&
+            typedObj["table"].every((e: any) =>
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (e["db"] === null ||
+                    typeof e["db"] === "string") &&
+                typeof e["table"] === "string"
+            ) ||
+            (typedObj["table"] !== null &&
+                typeof typedObj["table"] === "object" ||
+                typeof typedObj["table"] === "function") &&
+            (typedObj["table"]["db"] === null ||
+                typeof typedObj["table"]["db"] === "string") &&
+            typeof typedObj["table"]["table"] === "string") &&
         (typeof typedObj["for_each"] === "undefined" ||
             typedObj["for_each"] === null ||
             (typedObj["for_each"] !== null &&
@@ -2566,12 +2798,6 @@ export function isCreate(obj: unknown): obj is Create {
             typeof typedObj["for_each"]["args"] === "string" ||
             typedObj["for_each"] === "row" ||
             typedObj["for_each"] === "statement") &&
-        (typeof typedObj["events"] === "undefined" ||
-            typedObj["events"] === null ||
-            Array.isArray(typedObj["events"]) &&
-            typedObj["events"].every((e: any) =>
-                isTriggerEvent(e) as boolean
-            )) &&
         (typeof typedObj["order"] === "undefined" ||
             typedObj["order"] === null ||
             (typedObj["order"] !== null &&
@@ -2594,44 +2820,36 @@ export function isCreate(obj: unknown): obj is Create {
             typedObj["execute"]["expr"].every((e: any) =>
                 isSetList(e) as boolean
             )) &&
-        (typeof typedObj["replace"] === "undefined" ||
-            typedObj["replace"] === null ||
-            typedObj["replace"] === false ||
-            typedObj["replace"] === true) &&
-        (typeof typedObj["algorithm"] === "undefined" ||
-            typedObj["algorithm"] === null ||
-            typedObj["algorithm"] === "undefined" ||
-            typedObj["algorithm"] === "merge" ||
-            typedObj["algorithm"] === "temptable") &&
-        (typeof typedObj["sql_security"] === "undefined" ||
-            typedObj["sql_security"] === null ||
-            typedObj["sql_security"] === "definer" ||
-            typedObj["sql_security"] === "invoker") &&
-        (typeof typedObj["columns"] === "undefined" ||
-            typedObj["columns"] === null ||
-            Array.isArray(typedObj["columns"]) &&
-            typedObj["columns"].every((e: any) =>
-                typeof e === "string"
-            )) &&
-        (typeof typedObj["select"] === "undefined" ||
-            typedObj["select"] === null ||
-            isSelect(typedObj["select"]) as boolean) &&
-        (typeof typedObj["view"] === "undefined" ||
-            typedObj["view"] === null ||
-            isBaseFrom(typedObj["view"]) as boolean ||
-            isJoin(typedObj["view"]) as boolean ||
-            isTableExpr(typedObj["view"]) as boolean ||
-            isDual(typedObj["view"]) as boolean ||
-            (typedObj["view"] !== null &&
-                typeof typedObj["view"] === "object" ||
-                typeof typedObj["view"] === "function") &&
-            (typedObj["view"]["db"] === null ||
-                typeof typedObj["view"]["db"] === "string") &&
-            typeof typedObj["view"]["view"] === "string") &&
-        (typeof typedObj["with"] === "undefined" ||
-            typedObj["with"] === null ||
-            typedObj["with"] === "cascaded" ||
-            typedObj["with"] === "local") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isCreateUser(obj: unknown): obj is CreateUser {
+    const typedObj = obj as CreateUser
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "create" &&
+        typedObj["keyword"] === "user" &&
+        (typeof typedObj["if_not_exists"] === "undefined" ||
+            typedObj["if_not_exists"] === null ||
+            typedObj["if_not_exists"] === "if not exists") &&
         (typeof typedObj["user"] === "undefined" ||
             typedObj["user"] === null ||
             Array.isArray(typedObj["user"]) &&
@@ -2662,7 +2880,36 @@ export function isCreate(obj: unknown): obj is Create {
             typeof typedObj["comment_user"] === "string") &&
         (typeof typedObj["attribute"] === "undefined" ||
             typedObj["attribute"] === null ||
-            typeof typedObj["attribute"] === "string")
+            typeof typedObj["attribute"] === "string") &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isCreate(obj: unknown): obj is Create {
+    const typedObj = obj as Create
+    return (
+        (isCreateTable(typedObj) as boolean ||
+            isCreateDatabase(typedObj) as boolean ||
+            isCreateSchema(typedObj) as boolean ||
+            isCreateIndex(typedObj) as boolean ||
+            isCreateView(typedObj) as boolean ||
+            isCreateTrigger(typedObj) as boolean ||
+            isCreateUser(typedObj) as boolean)
     )
 }
 
@@ -3654,7 +3901,13 @@ export function isAST(obj: unknown): obj is AST {
             isDelete(typedObj) as boolean ||
             isAlter(typedObj) as boolean ||
             isUse(typedObj) as boolean ||
-            isCreate(typedObj) as boolean ||
+            isCreateTable(typedObj) as boolean ||
+            isCreateDatabase(typedObj) as boolean ||
+            isCreateSchema(typedObj) as boolean ||
+            isCreateIndex(typedObj) as boolean ||
+            isCreateView(typedObj) as boolean ||
+            isCreateTrigger(typedObj) as boolean ||
+            isCreateUser(typedObj) as boolean ||
             isDrop(typedObj) as boolean ||
             isShow(typedObj) as boolean ||
             isDesc(typedObj) as boolean ||
