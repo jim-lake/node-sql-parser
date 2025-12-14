@@ -1282,24 +1282,23 @@ export function isSelect(obj: unknown): obj is Select {
         typedObj["columns"].every((e: any) =>
             isColumn(e) as boolean
         ) &&
-        (typeof typedObj["into"] === "undefined" ||
-            (typedObj["into"] !== null &&
-                typeof typedObj["into"] === "object" ||
-                typeof typedObj["into"] === "function") &&
-            (typeof typedObj["into"]["keyword"] === "undefined" ||
-                typeof typedObj["into"]["keyword"] === "string") &&
-            (typeof typedObj["into"]["type"] === "undefined" ||
-                typeof typedObj["into"]["type"] === "string") &&
-            (typeof typedObj["into"]["expr"] === "undefined" ||
-                isValue(typedObj["into"]["expr"]) as boolean ||
-                Array.isArray(typedObj["into"]["expr"]) &&
-                typedObj["into"]["expr"].every((e: any) =>
-                    isVar(e) as boolean
-                )) &&
-            (typedObj["into"]["position"] === null ||
-                typedObj["into"]["position"] === "column" ||
-                typedObj["into"]["position"] === "from" ||
-                typedObj["into"]["position"] === "end")) &&
+        (typedObj["into"] !== null &&
+            typeof typedObj["into"] === "object" ||
+            typeof typedObj["into"] === "function") &&
+        (typeof typedObj["into"]["keyword"] === "undefined" ||
+            typeof typedObj["into"]["keyword"] === "string") &&
+        (typeof typedObj["into"]["type"] === "undefined" ||
+            typeof typedObj["into"]["type"] === "string") &&
+        (typeof typedObj["into"]["expr"] === "undefined" ||
+            isValue(typedObj["into"]["expr"]) as boolean ||
+            Array.isArray(typedObj["into"]["expr"]) &&
+            typedObj["into"]["expr"].every((e: any) =>
+                isVar(e) as boolean
+            )) &&
+        (typedObj["into"]["position"] === null ||
+            typedObj["into"]["position"] === "column" ||
+            typedObj["into"]["position"] === "from" ||
+            typedObj["into"]["position"] === "end") &&
         (typedObj["from"] === null ||
             isTableExpr(typedObj["from"]) as boolean ||
             Array.isArray(typedObj["from"]) &&
@@ -1373,8 +1372,7 @@ export function isSelect(obj: unknown): obj is Select {
             )) &&
         (typedObj["limit"] === null ||
             isLimit(typedObj["limit"]) as boolean) &&
-        (typeof typedObj["window"] === "undefined" ||
-            typedObj["window"] === null ||
+        (typedObj["window"] === null ||
             isWindowExpr(typedObj["window"]) as boolean) &&
         (typeof typedObj["qualify"] === "undefined" ||
             typedObj["qualify"] === null ||
@@ -1417,11 +1415,9 @@ export function isSelect(obj: unknown): obj is Select {
             isSelect(typedObj["_next"]) as boolean) &&
         (typeof typedObj["set_op"] === "undefined" ||
             typeof typedObj["set_op"] === "string") &&
-        (typeof typedObj["collate"] === "undefined" ||
-            typedObj["collate"] === null ||
+        (typedObj["collate"] === null ||
             isCollateExpr(typedObj["collate"]) as boolean) &&
-        (typeof typedObj["locking_read"] === "undefined" ||
-            typedObj["locking_read"] === null ||
+        (typedObj["locking_read"] === null ||
             (typedObj["locking_read"] !== null &&
                 typeof typedObj["locking_read"] === "object" ||
                 typeof typedObj["locking_read"] === "function") &&
@@ -1481,8 +1477,7 @@ export function isInsert_Replace(obj: unknown): obj is Insert_Replace {
                 typeof e === "string"
             )) &&
         typeof typedObj["prefix"] === "string" &&
-        (typeof typedObj["on_duplicate_update"] === "undefined" ||
-            typedObj["on_duplicate_update"] === null ||
+        (typedObj["on_duplicate_update"] === null ||
             (typedObj["on_duplicate_update"] !== null &&
                 typeof typedObj["on_duplicate_update"] === "object" ||
                 typeof typedObj["on_duplicate_update"] === "function") &&
@@ -1538,9 +1533,6 @@ export function isUpdate(obj: unknown): obj is Update {
                 isWith(e) as boolean
             )) &&
         typedObj["type"] === "update" &&
-        (typeof typedObj["db"] === "undefined" ||
-            typedObj["db"] === null ||
-            typeof typedObj["db"] === "string") &&
         (typedObj["table"] === null ||
             Array.isArray(typedObj["table"]) &&
             typedObj["table"].every((e: any) =>
@@ -2353,11 +2345,9 @@ export function isCreateTable(obj: unknown): obj is CreateTable {
             typeof typedObj === "function") &&
         typedObj["type"] === "create" &&
         typedObj["keyword"] === "table" &&
-        (typeof typedObj["temporary"] === "undefined" ||
-            typedObj["temporary"] === null ||
+        (typedObj["temporary"] === null ||
             typedObj["temporary"] === "temporary") &&
-        (typeof typedObj["table"] === "undefined" ||
-            Array.isArray(typedObj["table"]) &&
+        (Array.isArray(typedObj["table"]) &&
             typedObj["table"].every((e: any) =>
                 (e !== null &&
                     typeof e === "object" ||
@@ -2372,8 +2362,7 @@ export function isCreateTable(obj: unknown): obj is CreateTable {
             (typedObj["table"]["db"] === null ||
                 typeof typedObj["table"]["db"] === "string") &&
             typeof typedObj["table"]["table"] === "string") &&
-        (typeof typedObj["if_not_exists"] === "undefined" ||
-            typedObj["if_not_exists"] === null ||
+        (typedObj["if_not_exists"] === null ||
             typedObj["if_not_exists"] === "if not exists") &&
         (typeof typedObj["like"] === "undefined" ||
             typedObj["like"] === null ||

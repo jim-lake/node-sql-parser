@@ -282,7 +282,7 @@ export interface Select {
   options: ValueExpr<string>[] | null;
   distinct: "DISTINCT" | null;
   columns: Column[];
-  into?: {
+  into: {
     keyword?: string;
     type?: string;
     expr?: Var[] | Value;
@@ -294,7 +294,7 @@ export interface Select {
   having: Binary | null;
   orderby: OrderBy[] | null;
   limit: Limit | null;
-  window?: WindowExpr | null;
+  window: WindowExpr | null;
   qualify?: Binary[] | null;
   _orderby?: OrderBy[] | null;
   _limit?: Limit | null;
@@ -303,8 +303,8 @@ export interface Select {
   loc?: LocationRange;
   _next?: Select;
   set_op?: string;
-  collate?: CollateExpr | null;
-  locking_read?: {
+  collate: CollateExpr | null;
+  locking_read: {
     type: 'for_update' | 'lock_in_share_mode';
     of_tables?: From[];
     wait?: 'nowait' | 'skip_locked' | null;
@@ -321,7 +321,7 @@ export interface Insert_Replace {
   set?: SetList[];
   partition: string[] | null;
   prefix: string;
-  on_duplicate_update?: {
+  on_duplicate_update: {
     keyword: "on duplicate key update",
     set: SetList[];
   } | null;
@@ -335,7 +335,6 @@ export interface Returning {
 export interface Update {
   with: With[] | null;
   type: "update";
-  db?: string | null;
   table: Array<From | Dual> | null;
   set: SetList[];
   where: Binary | Unary | Function | null;
@@ -570,9 +569,9 @@ export type CreateDefinition =
 export interface CreateTable {
   type: "create";
   keyword: "table";
-  temporary?: "temporary" | null;
-  table?: { db: string | null; table: string }[] | { db: string | null, table: string };
-  if_not_exists?: "if not exists" | null;
+  temporary: "temporary" | null;
+  table: { db: string | null; table: string }[] | { db: string | null, table: string };
+  if_not_exists: "if not exists" | null;
   like?: {
     type: "like";
     table: From[];
