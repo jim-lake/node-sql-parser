@@ -102,6 +102,32 @@ export interface ValueExpr<T = string | number | boolean> {
   value: T;
 }
 
+export type StringValue = {
+  type: "single_quote_string" | "double_quote_string";
+  value: string;
+};
+
+export type OriginValue = {
+  type: "origin";
+  value: string;
+};
+
+export type DefaultValue = {
+  type: "default";
+  value: string;
+};
+
+export type NumberValue = {
+  type: "number";
+  value: number;
+};
+
+export type IntervalExprValue = {
+  type: "number" | "single_quote_string" | "double_quote_string";
+  value: number | string;
+  loc?: LocationRange;
+};
+
 export type SortDirection = 'ASC' | 'DESC' | 'asc' | 'desc';
 
 export interface ColumnRefItem {
@@ -171,9 +197,14 @@ export interface AggrFunc {
   over: { type: 'window'; as_window_specification: AsWindowSpec } | null;
 }
 
+export type FunctionNameValue = {
+  type: "origin" | "default";
+  value: string;
+};
+
 export type FunctionName = {
   schema?: { value: string; type: string };
-  name: ValueExpr<string>[];
+  name: FunctionNameValue[];
 };
 export interface Function {
   type: "function";
@@ -184,7 +215,7 @@ export interface Function {
 }
 export interface Column {
   expr: ExpressionValue;
-  as: ValueExpr<string> | string | null;
+  as: string | null;
   type?: string;
   loc?: LocationRange;
 }
@@ -192,7 +223,7 @@ export interface Column {
 export interface Interval {
   type: "interval";
   unit: string;
-  expr: ValueExpr & { loc?: LocationRange };
+  expr: IntervalExprValue;
 }
 
 export type Param = { type: "param"; value: string; loc?: LocationRange };
@@ -281,7 +312,7 @@ export interface Select {
   };
   from: From[] | TableExpr | { expr: From[], parentheses: { length: number }, joins: From[] } | null;
   where: Binary | Unary | Function | null;
-  groupby: { columns: ColumnRef[] | null, modifiers: (ValueExpr<string> | null)[] } | null;
+  groupby: { columns: ColumnRef[] | null, modifiers: (OriginValue | null)[] } | null;
   having: Binary | null;
   orderby: OrderBy[] | null;
   limit: Limit | null;
@@ -464,7 +495,7 @@ export type AlterAddPartition = {
   action: 'add';
   keyword: 'PARTITION';
   partitions: Array<{
-    name: ValueExpr;
+    name: DefaultValue;
     value: {
       type: string;
       expr: Value;
@@ -515,7 +546,7 @@ export type KeywordComment = {
   type: "comment";
   keyword: "comment";
   symbol?: "=" | null;
-  value: ValueExpr | string;
+  value: StringValue | string;
 };
 
 export type CollateExpr = {
@@ -571,7 +602,7 @@ export type ColumnDefinitionOptList = {
   column_format?: { type: string; value: string };
   storage?: { type: string; value: string };
   reference_definition?: ReferenceDefinition;
-  character_set?: { type: "CHARACTER SET"; value: ValueExpr; symbol: "=" | null };
+  character_set?: { type: "CHARACTER SET"; value: DefaultValue; symbol: "=" | null };
   check?: {
     constraint_type: 'check';
     keyword: 'constraint' | null;
@@ -598,7 +629,7 @@ export type ReferenceDefinition = {
 
 export type OnReference = {
   type: 'on update' | 'on delete';
-  value: ValueExpr;
+  value: OriginValue;
 };
 
 export type CreateColumnDefinition = {
@@ -727,7 +758,7 @@ export interface CreateDatabase {
   type: "create";
   keyword: "database";
   if_not_exists?: "IF NOT EXISTS" | null;
-  database?: string | { schema: ValueExpr[] };
+  database?: string | { schema: DefaultValue[] };
   loc?: LocationRange;
 }
 
@@ -735,7 +766,7 @@ export interface CreateSchema {
   type: "create";
   keyword: "schema";
   if_not_exists?: "IF NOT EXISTS" | null;
-  database?: string | { schema: ValueExpr[] };
+  database?: string | { schema: DefaultValue[] };
   loc?: LocationRange;
 }
 
@@ -825,19 +856,19 @@ export type TriggerEvent = {
 
 export type UserAuthOption = {
   user: {
-    name: ValueExpr;
-    host: ValueExpr;
+    name: StringValue;
+    host: StringValue;
   };
   auth_option?: {
     keyword: string;
     auth_plugin?: string | null;
-    value: ValueExpr & { prefix?: string };
+    value: StringValue & { prefix?: string };
   } | null;
 };
 
 export type RequireOption = {
   keyword: 'require';
-  value: ValueExpr;
+  value: OriginValue;
 };
 
 export type ResourceOption = {
@@ -974,7 +1005,7 @@ export interface Grant {
   type: "grant";
   keyword: "priv";
   objects: Array<{
-    priv: ValueExpr;
+    priv: OriginValue;
     columns: ColumnRef[] | null;
   }>;
   on: {
@@ -986,10 +1017,10 @@ export interface Grant {
   };
   to_from: "TO" | "FROM";
   user_or_roles: Array<{
-    name: ValueExpr;
-    host: ValueExpr | null;
+    name: StringValue;
+    host: StringValue | null;
   }>;
-  with: any | null;
+  with: OriginValue | null;
   loc?: LocationRange;
 }
 
@@ -997,10 +1028,10 @@ export interface LoadData {
   type: "load_data";
   mode?: string | null;
   local?: 'local' | null;
-  file: ValueExpr;
+  file: StringValue;
   replace_ignore?: 'replace' | 'ignore' | null;
   table: { db: string | null; table: string };
-  partition?: ValueExpr<string>[] | null;
+  partition?: StringValue[] | null;
   character_set?: string | null;
   fields?: LoadDataField | null;
   lines?: LoadDataLine | null;
@@ -1012,15 +1043,15 @@ export interface LoadData {
 
 export type LoadDataField = {
   keyword: 'FIELDS';
-  terminated: ValueExpr & { prefix: string } | null;
-  enclosed: ValueExpr & { prefix: string } | null;
-  escaped: ValueExpr & { prefix: string } | null;
+  terminated: StringValue & { prefix: string } | null;
+  enclosed: StringValue & { prefix: string } | null;
+  escaped: StringValue & { prefix: string } | null;
 };
 
 export type LoadDataLine = {
   keyword: 'LINES';
-  starting?: ValueExpr & { prefix: string };
-  terminated: ValueExpr & { prefix: string } | null;
+  starting?: StringValue & { prefix: string };
+  terminated: StringValue & { prefix: string } | null;
 };
 
 export interface Truncate {
@@ -1039,9 +1070,9 @@ export interface Rename {
 export interface Transaction {
   type: "transaction";
   expr: {
-    action: ValueExpr<"start" | "begin" | "commit" | "rollback" | "START" | "COMMIT" | "ROLLBACK">;
+    action: OriginValue;
     keyword?: "TRANSACTION";
-    modes?: ValueExpr[] | null;
+    modes?: OriginValue[] | null;
   };
   loc?: LocationRange;
 }
