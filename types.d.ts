@@ -12,7 +12,7 @@ export interface With {
     columnList: string[];
     ast: Select;
   };
-  columns?: ColumnRef[];
+  columns: ColumnRef[] | null;
 }
 import { LocationRange } from "pegjs";
 
@@ -54,7 +54,7 @@ export interface TableExpr {
     ast: Select;
     parentheses: boolean;
   };
-  as?: string | null;
+  as: string | null;
 }
 export interface Dual {
   type: "dual";
@@ -125,7 +125,7 @@ export interface SetList {
 export interface InsertReplaceValue {
   type: "expr_list";
   value: ExpressionValue[];
-  prefix?: string | null;
+  prefix: string | null;
   loc?: LocationRange;
 }
 
@@ -484,12 +484,12 @@ export type IndexOption = {
 };
 
 export type CreateIndexDefinition = {
-  index?: string | null;
+  index: string | null;
   definition: ColumnRef[];
   keyword: "index" | "key";
-  index_type?: IndexType | null;
+  index_type: IndexType | null;
   resource: "index";
-  index_options?: IndexOption[] | null;
+  index_options: IndexOption[] | null;
 };
 
 export type CreateFulltextSpatialIndexDefinition = {

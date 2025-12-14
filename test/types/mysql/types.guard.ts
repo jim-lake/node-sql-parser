@@ -29,7 +29,7 @@ export function isWith(obj: unknown): obj is With {
             typeof e === "string"
         ) &&
         isSelect(typedObj["stmt"]["ast"]) as boolean &&
-        (typeof typedObj["columns"] === "undefined" ||
+        (typedObj["columns"] === null ||
             Array.isArray(typedObj["columns"]) &&
             typedObj["columns"].every((e: any) =>
                 isColumnRefItem(e) as boolean
@@ -208,8 +208,7 @@ export function isTableExpr(obj: unknown): obj is TableExpr {
         ) &&
         isSelect(typedObj["expr"]["ast"]) as boolean &&
         typeof typedObj["expr"]["parentheses"] === "boolean" &&
-        (typeof typedObj["as"] === "undefined" ||
-            typedObj["as"] === null ||
+        (typedObj["as"] === null ||
             typeof typedObj["as"] === "string")
     )
 }
@@ -564,8 +563,7 @@ export function isInsertReplaceValue(obj: unknown): obj is InsertReplaceValue {
         typedObj["value"].every((e: any) =>
             isExpressionValue(e) as boolean
         ) &&
-        (typeof typedObj["prefix"] === "undefined" ||
-            typedObj["prefix"] === null ||
+        (typedObj["prefix"] === null ||
             typeof typedObj["prefix"] === "string") &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
@@ -2181,8 +2179,7 @@ export function isCreateIndexDefinition(obj: unknown): obj is CreateIndexDefinit
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        (typeof typedObj["index"] === "undefined" ||
-            typedObj["index"] === null ||
+        (typedObj["index"] === null ||
             typeof typedObj["index"] === "string") &&
         Array.isArray(typedObj["definition"]) &&
         typedObj["definition"].every((e: any) =>
@@ -2190,12 +2187,10 @@ export function isCreateIndexDefinition(obj: unknown): obj is CreateIndexDefinit
         ) &&
         (typedObj["keyword"] === "key" ||
             typedObj["keyword"] === "index") &&
-        (typeof typedObj["index_type"] === "undefined" ||
-            typedObj["index_type"] === null ||
+        (typedObj["index_type"] === null ||
             isIndexType(typedObj["index_type"]) as boolean) &&
         typedObj["resource"] === "index" &&
-        (typeof typedObj["index_options"] === "undefined" ||
-            typedObj["index_options"] === null ||
+        (typedObj["index_options"] === null ||
             Array.isArray(typedObj["index_options"]) &&
             typedObj["index_options"].every((e: any) =>
                 isIndexOption(e) as boolean
