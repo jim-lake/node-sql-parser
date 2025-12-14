@@ -134,3 +134,49 @@ test('CreateTrigger - TriggerEvent type', () => {
   assert.strictEqual(event.keyword, 'insert');
   assert.strictEqual(event.args, undefined);
 });
+
+test('CreateTrigger - if_not_exists property', () => {
+  const sql = 'CREATE TRIGGER IF NOT EXISTS my_trigger BEFORE INSERT ON users FOR EACH ROW SET x = 1';
+  const ast = parser.astify(sql);
+  
+  assert.ok(isCreate(ast), 'Should be Create');
+  assert.ok(isCreateTrigger(ast), 'Should be CreateTrigger');
+  assert.strictEqual(ast.if_not_exists, 'IF NOT EXISTS');
+});
+
+test('CreateTrigger - if_not_exists null', () => {
+  const sql = 'CREATE TRIGGER my_trigger BEFORE INSERT ON users FOR EACH ROW SET x = 1';
+  const ast = parser.astify(sql);
+  
+  assert.ok(isCreate(ast), 'Should be Create');
+  assert.ok(isCreateTrigger(ast), 'Should be CreateTrigger');
+  assert.strictEqual(ast.if_not_exists, null);
+});
+
+test('CreateTrigger - definer null', () => {
+  const sql = 'CREATE TRIGGER my_trigger BEFORE INSERT ON users FOR EACH ROW SET x = 1';
+  const ast = parser.astify(sql);
+  
+  assert.ok(isCreate(ast), 'Should be Create');
+  assert.ok(isCreateTrigger(ast), 'Should be CreateTrigger');
+  assert.strictEqual(ast.definer, null);
+});
+
+test('CreateTrigger - order null', () => {
+  const sql = 'CREATE TRIGGER my_trigger BEFORE INSERT ON users FOR EACH ROW SET x = 1';
+  const ast = parser.astify(sql);
+  
+  assert.ok(isCreate(ast), 'Should be Create');
+  assert.ok(isCreateTrigger(ast), 'Should be CreateTrigger');
+  assert.strictEqual(ast.order, null);
+});
+
+test('CreateTrigger - time property values', () => {
+  const sql1 = 'CREATE TRIGGER t1 BEFORE INSERT ON users FOR EACH ROW SET x = 1';
+  const ast1 = parser.astify(sql1);
+  assert.strictEqual((ast1 as CreateTrigger).time, 'BEFORE');
+  
+  const sql2 = 'CREATE TRIGGER t2 AFTER INSERT ON users FOR EACH ROW SET x = 1';
+  const ast2 = parser.astify(sql2);
+  assert.strictEqual((ast2 as CreateTrigger).time, 'AFTER');
+});

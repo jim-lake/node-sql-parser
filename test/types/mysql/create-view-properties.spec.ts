@@ -167,3 +167,50 @@ test('CREATE VIEW - all properties combined', () => {
   assert.ok(create.select);
   assert.strictEqual(create.with, 'with local check option');
 });
+
+test('CREATE VIEW - definer property as Binary', () => {
+  const sql = "CREATE DEFINER = 'user'@'host' VIEW v AS SELECT 1";
+  const ast = parser.astify(sql);
+  
+  assert.ok(isCreate(ast));
+  const create = ast as CreateView;
+  assert.ok(create.definer);
+  assert.strictEqual(create.definer.type, 'binary_expr');
+});
+
+test('CREATE VIEW - definer null', () => {
+  const sql = 'CREATE VIEW v AS SELECT 1';
+  const ast = parser.astify(sql);
+  
+  assert.ok(isCreate(ast));
+  const create = ast as CreateView;
+  assert.strictEqual(create.definer, null);
+});
+
+test('CREATE VIEW - algorithm null', () => {
+  const sql = 'CREATE VIEW v AS SELECT 1';
+  const ast = parser.astify(sql);
+  
+  assert.ok(isCreate(ast));
+  const create = ast as CreateView;
+  assert.strictEqual(create.algorithm, null);
+});
+
+test('CREATE VIEW - sql_security null', () => {
+  const sql = 'CREATE VIEW v AS SELECT 1';
+  const ast = parser.astify(sql);
+  
+  assert.ok(isCreate(ast));
+  const create = ast as CreateView;
+  assert.strictEqual(create.sql_security, null);
+});
+
+test('CREATE VIEW - select property is Select type', () => {
+  const sql = 'CREATE VIEW v AS SELECT * FROM users';
+  const ast = parser.astify(sql);
+  
+  assert.ok(isCreate(ast));
+  const create = ast as CreateView;
+  assert.ok(create.select);
+  assert.strictEqual(create.select.type, 'select');
+});

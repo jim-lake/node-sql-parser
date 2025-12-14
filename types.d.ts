@@ -711,7 +711,7 @@ export interface CreateTable {
   type: "create";
   keyword: "table";
   temporary: "temporary" | null;
-  table: { db: string | null; table: string }[] | { db: string | null, table: string };
+  table: { db: string | null; table: string }[];
   if_not_exists: "IF NOT EXISTS" | null;
   like?: {
     type: "like";
@@ -749,7 +749,7 @@ export interface CreateIndex {
     keyword: "using";
     type: "btree" | "hash";
   } | null;
-  index?: string | null;
+  index: string;
   on_kw?: "on" | null;
   table?: { db: string | null; table: string }[] | { db: string | null, table: string };
   index_columns?: ColumnRefItem[] | null;

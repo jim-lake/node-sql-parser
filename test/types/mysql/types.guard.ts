@@ -2625,21 +2625,15 @@ export function isCreateTable(obj: unknown): obj is CreateTable {
         typedObj["keyword"] === "table" &&
         (typedObj["temporary"] === null ||
             typedObj["temporary"] === "temporary") &&
-        (Array.isArray(typedObj["table"]) &&
-            typedObj["table"].every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                (e["db"] === null ||
-                    typeof e["db"] === "string") &&
-                typeof e["table"] === "string"
-            ) ||
-            (typedObj["table"] !== null &&
-                typeof typedObj["table"] === "object" ||
-                typeof typedObj["table"] === "function") &&
-            (typedObj["table"]["db"] === null ||
-                typeof typedObj["table"]["db"] === "string") &&
-            typeof typedObj["table"]["table"] === "string") &&
+        Array.isArray(typedObj["table"]) &&
+        typedObj["table"].every((e: any) =>
+            (e !== null &&
+                typeof e === "object" ||
+                typeof e === "function") &&
+            (e["db"] === null ||
+                typeof e["db"] === "string") &&
+            typeof e["table"] === "string"
+        ) &&
         (typedObj["if_not_exists"] === null ||
             typedObj["if_not_exists"] === "IF NOT EXISTS") &&
         (typeof typedObj["like"] === "undefined" ||
@@ -2842,9 +2836,7 @@ export function isCreateIndex(obj: unknown): obj is CreateIndex {
             typedObj["index_using"]["keyword"] === "using" &&
             (typedObj["index_using"]["type"] === "btree" ||
                 typedObj["index_using"]["type"] === "hash")) &&
-        (typeof typedObj["index"] === "undefined" ||
-            typedObj["index"] === null ||
-            typeof typedObj["index"] === "string") &&
+        typeof typedObj["index"] === "string" &&
         (typeof typedObj["on_kw"] === "undefined" ||
             typedObj["on_kw"] === null ||
             typedObj["on_kw"] === "on") &&
