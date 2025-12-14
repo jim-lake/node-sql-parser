@@ -3874,6 +3874,34 @@ export function isGrant(obj: unknown): obj is Grant {
                     e["host"]["value"] === false ||
                     e["host"]["value"] === true))
         ) &&
+        (typedObj["with"] === null ||
+            (typedObj["with"] !== null &&
+                typeof typedObj["with"] === "object" ||
+                typeof typedObj["with"] === "function") &&
+            (typedObj["with"]["type"] === "string" ||
+                typedObj["with"]["type"] === "number" ||
+                typedObj["with"]["type"] === "boolean" ||
+                typedObj["with"]["type"] === "backticks_quote_string" ||
+                typedObj["with"]["type"] === "hex_string" ||
+                typedObj["with"]["type"] === "full_hex_string" ||
+                typedObj["with"]["type"] === "natural_string" ||
+                typedObj["with"]["type"] === "bit_string" ||
+                typedObj["with"]["type"] === "double_quote_string" ||
+                typedObj["with"]["type"] === "single_quote_string" ||
+                typedObj["with"]["type"] === "bool" ||
+                typedObj["with"]["type"] === "null" ||
+                typedObj["with"]["type"] === "star" ||
+                typedObj["with"]["type"] === "param" ||
+                typedObj["with"]["type"] === "origin" ||
+                typedObj["with"]["type"] === "date" ||
+                typedObj["with"]["type"] === "datetime" ||
+                typedObj["with"]["type"] === "default" ||
+                typedObj["with"]["type"] === "time" ||
+                typedObj["with"]["type"] === "timestamp") &&
+            (typeof typedObj["with"]["value"] === "string" ||
+                typeof typedObj["with"]["value"] === "number" ||
+                typedObj["with"]["value"] === false ||
+                typedObj["with"]["value"] === true)) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
                 typeof typedObj["loc"] === "object" ||
