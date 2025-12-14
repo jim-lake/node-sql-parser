@@ -2161,9 +2161,6 @@ export function isDataType(obj: unknown): obj is DataType {
             (e === "UNSIGNED" ||
                 e === "ZEROFILL")
             )) &&
-        (typeof typedObj["array"] === "undefined" ||
-            typedObj["array"] === "one" ||
-            typedObj["array"] === "two") &&
         (typeof typedObj["expr"] === "undefined" ||
             isBinary(typedObj["expr"]) as boolean ||
             isUnary(typedObj["expr"]) as boolean ||
@@ -2981,47 +2978,33 @@ export function isCreateView(obj: unknown): obj is CreateView {
             typeof typedObj === "function") &&
         typedObj["type"] === "create" &&
         typedObj["keyword"] === "view" &&
-        (typeof typedObj["replace"] === "undefined" ||
-            typedObj["replace"] === null ||
-            typedObj["replace"] === false ||
-            typedObj["replace"] === true) &&
-        (typeof typedObj["algorithm"] === "undefined" ||
-            typedObj["algorithm"] === null ||
-            typedObj["algorithm"] === "undefined" ||
-            typedObj["algorithm"] === "merge" ||
-            typedObj["algorithm"] === "temptable") &&
-        (typeof typedObj["definer"] === "undefined" ||
-            typedObj["definer"] === null ||
+        (typedObj["replace"] === null ||
+            typedObj["replace"] === "or replace") &&
+        (typedObj["algorithm"] === null ||
+            typedObj["algorithm"] === "UNDEFINED" ||
+            typedObj["algorithm"] === "MERGE" ||
+            typedObj["algorithm"] === "TEMPTABLE") &&
+        (typedObj["definer"] === null ||
             isBinary(typedObj["definer"]) as boolean) &&
-        (typeof typedObj["sql_security"] === "undefined" ||
-            typedObj["sql_security"] === null ||
-            typedObj["sql_security"] === "definer" ||
-            typedObj["sql_security"] === "invoker") &&
-        (typeof typedObj["view"] === "undefined" ||
-            typedObj["view"] === null ||
-            isBaseFrom(typedObj["view"]) as boolean ||
-            isJoin(typedObj["view"]) as boolean ||
-            isTableExpr(typedObj["view"]) as boolean ||
-            isDual(typedObj["view"]) as boolean ||
-            (typedObj["view"] !== null &&
-                typeof typedObj["view"] === "object" ||
-                typeof typedObj["view"] === "function") &&
-            (typedObj["view"]["db"] === null ||
-                typeof typedObj["view"]["db"] === "string") &&
-            typeof typedObj["view"]["view"] === "string") &&
-        (typeof typedObj["columns"] === "undefined" ||
-            typedObj["columns"] === null ||
+        (typedObj["sql_security"] === null ||
+            typedObj["sql_security"] === "DEFINER" ||
+            typedObj["sql_security"] === "INVOKER") &&
+        (typedObj["view"] !== null &&
+            typeof typedObj["view"] === "object" ||
+            typeof typedObj["view"] === "function") &&
+        (typedObj["view"]["db"] === null ||
+            typeof typedObj["view"]["db"] === "string") &&
+        typeof typedObj["view"]["view"] === "string" &&
+        (typedObj["columns"] === null ||
             Array.isArray(typedObj["columns"]) &&
             typedObj["columns"].every((e: any) =>
                 typeof e === "string"
             )) &&
-        (typeof typedObj["select"] === "undefined" ||
-            typedObj["select"] === null ||
-            isSelect(typedObj["select"]) as boolean) &&
-        (typeof typedObj["with"] === "undefined" ||
-            typedObj["with"] === null ||
-            typedObj["with"] === "cascaded" ||
-            typedObj["with"] === "local") &&
+        isSelect(typedObj["select"]) as boolean &&
+        (typedObj["with"] === null ||
+            typedObj["with"] === "with check option" ||
+            typedObj["with"] === "with cascaded check option" ||
+            typedObj["with"] === "with local check option") &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
                 typeof typedObj["loc"] === "object" ||
@@ -3049,71 +3032,47 @@ export function isCreateTrigger(obj: unknown): obj is CreateTrigger {
             typeof typedObj === "function") &&
         typedObj["type"] === "create" &&
         typedObj["keyword"] === "trigger" &&
-        (typeof typedObj["definer"] === "undefined" ||
-            typedObj["definer"] === null ||
+        (typedObj["definer"] === null ||
             isBinary(typedObj["definer"]) as boolean) &&
-        (typeof typedObj["trigger"] === "undefined" ||
-            (typedObj["trigger"] !== null &&
-                typeof typedObj["trigger"] === "object" ||
-                typeof typedObj["trigger"] === "function") &&
-            (typedObj["trigger"]["db"] === null ||
-                typeof typedObj["trigger"]["db"] === "string") &&
-            typeof typedObj["trigger"]["table"] === "string") &&
-        (typeof typedObj["time"] === "undefined" ||
-            typeof typedObj["time"] === "string") &&
-        (typeof typedObj["events"] === "undefined" ||
-            typedObj["events"] === null ||
-            Array.isArray(typedObj["events"]) &&
-            typedObj["events"].every((e: any) =>
-                isTriggerEvent(e) as boolean
-            )) &&
-        (typeof typedObj["table"] === "undefined" ||
-            Array.isArray(typedObj["table"]) &&
-            typedObj["table"].every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                (e["db"] === null ||
-                    typeof e["db"] === "string") &&
-                typeof e["table"] === "string"
-            ) ||
-            (typedObj["table"] !== null &&
-                typeof typedObj["table"] === "object" ||
-                typeof typedObj["table"] === "function") &&
-            (typedObj["table"]["db"] === null ||
-                typeof typedObj["table"]["db"] === "string") &&
-            typeof typedObj["table"]["table"] === "string") &&
-        (typeof typedObj["for_each"] === "undefined" ||
-            typedObj["for_each"] === null ||
-            (typedObj["for_each"] !== null &&
-                typeof typedObj["for_each"] === "object" ||
-                typeof typedObj["for_each"] === "function") &&
-            typeof typedObj["for_each"]["keyword"] === "string" &&
-            typeof typedObj["for_each"]["args"] === "string" ||
-            typedObj["for_each"] === "row" ||
-            typedObj["for_each"] === "statement") &&
-        (typeof typedObj["order"] === "undefined" ||
-            typedObj["order"] === null ||
+        (typedObj["trigger"] !== null &&
+            typeof typedObj["trigger"] === "object" ||
+            typeof typedObj["trigger"] === "function") &&
+        (typedObj["trigger"]["db"] === null ||
+            typeof typedObj["trigger"]["db"] === "string") &&
+        typeof typedObj["trigger"]["table"] === "string" &&
+        typeof typedObj["time"] === "string" &&
+        Array.isArray(typedObj["events"]) &&
+        typedObj["events"].every((e: any) =>
+            isTriggerEvent(e) as boolean
+        ) &&
+        (typedObj["table"] !== null &&
+            typeof typedObj["table"] === "object" ||
+            typeof typedObj["table"] === "function") &&
+        (typedObj["table"]["db"] === null ||
+            typeof typedObj["table"]["db"] === "string") &&
+        typeof typedObj["table"]["table"] === "string" &&
+        (typedObj["for_each"] !== null &&
+            typeof typedObj["for_each"] === "object" ||
+            typeof typedObj["for_each"] === "function") &&
+        typeof typedObj["for_each"]["keyword"] === "string" &&
+        typeof typedObj["for_each"]["args"] === "string" &&
+        (typedObj["order"] === null ||
             (typedObj["order"] !== null &&
                 typeof typedObj["order"] === "object" ||
                 typeof typedObj["order"] === "function") &&
             (typedObj["order"]["keyword"] === "FOLLOWS" ||
                 typedObj["order"]["keyword"] === "PRECEDES") &&
             typeof typedObj["order"]["trigger"] === "string") &&
-        (typeof typedObj["execute"] === "undefined" ||
-            typedObj["execute"] === null ||
-            Array.isArray(typedObj["execute"]) &&
-            typedObj["execute"].every((e: any) =>
-                isSetList(e) as boolean
-            ) ||
-            (typedObj["execute"] !== null &&
-                typeof typedObj["execute"] === "object" ||
-                typeof typedObj["execute"] === "function") &&
-            typedObj["execute"]["type"] === "set" &&
-            Array.isArray(typedObj["execute"]["expr"]) &&
-            typedObj["execute"]["expr"].every((e: any) =>
-                isSetList(e) as boolean
-            )) &&
+        (typedObj["execute"] !== null &&
+            typeof typedObj["execute"] === "object" ||
+            typeof typedObj["execute"] === "function") &&
+        typedObj["execute"]["type"] === "set" &&
+        Array.isArray(typedObj["execute"]["expr"]) &&
+        typedObj["execute"]["expr"].every((e: any) =>
+            isSetList(e) as boolean
+        ) &&
+        (typedObj["if_not_exists"] === null ||
+            typeof typedObj["if_not_exists"] === "string") &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
                 typeof typedObj["loc"] === "object" ||

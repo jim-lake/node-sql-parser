@@ -548,7 +548,6 @@ export type DataType = {
   parentheses?: true;
   scale?: number;
   suffix?: ("UNSIGNED" | "ZEROFILL")[] | OnUpdateCurrentTimestamp | null;
-  array?: "one" | "two";
   expr?: Expr | ExprList;
   quoted?: string;
 };
@@ -787,31 +786,32 @@ export interface CreateIndex {
 export interface CreateView {
   type: "create";
   keyword: "view";
-  replace?: boolean | null;
-  algorithm?: 'undefined' | 'merge' | 'temptable' | null;
-  definer?: Binary | null;
-  sql_security?: 'definer' | 'invoker' | null;
-  view?: { db: string | null; view: string } | From | null;
-  columns?: string[] | null;
-  select?: Select | null;
-  with?: 'cascaded' | 'local' | null;
+  replace: "or replace" | null;
+  algorithm: "UNDEFINED" | "MERGE" | "TEMPTABLE" | null;
+  definer: Binary | null;
+  sql_security: "DEFINER" | "INVOKER" | null;
+  view: { db: string | null; view: string };
+  columns: string[] | null;
+  select: Select;
+  with: "with check option" | "with cascaded check option" | "with local check option" | null;
   loc?: LocationRange;
 }
 
 export interface CreateTrigger {
   type: "create";
   keyword: "trigger";
-  definer?: Binary | null;
-  trigger?: { db: string | null; table: string };
-  time?: string;
-  events?: TriggerEvent[] | null;
-  table?: { db: string | null; table: string }[] | { db: string | null, table: string };
-  for_each?: { keyword: string; args: string } | 'row' | 'statement' | null;
-  order?: {
+  definer: Binary | null;
+  trigger: { db: string | null; table: string };
+  time: string;
+  events: TriggerEvent[];
+  table: { db: string | null; table: string };
+  for_each: { keyword: string; args: string };
+  order: {
     keyword: 'FOLLOWS' | 'PRECEDES';
     trigger: string;
   } | null;
-  execute?: { type: "set"; expr: SetList[] } | SetList[] | null;
+  execute: { type: "set"; expr: SetList[] };
+  if_not_exists: string | null;
   loc?: LocationRange;
 }
 
