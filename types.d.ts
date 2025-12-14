@@ -535,9 +535,8 @@ export type DataType = {
   length?: number;
   parentheses?: true;
   scale?: number;
-  suffix?: ("UNSIGNED" | "ZEROFILL")[] | OnUpdateCurrentTimestamp | null;
+  suffix?: ("UNSIGNED" | "ZEROFILL")[] | null;
   expr?: Expr | ExprList;
-  quoted?: string;
 };
 
 export type OnUpdateCurrentTimestamp = {

@@ -2105,7 +2105,6 @@ export function isDataType(obj: unknown): obj is DataType {
             typeof typedObj["scale"] === "number") &&
         (typeof typedObj["suffix"] === "undefined" ||
             typedObj["suffix"] === null ||
-            isOnUpdateCurrentTimestamp(typedObj["suffix"]) as boolean ||
             Array.isArray(typedObj["suffix"]) &&
             typedObj["suffix"].every((e: any) =>
             (e === "UNSIGNED" ||
@@ -2114,9 +2113,7 @@ export function isDataType(obj: unknown): obj is DataType {
         (typeof typedObj["expr"] === "undefined" ||
             isBinary(typedObj["expr"]) as boolean ||
             isUnary(typedObj["expr"]) as boolean ||
-            isExprList(typedObj["expr"]) as boolean) &&
-        (typeof typedObj["quoted"] === "undefined" ||
-            typeof typedObj["quoted"] === "string")
+            isExprList(typedObj["expr"]) as boolean)
     )
 }
 
