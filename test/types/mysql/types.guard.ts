@@ -2422,9 +2422,10 @@ export function isIndexType(obj: unknown): obj is IndexType {
 export function isIndexOption(obj: unknown): obj is IndexOption {
     const typedObj = obj as IndexOption
     return (
-        ((typedObj !== null &&
-            typeof typedObj === "object" ||
-            typeof typedObj === "function") &&
+        (isKeywordComment(typedObj) as boolean ||
+            (typedObj !== null &&
+                typeof typedObj === "object" ||
+                typeof typedObj === "function") &&
             typedObj["type"] === "key_block_size" &&
             (typeof typedObj["symbol"] === "undefined" ||
                 typedObj["symbol"] === "=") &&
@@ -2434,7 +2435,18 @@ export function isIndexOption(obj: unknown): obj is IndexOption {
                 typeof typedObj === "function") &&
             typedObj["keyword"] === "using" &&
             (typedObj["type"] === "btree" ||
-                typedObj["type"] === "hash"))
+                typedObj["type"] === "hash") ||
+            (typedObj !== null &&
+                typeof typedObj === "object" ||
+                typeof typedObj === "function") &&
+            typedObj["type"] === "with parser" &&
+            typeof typedObj["expr"] === "string" ||
+            (typedObj !== null &&
+                typeof typedObj === "object" ||
+                typeof typedObj === "function") &&
+            (typedObj["type"] === "visible" ||
+                typedObj["type"] === "invisible") &&
+            typeof typedObj["expr"] === "string")
     )
 }
 

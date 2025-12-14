@@ -630,7 +630,13 @@ export type IndexOption = {
 } | {
   keyword: "using";
   type: "btree" | "hash";
-};
+} | {
+  type: "with parser";
+  expr: string;
+} | {
+  type: "visible" | "invisible";
+  expr: string;
+} | KeywordComment;
 
 export type CreateIndexDefinition = {
   index: string | null;
