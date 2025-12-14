@@ -1426,14 +1426,7 @@ export function isSelect(obj: unknown): obj is Select {
         (typedObj["collate"] === null ||
             isCollateExpr(typedObj["collate"]) as boolean) &&
         (typedObj["locking_read"] === null ||
-            typedObj["locking_read"] === "FOR UPDATE" ||
-            typedObj["locking_read"] === "FOR UPDATE NOWAIT" ||
-            typedObj["locking_read"] === "FOR UPDATE SKIP LOCKED" ||
-            typeof typedObj["locking_read"] === "`FOR UPDATE WAIT ${number}`" ||
-            typedObj["locking_read"] === "LOCK IN SHARE MODE" ||
-            typedObj["locking_read"] === "LOCK IN SHARE MODE NOWAIT" ||
-            typedObj["locking_read"] === "LOCK IN SHARE MODE SKIP LOCKED" ||
-            typeof typedObj["locking_read"] === "`LOCK IN SHARE MODE WAIT ${number}`")
+            typeof typedObj["locking_read"] === "string")
     )
 }
 

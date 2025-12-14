@@ -295,7 +295,7 @@ export interface Select {
   _next?: Select;
   set_op?: string;
   collate: CollateExpr | null;
-  locking_read: "FOR UPDATE" | "FOR UPDATE NOWAIT" | "FOR UPDATE SKIP LOCKED" | `FOR UPDATE WAIT ${number}` | "LOCK IN SHARE MODE" | "LOCK IN SHARE MODE NOWAIT" | "LOCK IN SHARE MODE SKIP LOCKED" | `LOCK IN SHARE MODE WAIT ${number}` | null;
+  locking_read: string | null;
 }
 export interface Insert_Replace {
   type: "replace" | "insert";

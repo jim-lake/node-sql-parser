@@ -259,3 +259,16 @@ test('Select.locking_read - FOR UPDATE SKIP LOCKED', () => {
   assert.ok(select.locking_read);
   assert.strictEqual(select.locking_read, 'FOR UPDATE SKIP LOCKED');
 });
+test('Select.locking_read - FOR UPDATE WAIT 5', () => {
+  const sql = 'SELECT * FROM users FOR UPDATE WAIT 5';
+  const ast = parser.astify(sql);
+  assert.ok(isSelect(ast));
+  const select = ast as Select;
+  assert.ok(select.locking_read);
+  assert.strictEqual(select.locking_read, 'FOR UPDATE WAIT 5');
+});
+test('Select.locking_read - for update wait 5', () => {
+  const sql = 'SELECT * FROM users for update wait 5';
+  const ast = parser.astify(sql);
+  assert.ok(isSelect(ast));
+});
