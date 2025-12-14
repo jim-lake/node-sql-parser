@@ -1285,30 +1285,12 @@ export function isSelect(obj: unknown): obj is Select {
         (typedObj["options"] === null ||
             Array.isArray(typedObj["options"]) &&
             typedObj["options"].every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                (e["type"] === "string" ||
-                    e["type"] === "number" ||
-                    e["type"] === "boolean" ||
-                    e["type"] === "backticks_quote_string" ||
-                    e["type"] === "hex_string" ||
-                    e["type"] === "full_hex_string" ||
-                    e["type"] === "natural_string" ||
-                    e["type"] === "bit_string" ||
-                    e["type"] === "double_quote_string" ||
-                    e["type"] === "single_quote_string" ||
-                    e["type"] === "bool" ||
-                    e["type"] === "null" ||
-                    e["type"] === "star" ||
-                    e["type"] === "param" ||
-                    e["type"] === "origin" ||
-                    e["type"] === "date" ||
-                    e["type"] === "datetime" ||
-                    e["type"] === "default" ||
-                    e["type"] === "time" ||
-                    e["type"] === "timestamp") &&
-                typeof e["value"] === "string"
+            (e === "SQL_CALC_FOUND_ROWS" ||
+                e === "SQL_CACHE" ||
+                e === "SQL_NO_CACHE" ||
+                e === "SQL_SMALL_RESULT" ||
+                e === "SQL_BIG_RESULT" ||
+                e === "SQL_BUFFER_RESULT")
             )) &&
         (typedObj["distinct"] === null ||
             typedObj["distinct"] === "DISTINCT") &&
@@ -1444,20 +1426,14 @@ export function isSelect(obj: unknown): obj is Select {
         (typedObj["collate"] === null ||
             isCollateExpr(typedObj["collate"]) as boolean) &&
         (typedObj["locking_read"] === null ||
-            (typedObj["locking_read"] !== null &&
-                typeof typedObj["locking_read"] === "object" ||
-                typeof typedObj["locking_read"] === "function") &&
-            (typedObj["locking_read"]["type"] === "for_update" ||
-                typedObj["locking_read"]["type"] === "lock_in_share_mode") &&
-            (typeof typedObj["locking_read"]["of_tables"] === "undefined" ||
-                Array.isArray(typedObj["locking_read"]["of_tables"]) &&
-                typedObj["locking_read"]["of_tables"].every((e: any) =>
-                    isFrom(e) as boolean
-                )) &&
-            (typeof typedObj["locking_read"]["wait"] === "undefined" ||
-                typedObj["locking_read"]["wait"] === null ||
-                typedObj["locking_read"]["wait"] === "nowait" ||
-                typedObj["locking_read"]["wait"] === "skip_locked"))
+            typedObj["locking_read"] === "FOR UPDATE" ||
+            typedObj["locking_read"] === "FOR UPDATE NOWAIT" ||
+            typedObj["locking_read"] === "FOR UPDATE SKIP LOCKED" ||
+            typeof typedObj["locking_read"] === "`FOR UPDATE WAIT ${number}`" ||
+            typedObj["locking_read"] === "LOCK IN SHARE MODE" ||
+            typedObj["locking_read"] === "LOCK IN SHARE MODE NOWAIT" ||
+            typedObj["locking_read"] === "LOCK IN SHARE MODE SKIP LOCKED" ||
+            typeof typedObj["locking_read"] === "`LOCK IN SHARE MODE WAIT ${number}`")
     )
 }
 

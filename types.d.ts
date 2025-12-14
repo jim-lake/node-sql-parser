@@ -271,7 +271,7 @@ export type WindowExpr = {
 export interface Select {
   with: With[] | null;
   type: "select";
-  options: ValueExpr<string>[] | null;
+  options: ("SQL_CALC_FOUND_ROWS" | "SQL_CACHE" | "SQL_NO_CACHE" | "SQL_SMALL_RESULT" | "SQL_BIG_RESULT" | "SQL_BUFFER_RESULT")[] | null;
   distinct: "DISTINCT" | null;
   columns: Column[];
   into: {
@@ -295,11 +295,7 @@ export interface Select {
   _next?: Select;
   set_op?: string;
   collate: CollateExpr | null;
-  locking_read: {
-    type: 'for_update' | 'lock_in_share_mode';
-    of_tables?: From[];
-    wait?: 'nowait' | 'skip_locked' | null;
-  } | null;
+  locking_read: "FOR UPDATE" | "FOR UPDATE NOWAIT" | "FOR UPDATE SKIP LOCKED" | `FOR UPDATE WAIT ${number}` | "LOCK IN SHARE MODE" | "LOCK IN SHARE MODE NOWAIT" | "LOCK IN SHARE MODE SKIP LOCKED" | `LOCK IN SHARE MODE WAIT ${number}` | null;
 }
 export interface Insert_Replace {
   type: "replace" | "insert";
