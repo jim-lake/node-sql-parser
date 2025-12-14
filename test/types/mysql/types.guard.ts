@@ -762,11 +762,9 @@ export function isFunction(obj: unknown): obj is Function {
         isFunctionName(typedObj["name"]) as boolean &&
         (typeof typedObj["args"] === "undefined" ||
             isExprList(typedObj["args"]) as boolean) &&
-        (typeof typedObj["suffix"] === "undefined" ||
-            typedObj["suffix"] === null ||
-            isOnUpdateCurrentTimestamp(typedObj["suffix"]) as boolean) &&
         (typeof typedObj["over"] === "undefined" ||
             typedObj["over"] === null ||
+            isOnUpdateCurrentTimestamp(typedObj["over"]) as boolean ||
             (typedObj["over"] !== null &&
                 typeof typedObj["over"] === "object" ||
                 typeof typedObj["over"] === "function") &&

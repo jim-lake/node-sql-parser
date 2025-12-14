@@ -179,8 +179,7 @@ export interface Function {
   type: "function";
   name: FunctionName;
   args?: ExprList;
-  suffix?: OnUpdateCurrentTimestamp | null;
-  over?: { type: 'window'; as_window_specification: AsWindowSpec } | null;
+  over?: { type: 'window'; as_window_specification: AsWindowSpec } | OnUpdateCurrentTimestamp | null;
   loc?: LocationRange;
 }
 export interface Column {
