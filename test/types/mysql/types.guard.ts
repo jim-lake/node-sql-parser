@@ -2353,8 +2353,7 @@ export function isOnReference(obj: unknown): obj is OnReference {
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         (typedObj["type"] === "on update" ||
-            typedObj["type"] === "on delete" ||
-            typedObj["type"] === "on_reference") &&
+            typedObj["type"] === "on delete") &&
         (typeof typedObj["keyword"] === "undefined" ||
             typedObj["keyword"] === "on update" ||
             typedObj["keyword"] === "on delete") &&

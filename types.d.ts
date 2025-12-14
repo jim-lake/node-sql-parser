@@ -607,7 +607,7 @@ export type ReferenceDefinition = {
 };
 
 export type OnReference = {
-  type: 'on update' | 'on delete' | 'on_reference';
+  type: 'on update' | 'on delete';
   keyword?: 'on delete' | 'on update';
   value: 'restrict' | 'cascade' | 'set null' | 'no action' | 'set default' | ValueExpr;
 };
