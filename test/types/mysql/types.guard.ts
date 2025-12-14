@@ -2,7 +2,7 @@
  * Generated type guards for "types.d.ts".
  * WARNING: Do not manually change this file.
  */
-import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, SortDirection, ColumnRefItem, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionName, Function, Column, Interval, Param, Var, Value, Binary, Unary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Returning, Update, Delete, Alter, AlterExpr, AlterAddColumn, AlterDropColumn, AlterModifyColumn, AlterChangeColumn, AlterRenameTable, AlterRenameColumn, AlterAddIndex, AlterDropIndex, AlterDropKey, AlterAddConstraint, AlterDropConstraint, AlterAddPartition, AlterDropPartition, AlterAlgorithm, AlterLock, AlterTableOption, Use, Timezone, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, CreateTable, CreateDatabase, CreateSchema, CreateIndex, CreateView, CreateTrigger, CreateUser, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, DropTable, DropDatabase, DropView, DropIndex, DropTrigger, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
+import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, SortDirection, ColumnRefItem, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionName, Function, Column, Interval, Param, Var, Value, Binary, Unary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Returning, Update, Delete, Alter, AlterExpr, AlterAddColumn, AlterDropColumn, AlterModifyColumn, AlterChangeColumn, AlterRenameTable, AlterRenameColumn, AlterAddIndex, AlterDropIndex, AlterDropKey, AlterAddConstraint, AlterDropConstraint, AlterAddPartition, AlterDropPartition, AlterAlgorithm, AlterLock, AlterTableOption, Use, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, CreateTable, CreateDatabase, CreateSchema, CreateIndex, CreateView, CreateTrigger, CreateUser, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, DropTable, DropDatabase, DropView, DropIndex, DropTrigger, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
 
 export function isWith(obj: unknown): obj is With {
     const typedObj = obj as With
@@ -345,7 +345,6 @@ export function isValueExpr(obj: unknown): obj is ValueExpr {
             typedObj["type"] === "number" ||
             typedObj["type"] === "boolean" ||
             typedObj["type"] === "backticks_quote_string" ||
-            typedObj["type"] === "regex_string" ||
             typedObj["type"] === "hex_string" ||
             typedObj["type"] === "full_hex_string" ||
             typedObj["type"] === "natural_string" ||
@@ -361,8 +360,7 @@ export function isValueExpr(obj: unknown): obj is ValueExpr {
             typedObj["type"] === "datetime" ||
             typedObj["type"] === "default" ||
             typedObj["type"] === "time" ||
-            typedObj["type"] === "timestamp" ||
-            typedObj["type"] === "var_string") &&
+            typedObj["type"] === "timestamp") &&
         typeof typedObj["value"] === "T"
     )
 }
@@ -398,7 +396,6 @@ export function isColumnRefItem(obj: unknown): obj is ColumnRefItem {
                 typedObj["column"]["expr"]["type"] === "number" ||
                 typedObj["column"]["expr"]["type"] === "boolean" ||
                 typedObj["column"]["expr"]["type"] === "backticks_quote_string" ||
-                typedObj["column"]["expr"]["type"] === "regex_string" ||
                 typedObj["column"]["expr"]["type"] === "hex_string" ||
                 typedObj["column"]["expr"]["type"] === "full_hex_string" ||
                 typedObj["column"]["expr"]["type"] === "natural_string" ||
@@ -414,8 +411,7 @@ export function isColumnRefItem(obj: unknown): obj is ColumnRefItem {
                 typedObj["column"]["expr"]["type"] === "datetime" ||
                 typedObj["column"]["expr"]["type"] === "default" ||
                 typedObj["column"]["expr"]["type"] === "time" ||
-                typedObj["column"]["expr"]["type"] === "timestamp" ||
-                typedObj["column"]["expr"]["type"] === "var_string") &&
+                typedObj["column"]["expr"]["type"] === "timestamp") &&
             (typeof typedObj["column"]["expr"]["value"] === "string" ||
                 typeof typedObj["column"]["expr"]["value"] === "number" ||
                 typedObj["column"]["expr"]["value"] === false ||
@@ -471,7 +467,6 @@ export function isColumnRef(obj: unknown): obj is ColumnRef {
                 typedObj["column"]["expr"]["type"] === "number" ||
                 typedObj["column"]["expr"]["type"] === "boolean" ||
                 typedObj["column"]["expr"]["type"] === "backticks_quote_string" ||
-                typedObj["column"]["expr"]["type"] === "regex_string" ||
                 typedObj["column"]["expr"]["type"] === "hex_string" ||
                 typedObj["column"]["expr"]["type"] === "full_hex_string" ||
                 typedObj["column"]["expr"]["type"] === "natural_string" ||
@@ -487,8 +482,7 @@ export function isColumnRef(obj: unknown): obj is ColumnRef {
                 typedObj["column"]["expr"]["type"] === "datetime" ||
                 typedObj["column"]["expr"]["type"] === "default" ||
                 typedObj["column"]["expr"]["type"] === "time" ||
-                typedObj["column"]["expr"]["type"] === "timestamp" ||
-                typedObj["column"]["expr"]["type"] === "var_string") &&
+                typedObj["column"]["expr"]["type"] === "timestamp") &&
             (typeof typedObj["column"]["expr"]["value"] === "string" ||
                 typeof typedObj["column"]["expr"]["value"] === "number" ||
                 typedObj["column"]["expr"]["value"] === false ||
@@ -737,7 +731,6 @@ export function isFunctionName(obj: unknown): obj is FunctionName {
                 e["type"] === "number" ||
                 e["type"] === "boolean" ||
                 e["type"] === "backticks_quote_string" ||
-                e["type"] === "regex_string" ||
                 e["type"] === "hex_string" ||
                 e["type"] === "full_hex_string" ||
                 e["type"] === "natural_string" ||
@@ -753,8 +746,7 @@ export function isFunctionName(obj: unknown): obj is FunctionName {
                 e["type"] === "datetime" ||
                 e["type"] === "default" ||
                 e["type"] === "time" ||
-                e["type"] === "timestamp" ||
-                e["type"] === "var_string") &&
+                e["type"] === "timestamp") &&
             typeof e["value"] === "string"
         )
     )
@@ -815,7 +807,6 @@ export function isColumn(obj: unknown): obj is Column {
                 typedObj["as"]["type"] === "number" ||
                 typedObj["as"]["type"] === "boolean" ||
                 typedObj["as"]["type"] === "backticks_quote_string" ||
-                typedObj["as"]["type"] === "regex_string" ||
                 typedObj["as"]["type"] === "hex_string" ||
                 typedObj["as"]["type"] === "full_hex_string" ||
                 typedObj["as"]["type"] === "natural_string" ||
@@ -831,8 +822,7 @@ export function isColumn(obj: unknown): obj is Column {
                 typedObj["as"]["type"] === "datetime" ||
                 typedObj["as"]["type"] === "default" ||
                 typedObj["as"]["type"] === "time" ||
-                typedObj["as"]["type"] === "timestamp" ||
-                typedObj["as"]["type"] === "var_string") &&
+                typedObj["as"]["type"] === "timestamp") &&
             typeof typedObj["as"]["value"] === "string") &&
         (typeof typedObj["type"] === "undefined" ||
             typeof typedObj["type"] === "string") &&
@@ -870,7 +860,6 @@ export function isInterval(obj: unknown): obj is Interval {
             typedObj["expr"]["type"] === "number" ||
             typedObj["expr"]["type"] === "boolean" ||
             typedObj["expr"]["type"] === "backticks_quote_string" ||
-            typedObj["expr"]["type"] === "regex_string" ||
             typedObj["expr"]["type"] === "hex_string" ||
             typedObj["expr"]["type"] === "full_hex_string" ||
             typedObj["expr"]["type"] === "natural_string" ||
@@ -886,8 +875,7 @@ export function isInterval(obj: unknown): obj is Interval {
             typedObj["expr"]["type"] === "datetime" ||
             typedObj["expr"]["type"] === "default" ||
             typedObj["expr"]["type"] === "time" ||
-            typedObj["expr"]["type"] === "timestamp" ||
-            typedObj["expr"]["type"] === "var_string") &&
+            typedObj["expr"]["type"] === "timestamp") &&
         (typeof typedObj["expr"]["value"] === "string" ||
             typeof typedObj["expr"]["value"] === "number" ||
             typedObj["expr"]["value"] === false ||
@@ -1304,7 +1292,6 @@ export function isSelect(obj: unknown): obj is Select {
                     e["type"] === "number" ||
                     e["type"] === "boolean" ||
                     e["type"] === "backticks_quote_string" ||
-                    e["type"] === "regex_string" ||
                     e["type"] === "hex_string" ||
                     e["type"] === "full_hex_string" ||
                     e["type"] === "natural_string" ||
@@ -1320,8 +1307,7 @@ export function isSelect(obj: unknown): obj is Select {
                     e["type"] === "datetime" ||
                     e["type"] === "default" ||
                     e["type"] === "time" ||
-                    e["type"] === "timestamp" ||
-                    e["type"] === "var_string") &&
+                    e["type"] === "timestamp") &&
                 typeof e["value"] === "string"
             )) &&
         (typedObj["distinct"] === null ||
@@ -1391,7 +1377,6 @@ export function isSelect(obj: unknown): obj is Select {
                     e["type"] === "number" ||
                     e["type"] === "boolean" ||
                     e["type"] === "backticks_quote_string" ||
-                    e["type"] === "regex_string" ||
                     e["type"] === "hex_string" ||
                     e["type"] === "full_hex_string" ||
                     e["type"] === "natural_string" ||
@@ -1407,8 +1392,7 @@ export function isSelect(obj: unknown): obj is Select {
                     e["type"] === "datetime" ||
                     e["type"] === "default" ||
                     e["type"] === "time" ||
-                    e["type"] === "timestamp" ||
-                    e["type"] === "var_string") &&
+                    e["type"] === "timestamp") &&
                 typeof e["value"] === "string")
             )) &&
         (typedObj["having"] === null ||
@@ -1422,12 +1406,6 @@ export function isSelect(obj: unknown): obj is Select {
             isLimit(typedObj["limit"]) as boolean) &&
         (typedObj["window"] === null ||
             isWindowExpr(typedObj["window"]) as boolean) &&
-        (typeof typedObj["qualify"] === "undefined" ||
-            typedObj["qualify"] === null ||
-            Array.isArray(typedObj["qualify"]) &&
-            typedObj["qualify"].every((e: any) =>
-                isBinary(e) as boolean
-            )) &&
         (typeof typedObj["_orderby"] === "undefined" ||
             typedObj["_orderby"] === null ||
             Array.isArray(typedObj["_orderby"]) &&
@@ -1977,7 +1955,6 @@ export function isAlterAddPartition(obj: unknown): obj is AlterAddPartition {
                 e["name"]["type"] === "number" ||
                 e["name"]["type"] === "boolean" ||
                 e["name"]["type"] === "backticks_quote_string" ||
-                e["name"]["type"] === "regex_string" ||
                 e["name"]["type"] === "hex_string" ||
                 e["name"]["type"] === "full_hex_string" ||
                 e["name"]["type"] === "natural_string" ||
@@ -1993,8 +1970,7 @@ export function isAlterAddPartition(obj: unknown): obj is AlterAddPartition {
                 e["name"]["type"] === "datetime" ||
                 e["name"]["type"] === "default" ||
                 e["name"]["type"] === "time" ||
-                e["name"]["type"] === "timestamp" ||
-                e["name"]["type"] === "var_string") &&
+                e["name"]["type"] === "timestamp") &&
             (typeof e["name"]["value"] === "string" ||
                 typeof e["name"]["value"] === "number" ||
                 e["name"]["value"] === false ||
@@ -2096,17 +2072,6 @@ export function isUse(obj: unknown): obj is Use {
     )
 }
 
-export function isTimezone(obj: unknown): obj is Timezone {
-    const typedObj = obj as Timezone
-    return (
-        Array.isArray(typedObj) &&
-        (typedObj[0] === "WITHOUT" ||
-            typedObj[0] === "WITH") &&
-        typedObj[1] === "TIME" &&
-        typedObj[2] === "ZONE"
-    )
-}
-
 export function isKeywordComment(obj: unknown): obj is KeywordComment {
     const typedObj = obj as KeywordComment
     return (
@@ -2126,7 +2091,6 @@ export function isKeywordComment(obj: unknown): obj is KeywordComment {
                 typedObj["value"]["type"] === "number" ||
                 typedObj["value"]["type"] === "boolean" ||
                 typedObj["value"]["type"] === "backticks_quote_string" ||
-                typedObj["value"]["type"] === "regex_string" ||
                 typedObj["value"]["type"] === "hex_string" ||
                 typedObj["value"]["type"] === "full_hex_string" ||
                 typedObj["value"]["type"] === "natural_string" ||
@@ -2142,8 +2106,7 @@ export function isKeywordComment(obj: unknown): obj is KeywordComment {
                 typedObj["value"]["type"] === "datetime" ||
                 typedObj["value"]["type"] === "default" ||
                 typedObj["value"]["type"] === "time" ||
-                typedObj["value"]["type"] === "timestamp" ||
-                typedObj["value"]["type"] === "var_string") &&
+                typedObj["value"]["type"] === "timestamp") &&
             (typeof typedObj["value"]["value"] === "string" ||
                 typeof typedObj["value"]["value"] === "number" ||
                 typedObj["value"]["value"] === false ||
@@ -2192,7 +2155,6 @@ export function isDataType(obj: unknown): obj is DataType {
             typeof typedObj["scale"] === "number") &&
         (typeof typedObj["suffix"] === "undefined" ||
             typedObj["suffix"] === null ||
-            isTimezone(typedObj["suffix"]) as boolean ||
             isOnUpdateCurrentTimestamp(typedObj["suffix"]) as boolean ||
             Array.isArray(typedObj["suffix"]) &&
             typedObj["suffix"].every((e: any) =>
@@ -2315,7 +2277,6 @@ export function isColumnDefinitionOptList(obj: unknown): obj is ColumnDefinition
                 typedObj["character_set"]["value"]["type"] === "number" ||
                 typedObj["character_set"]["value"]["type"] === "boolean" ||
                 typedObj["character_set"]["value"]["type"] === "backticks_quote_string" ||
-                typedObj["character_set"]["value"]["type"] === "regex_string" ||
                 typedObj["character_set"]["value"]["type"] === "hex_string" ||
                 typedObj["character_set"]["value"]["type"] === "full_hex_string" ||
                 typedObj["character_set"]["value"]["type"] === "natural_string" ||
@@ -2331,8 +2292,7 @@ export function isColumnDefinitionOptList(obj: unknown): obj is ColumnDefinition
                 typedObj["character_set"]["value"]["type"] === "datetime" ||
                 typedObj["character_set"]["value"]["type"] === "default" ||
                 typedObj["character_set"]["value"]["type"] === "time" ||
-                typedObj["character_set"]["value"]["type"] === "timestamp" ||
-                typedObj["character_set"]["value"]["type"] === "var_string") &&
+                typedObj["character_set"]["value"]["type"] === "timestamp") &&
             (typeof typedObj["character_set"]["value"]["value"] === "string" ||
                 typeof typedObj["character_set"]["value"]["value"] === "number" ||
                 typedObj["character_set"]["value"]["value"] === false ||
@@ -2405,7 +2365,6 @@ export function isOnReference(obj: unknown): obj is OnReference {
                 typedObj["value"]["type"] === "number" ||
                 typedObj["value"]["type"] === "boolean" ||
                 typedObj["value"]["type"] === "backticks_quote_string" ||
-                typedObj["value"]["type"] === "regex_string" ||
                 typedObj["value"]["type"] === "hex_string" ||
                 typedObj["value"]["type"] === "full_hex_string" ||
                 typedObj["value"]["type"] === "natural_string" ||
@@ -2421,8 +2380,7 @@ export function isOnReference(obj: unknown): obj is OnReference {
                 typedObj["value"]["type"] === "datetime" ||
                 typedObj["value"]["type"] === "default" ||
                 typedObj["value"]["type"] === "time" ||
-                typedObj["value"]["type"] === "timestamp" ||
-                typedObj["value"]["type"] === "var_string") &&
+                typedObj["value"]["type"] === "timestamp") &&
             (typeof typedObj["value"]["value"] === "string" ||
                 typeof typedObj["value"]["value"] === "number" ||
                 typedObj["value"]["value"] === false ||
@@ -2792,7 +2750,6 @@ export function isCreateDatabase(obj: unknown): obj is CreateDatabase {
                     e["type"] === "number" ||
                     e["type"] === "boolean" ||
                     e["type"] === "backticks_quote_string" ||
-                    e["type"] === "regex_string" ||
                     e["type"] === "hex_string" ||
                     e["type"] === "full_hex_string" ||
                     e["type"] === "natural_string" ||
@@ -2808,8 +2765,7 @@ export function isCreateDatabase(obj: unknown): obj is CreateDatabase {
                     e["type"] === "datetime" ||
                     e["type"] === "default" ||
                     e["type"] === "time" ||
-                    e["type"] === "timestamp" ||
-                    e["type"] === "var_string") &&
+                    e["type"] === "timestamp") &&
                 (typeof e["value"] === "string" ||
                     typeof e["value"] === "number" ||
                     e["value"] === false ||
@@ -2859,7 +2815,6 @@ export function isCreateSchema(obj: unknown): obj is CreateSchema {
                     e["type"] === "number" ||
                     e["type"] === "boolean" ||
                     e["type"] === "backticks_quote_string" ||
-                    e["type"] === "regex_string" ||
                     e["type"] === "hex_string" ||
                     e["type"] === "full_hex_string" ||
                     e["type"] === "natural_string" ||
@@ -2875,8 +2830,7 @@ export function isCreateSchema(obj: unknown): obj is CreateSchema {
                     e["type"] === "datetime" ||
                     e["type"] === "default" ||
                     e["type"] === "time" ||
-                    e["type"] === "timestamp" ||
-                    e["type"] === "var_string") &&
+                    e["type"] === "timestamp") &&
                 (typeof e["value"] === "string" ||
                     typeof e["value"] === "number" ||
                     e["value"] === false ||
@@ -3270,7 +3224,6 @@ export function isUserAuthOption(obj: unknown): obj is UserAuthOption {
             typedObj["user"]["name"]["type"] === "number" ||
             typedObj["user"]["name"]["type"] === "boolean" ||
             typedObj["user"]["name"]["type"] === "backticks_quote_string" ||
-            typedObj["user"]["name"]["type"] === "regex_string" ||
             typedObj["user"]["name"]["type"] === "hex_string" ||
             typedObj["user"]["name"]["type"] === "full_hex_string" ||
             typedObj["user"]["name"]["type"] === "natural_string" ||
@@ -3286,8 +3239,7 @@ export function isUserAuthOption(obj: unknown): obj is UserAuthOption {
             typedObj["user"]["name"]["type"] === "datetime" ||
             typedObj["user"]["name"]["type"] === "default" ||
             typedObj["user"]["name"]["type"] === "time" ||
-            typedObj["user"]["name"]["type"] === "timestamp" ||
-            typedObj["user"]["name"]["type"] === "var_string") &&
+            typedObj["user"]["name"]["type"] === "timestamp") &&
         (typeof typedObj["user"]["name"]["value"] === "string" ||
             typeof typedObj["user"]["name"]["value"] === "number" ||
             typedObj["user"]["name"]["value"] === false ||
@@ -3299,7 +3251,6 @@ export function isUserAuthOption(obj: unknown): obj is UserAuthOption {
             typedObj["user"]["host"]["type"] === "number" ||
             typedObj["user"]["host"]["type"] === "boolean" ||
             typedObj["user"]["host"]["type"] === "backticks_quote_string" ||
-            typedObj["user"]["host"]["type"] === "regex_string" ||
             typedObj["user"]["host"]["type"] === "hex_string" ||
             typedObj["user"]["host"]["type"] === "full_hex_string" ||
             typedObj["user"]["host"]["type"] === "natural_string" ||
@@ -3315,8 +3266,7 @@ export function isUserAuthOption(obj: unknown): obj is UserAuthOption {
             typedObj["user"]["host"]["type"] === "datetime" ||
             typedObj["user"]["host"]["type"] === "default" ||
             typedObj["user"]["host"]["type"] === "time" ||
-            typedObj["user"]["host"]["type"] === "timestamp" ||
-            typedObj["user"]["host"]["type"] === "var_string") &&
+            typedObj["user"]["host"]["type"] === "timestamp") &&
         (typeof typedObj["user"]["host"]["value"] === "string" ||
             typeof typedObj["user"]["host"]["value"] === "number" ||
             typedObj["user"]["host"]["value"] === false ||
@@ -3337,7 +3287,6 @@ export function isUserAuthOption(obj: unknown): obj is UserAuthOption {
                 typedObj["auth_option"]["value"]["type"] === "number" ||
                 typedObj["auth_option"]["value"]["type"] === "boolean" ||
                 typedObj["auth_option"]["value"]["type"] === "backticks_quote_string" ||
-                typedObj["auth_option"]["value"]["type"] === "regex_string" ||
                 typedObj["auth_option"]["value"]["type"] === "hex_string" ||
                 typedObj["auth_option"]["value"]["type"] === "full_hex_string" ||
                 typedObj["auth_option"]["value"]["type"] === "natural_string" ||
@@ -3353,8 +3302,7 @@ export function isUserAuthOption(obj: unknown): obj is UserAuthOption {
                 typedObj["auth_option"]["value"]["type"] === "datetime" ||
                 typedObj["auth_option"]["value"]["type"] === "default" ||
                 typedObj["auth_option"]["value"]["type"] === "time" ||
-                typedObj["auth_option"]["value"]["type"] === "timestamp" ||
-                typedObj["auth_option"]["value"]["type"] === "var_string") &&
+                typedObj["auth_option"]["value"]["type"] === "timestamp") &&
             (typeof typedObj["auth_option"]["value"]["value"] === "string" ||
                 typeof typedObj["auth_option"]["value"]["value"] === "number" ||
                 typedObj["auth_option"]["value"]["value"] === false ||
@@ -3381,7 +3329,6 @@ export function isRequireOption(obj: unknown): obj is RequireOption {
             typedObj["value"]["type"] === "number" ||
             typedObj["value"]["type"] === "boolean" ||
             typedObj["value"]["type"] === "backticks_quote_string" ||
-            typedObj["value"]["type"] === "regex_string" ||
             typedObj["value"]["type"] === "hex_string" ||
             typedObj["value"]["type"] === "full_hex_string" ||
             typedObj["value"]["type"] === "natural_string" ||
@@ -3397,8 +3344,7 @@ export function isRequireOption(obj: unknown): obj is RequireOption {
             typedObj["value"]["type"] === "datetime" ||
             typedObj["value"]["type"] === "default" ||
             typedObj["value"]["type"] === "time" ||
-            typedObj["value"]["type"] === "timestamp" ||
-            typedObj["value"]["type"] === "var_string") &&
+            typedObj["value"]["type"] === "timestamp") &&
         (typeof typedObj["value"]["value"] === "string" ||
             typeof typedObj["value"]["value"] === "number" ||
             typedObj["value"]["value"] === false ||
@@ -3916,7 +3862,6 @@ export function isGrant(obj: unknown): obj is Grant {
                 e["priv"]["type"] === "number" ||
                 e["priv"]["type"] === "boolean" ||
                 e["priv"]["type"] === "backticks_quote_string" ||
-                e["priv"]["type"] === "regex_string" ||
                 e["priv"]["type"] === "hex_string" ||
                 e["priv"]["type"] === "full_hex_string" ||
                 e["priv"]["type"] === "natural_string" ||
@@ -3932,8 +3877,7 @@ export function isGrant(obj: unknown): obj is Grant {
                 e["priv"]["type"] === "datetime" ||
                 e["priv"]["type"] === "default" ||
                 e["priv"]["type"] === "time" ||
-                e["priv"]["type"] === "timestamp" ||
-                e["priv"]["type"] === "var_string") &&
+                e["priv"]["type"] === "timestamp") &&
             (typeof e["priv"]["value"] === "string" ||
                 typeof e["priv"]["value"] === "number" ||
                 e["priv"]["value"] === false ||
@@ -3973,7 +3917,6 @@ export function isGrant(obj: unknown): obj is Grant {
                 e["name"]["type"] === "number" ||
                 e["name"]["type"] === "boolean" ||
                 e["name"]["type"] === "backticks_quote_string" ||
-                e["name"]["type"] === "regex_string" ||
                 e["name"]["type"] === "hex_string" ||
                 e["name"]["type"] === "full_hex_string" ||
                 e["name"]["type"] === "natural_string" ||
@@ -3989,8 +3932,7 @@ export function isGrant(obj: unknown): obj is Grant {
                 e["name"]["type"] === "datetime" ||
                 e["name"]["type"] === "default" ||
                 e["name"]["type"] === "time" ||
-                e["name"]["type"] === "timestamp" ||
-                e["name"]["type"] === "var_string") &&
+                e["name"]["type"] === "timestamp") &&
             (typeof e["name"]["value"] === "string" ||
                 typeof e["name"]["value"] === "number" ||
                 e["name"]["value"] === false ||
@@ -4003,7 +3945,6 @@ export function isGrant(obj: unknown): obj is Grant {
                     e["host"]["type"] === "number" ||
                     e["host"]["type"] === "boolean" ||
                     e["host"]["type"] === "backticks_quote_string" ||
-                    e["host"]["type"] === "regex_string" ||
                     e["host"]["type"] === "hex_string" ||
                     e["host"]["type"] === "full_hex_string" ||
                     e["host"]["type"] === "natural_string" ||
@@ -4019,8 +3960,7 @@ export function isGrant(obj: unknown): obj is Grant {
                     e["host"]["type"] === "datetime" ||
                     e["host"]["type"] === "default" ||
                     e["host"]["type"] === "time" ||
-                    e["host"]["type"] === "timestamp" ||
-                    e["host"]["type"] === "var_string") &&
+                    e["host"]["type"] === "timestamp") &&
                 (typeof e["host"]["value"] === "string" ||
                     typeof e["host"]["value"] === "number" ||
                     e["host"]["value"] === false ||
@@ -4065,7 +4005,6 @@ export function isLoadData(obj: unknown): obj is LoadData {
             typedObj["file"]["type"] === "number" ||
             typedObj["file"]["type"] === "boolean" ||
             typedObj["file"]["type"] === "backticks_quote_string" ||
-            typedObj["file"]["type"] === "regex_string" ||
             typedObj["file"]["type"] === "hex_string" ||
             typedObj["file"]["type"] === "full_hex_string" ||
             typedObj["file"]["type"] === "natural_string" ||
@@ -4081,8 +4020,7 @@ export function isLoadData(obj: unknown): obj is LoadData {
             typedObj["file"]["type"] === "datetime" ||
             typedObj["file"]["type"] === "default" ||
             typedObj["file"]["type"] === "time" ||
-            typedObj["file"]["type"] === "timestamp" ||
-            typedObj["file"]["type"] === "var_string") &&
+            typedObj["file"]["type"] === "timestamp") &&
         (typeof typedObj["file"]["value"] === "string" ||
             typeof typedObj["file"]["value"] === "number" ||
             typedObj["file"]["value"] === false ||
@@ -4108,7 +4046,6 @@ export function isLoadData(obj: unknown): obj is LoadData {
                     e["type"] === "number" ||
                     e["type"] === "boolean" ||
                     e["type"] === "backticks_quote_string" ||
-                    e["type"] === "regex_string" ||
                     e["type"] === "hex_string" ||
                     e["type"] === "full_hex_string" ||
                     e["type"] === "natural_string" ||
@@ -4124,8 +4061,7 @@ export function isLoadData(obj: unknown): obj is LoadData {
                     e["type"] === "datetime" ||
                     e["type"] === "default" ||
                     e["type"] === "time" ||
-                    e["type"] === "timestamp" ||
-                    e["type"] === "var_string") &&
+                    e["type"] === "timestamp") &&
                 typeof e["value"] === "string"
             )) &&
         (typeof typedObj["character_set"] === "undefined" ||
@@ -4186,7 +4122,6 @@ export function isLoadDataField(obj: unknown): obj is LoadDataField {
                 typedObj["terminated"]["type"] === "number" ||
                 typedObj["terminated"]["type"] === "boolean" ||
                 typedObj["terminated"]["type"] === "backticks_quote_string" ||
-                typedObj["terminated"]["type"] === "regex_string" ||
                 typedObj["terminated"]["type"] === "hex_string" ||
                 typedObj["terminated"]["type"] === "full_hex_string" ||
                 typedObj["terminated"]["type"] === "natural_string" ||
@@ -4202,8 +4137,7 @@ export function isLoadDataField(obj: unknown): obj is LoadDataField {
                 typedObj["terminated"]["type"] === "datetime" ||
                 typedObj["terminated"]["type"] === "default" ||
                 typedObj["terminated"]["type"] === "time" ||
-                typedObj["terminated"]["type"] === "timestamp" ||
-                typedObj["terminated"]["type"] === "var_string") &&
+                typedObj["terminated"]["type"] === "timestamp") &&
             (typeof typedObj["terminated"]["value"] === "string" ||
                 typeof typedObj["terminated"]["value"] === "number" ||
                 typedObj["terminated"]["value"] === false ||
@@ -4220,7 +4154,6 @@ export function isLoadDataField(obj: unknown): obj is LoadDataField {
                 typedObj["enclosed"]["type"] === "number" ||
                 typedObj["enclosed"]["type"] === "boolean" ||
                 typedObj["enclosed"]["type"] === "backticks_quote_string" ||
-                typedObj["enclosed"]["type"] === "regex_string" ||
                 typedObj["enclosed"]["type"] === "hex_string" ||
                 typedObj["enclosed"]["type"] === "full_hex_string" ||
                 typedObj["enclosed"]["type"] === "natural_string" ||
@@ -4236,8 +4169,7 @@ export function isLoadDataField(obj: unknown): obj is LoadDataField {
                 typedObj["enclosed"]["type"] === "datetime" ||
                 typedObj["enclosed"]["type"] === "default" ||
                 typedObj["enclosed"]["type"] === "time" ||
-                typedObj["enclosed"]["type"] === "timestamp" ||
-                typedObj["enclosed"]["type"] === "var_string") &&
+                typedObj["enclosed"]["type"] === "timestamp") &&
             (typeof typedObj["enclosed"]["value"] === "string" ||
                 typeof typedObj["enclosed"]["value"] === "number" ||
                 typedObj["enclosed"]["value"] === false ||
@@ -4254,7 +4186,6 @@ export function isLoadDataField(obj: unknown): obj is LoadDataField {
                 typedObj["escaped"]["type"] === "number" ||
                 typedObj["escaped"]["type"] === "boolean" ||
                 typedObj["escaped"]["type"] === "backticks_quote_string" ||
-                typedObj["escaped"]["type"] === "regex_string" ||
                 typedObj["escaped"]["type"] === "hex_string" ||
                 typedObj["escaped"]["type"] === "full_hex_string" ||
                 typedObj["escaped"]["type"] === "natural_string" ||
@@ -4270,8 +4201,7 @@ export function isLoadDataField(obj: unknown): obj is LoadDataField {
                 typedObj["escaped"]["type"] === "datetime" ||
                 typedObj["escaped"]["type"] === "default" ||
                 typedObj["escaped"]["type"] === "time" ||
-                typedObj["escaped"]["type"] === "timestamp" ||
-                typedObj["escaped"]["type"] === "var_string") &&
+                typedObj["escaped"]["type"] === "timestamp") &&
             (typeof typedObj["escaped"]["value"] === "string" ||
                 typeof typedObj["escaped"]["value"] === "number" ||
                 typedObj["escaped"]["value"] === false ||
@@ -4298,7 +4228,6 @@ export function isLoadDataLine(obj: unknown): obj is LoadDataLine {
                 typedObj["starting"]["type"] === "number" ||
                 typedObj["starting"]["type"] === "boolean" ||
                 typedObj["starting"]["type"] === "backticks_quote_string" ||
-                typedObj["starting"]["type"] === "regex_string" ||
                 typedObj["starting"]["type"] === "hex_string" ||
                 typedObj["starting"]["type"] === "full_hex_string" ||
                 typedObj["starting"]["type"] === "natural_string" ||
@@ -4314,8 +4243,7 @@ export function isLoadDataLine(obj: unknown): obj is LoadDataLine {
                 typedObj["starting"]["type"] === "datetime" ||
                 typedObj["starting"]["type"] === "default" ||
                 typedObj["starting"]["type"] === "time" ||
-                typedObj["starting"]["type"] === "timestamp" ||
-                typedObj["starting"]["type"] === "var_string") &&
+                typedObj["starting"]["type"] === "timestamp") &&
             (typeof typedObj["starting"]["value"] === "string" ||
                 typeof typedObj["starting"]["value"] === "number" ||
                 typedObj["starting"]["value"] === false ||
@@ -4332,7 +4260,6 @@ export function isLoadDataLine(obj: unknown): obj is LoadDataLine {
                 typedObj["terminated"]["type"] === "number" ||
                 typedObj["terminated"]["type"] === "boolean" ||
                 typedObj["terminated"]["type"] === "backticks_quote_string" ||
-                typedObj["terminated"]["type"] === "regex_string" ||
                 typedObj["terminated"]["type"] === "hex_string" ||
                 typedObj["terminated"]["type"] === "full_hex_string" ||
                 typedObj["terminated"]["type"] === "natural_string" ||
@@ -4348,8 +4275,7 @@ export function isLoadDataLine(obj: unknown): obj is LoadDataLine {
                 typedObj["terminated"]["type"] === "datetime" ||
                 typedObj["terminated"]["type"] === "default" ||
                 typedObj["terminated"]["type"] === "time" ||
-                typedObj["terminated"]["type"] === "timestamp" ||
-                typedObj["terminated"]["type"] === "var_string") &&
+                typedObj["terminated"]["type"] === "timestamp") &&
             (typeof typedObj["terminated"]["value"] === "string" ||
                 typeof typedObj["terminated"]["value"] === "number" ||
                 typedObj["terminated"]["value"] === false ||
@@ -4451,7 +4377,6 @@ export function isTransaction(obj: unknown): obj is Transaction {
             typedObj["expr"]["action"]["type"] === "number" ||
             typedObj["expr"]["action"]["type"] === "boolean" ||
             typedObj["expr"]["action"]["type"] === "backticks_quote_string" ||
-            typedObj["expr"]["action"]["type"] === "regex_string" ||
             typedObj["expr"]["action"]["type"] === "hex_string" ||
             typedObj["expr"]["action"]["type"] === "full_hex_string" ||
             typedObj["expr"]["action"]["type"] === "natural_string" ||
@@ -4467,8 +4392,7 @@ export function isTransaction(obj: unknown): obj is Transaction {
             typedObj["expr"]["action"]["type"] === "datetime" ||
             typedObj["expr"]["action"]["type"] === "default" ||
             typedObj["expr"]["action"]["type"] === "time" ||
-            typedObj["expr"]["action"]["type"] === "timestamp" ||
-            typedObj["expr"]["action"]["type"] === "var_string") &&
+            typedObj["expr"]["action"]["type"] === "timestamp") &&
         (typedObj["expr"]["action"]["value"] === "start" ||
             typedObj["expr"]["action"]["value"] === "begin" ||
             typedObj["expr"]["action"]["value"] === "commit" ||
@@ -4489,7 +4413,6 @@ export function isTransaction(obj: unknown): obj is Transaction {
                     e["type"] === "number" ||
                     e["type"] === "boolean" ||
                     e["type"] === "backticks_quote_string" ||
-                    e["type"] === "regex_string" ||
                     e["type"] === "hex_string" ||
                     e["type"] === "full_hex_string" ||
                     e["type"] === "natural_string" ||
@@ -4505,8 +4428,7 @@ export function isTransaction(obj: unknown): obj is Transaction {
                     e["type"] === "datetime" ||
                     e["type"] === "default" ||
                     e["type"] === "time" ||
-                    e["type"] === "timestamp" ||
-                    e["type"] === "var_string") &&
+                    e["type"] === "timestamp") &&
                 (typeof e["value"] === "string" ||
                     typeof e["value"] === "number" ||
                     e["value"] === false ||

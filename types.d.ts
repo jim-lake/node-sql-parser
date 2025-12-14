@@ -82,7 +82,6 @@ export interface ValueExpr<T = string | number | boolean> {
     | "backticks_quote_string"
     | "string"
     | "number"
-    | "regex_string"
     | "hex_string"
     | "full_hex_string"
     | "natural_string"
@@ -99,8 +98,7 @@ export interface ValueExpr<T = string | number | boolean> {
     | "datetime"
     | "default"
     | "time"
-    | "timestamp"
-    | "var_string";
+    | "timestamp";
   value: T;
 }
 
@@ -289,7 +287,6 @@ export interface Select {
   orderby: OrderBy[] | null;
   limit: Limit | null;
   window: WindowExpr | null;
-  qualify?: Binary[] | null;
   _orderby?: OrderBy[] | null;
   _limit?: Limit | null;
   parentheses_symbol?: boolean;
@@ -526,8 +523,6 @@ export interface Use {
   loc?: LocationRange;
 }
 
-export type Timezone = ["WITHOUT" | "WITH", "TIME", "ZONE"];
-
 export type KeywordComment = {
   type: "comment";
   keyword: "comment";
@@ -552,7 +547,7 @@ export type DataType = {
   length?: number;
   parentheses?: true;
   scale?: number;
-  suffix?: Timezone | ("UNSIGNED" | "ZEROFILL")[] | OnUpdateCurrentTimestamp | null;
+  suffix?: ("UNSIGNED" | "ZEROFILL")[] | OnUpdateCurrentTimestamp | null;
   array?: "one" | "two";
   expr?: Expr | ExprList;
   quoted?: string;
