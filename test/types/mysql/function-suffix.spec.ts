@@ -17,3 +17,10 @@ test('Function suffix type is OnUpdateCurrentTimestamp or null', () => {
   // suffix can be OnUpdateCurrentTimestamp | null | undefined
   assert.ok(func.suffix === null || func.suffix === undefined || typeof func.suffix === 'object');
 });
+
+test('CURRENT_TIMESTAMP without function ()', () => {
+  const sql = 'SELECT CURRENT_TIMESTAMP';
+  const ast = parser.astify(sql);
+
+  assert.ok(isSelect(ast), 'AST should be a Select type');
+});
