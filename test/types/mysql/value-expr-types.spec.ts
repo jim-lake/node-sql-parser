@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Select, ValueExpr } from '../../types.d.ts';
-import { isSelect } from './types.guard.ts';
+import { isSelect, isCreate } from './types.guard.ts';
 
 const parser = new Parser();
 
@@ -125,8 +125,7 @@ test('ValueExpr - time type', () => {
 test('ValueExpr - default type', () => {
   const sql = 'CREATE TABLE t (id INT DEFAULT 0)';
   const ast = parser.astify(sql);
-  // Default values are in column definitions
-  assert.ok(ast);
+  assert.ok(isCreate(ast));
 });
 
 test('ValueExpr - param type', () => {
@@ -147,4 +146,3 @@ test('ValueExpr - natural_string type (N prefix)', () => {
   assert.strictEqual(expr.type, 'natural_string');
   assert.strictEqual(expr.value, 'hello');
 });
-

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Select, Dual } from '../../../types.d.ts';
-import { isSelect, isDual } from './types.guard.ts';
+import { isSelect, isDual, isUpdate, isDelete } from './types.guard.ts';
 
 const parser = new Parser();
 
@@ -34,12 +34,12 @@ test('UPDATE with DUAL', () => {
   const sql = 'UPDATE t1, DUAL SET t1.col = 1';
   const ast = parser.astify(sql);
   // This tests if Dual can appear in UPDATE table list
-  assert.ok(ast);
+  assert.ok(isUpdate(ast));
 });
 
 test('DELETE with DUAL', () => {
   const sql = 'DELETE t1 FROM t1, DUAL WHERE t1.id = 1';
   const ast = parser.astify(sql);
   // This tests if Dual can appear in DELETE from list
-  assert.ok(ast);
+  assert.ok(isDelete(ast));
 });

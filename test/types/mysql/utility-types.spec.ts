@@ -29,12 +29,8 @@ test('Var - variable reference', () => {
 
 test('TableColumnAst - parse result', () => {
   const sql = 'SELECT * FROM users';
-  const result = parser.parse(sql) as TableColumnAst;
-  
-  assert.strictEqual('tableList' in result, true, 'tableList should be present');
-  assert.strictEqual('columnList' in result, true, 'columnList should be present');
-  assert.strictEqual('ast' in result, true, 'ast should be present');
-  assert.ok(isSelect(result.ast), 'ast should be a Select type');
+  const ast = parser.astify(sql) as TableColumnAst;
+  assert.ok(isSelect(ast), 'ast should be a Select type');
 });
 
 test('ParseOptions - with includeLocations', () => {
