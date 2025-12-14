@@ -115,13 +115,7 @@ export interface ColumnRefItem {
   collate?: CollateExpr | null;
   order_by?: SortDirection | null;
 }
-export interface ColumnRefExpr {
-  type: "expr";
-  expr: ColumnRefItem;
-  as: string | null;
-}
-
-export type ColumnRef = ColumnRefItem | ColumnRefExpr;
+export type ColumnRef = ColumnRefItem;
 export interface SetList {
   column: string;
   value: ExpressionValue;
@@ -176,7 +170,7 @@ export interface AggrFunc {
     separator?: { keyword: string; value: Value } | string | null;
   };
   loc?: LocationRange;
-  over?: { type: 'window'; as_window_specification: AsWindowSpec } | null;
+  over: { type: 'window'; as_window_specification: AsWindowSpec } | null;
 }
 
 export type FunctionName = {
@@ -364,9 +358,9 @@ export interface Alter {
 
 export type AlterExpr = {
   action: string;
-  keyword?: string;
-  resource?: string;
-  type?: string;
+  keyword: string;
+  resource: string;
+  type: string;
   column?: ColumnRef;
   definition?: DataType;
   suffix?: string | null;
@@ -721,14 +715,49 @@ export type TableOption = {
   value: ExpressionValue | string | number;
 };
 
-export interface Drop {
+export interface DropTable {
   type: "drop";
-  keyword: string;
+  keyword: "table";
   name: From[];
-  prefix?: 'if exists' | null;
-  options?: 'restrict' | 'cascade' | null;
-  table?: From | null;
+  prefix: 'if exists' | null;
+  loc?: LocationRange;
 }
+
+export interface DropDatabase {
+  type: "drop";
+  keyword: "database" | "schema";
+  name: string;
+  prefix: 'if exists' | null;
+  loc?: LocationRange;
+}
+
+export interface DropView {
+  type: "drop";
+  keyword: "view";
+  name: From[];
+  prefix: 'if exists' | null;
+  options: 'restrict' | 'cascade' | null;
+  loc?: LocationRange;
+}
+
+export interface DropIndex {
+  type: "drop";
+  keyword: "index";
+  name: ColumnRef;
+  table: From;
+  options: 'restrict' | 'cascade' | null;
+  loc?: LocationRange;
+}
+
+export interface DropTrigger {
+  type: "drop";
+  keyword: "trigger";
+  name: Array<{ schema: string | null; trigger: string }>;
+  prefix: 'if exists' | null;
+  loc?: LocationRange;
+}
+
+export type Drop = DropTable | DropDatabase | DropView | DropIndex | DropTrigger;
 
 export interface Show {
   type: "show";
