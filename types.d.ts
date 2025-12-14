@@ -591,15 +591,14 @@ export type ColumnDefinitionOptList = {
 export type ReferenceDefinition = {
   definition?: ColumnRef[];
   table?: From[];
-  keyword?: string;
-  match?: string | null;
+  keyword?: "references";
+  match?: "match full" | "match partial" | "match simple" | null;
   on_action: OnReference[];
 };
 
 export type OnReference = {
   type: 'on update' | 'on delete';
-  keyword?: 'on delete' | 'on update';
-  value: 'restrict' | 'cascade' | 'set null' | 'no action' | 'set default' | ValueExpr;
+  value: ValueExpr;
 };
 
 export type CreateColumnDefinition = {
