@@ -307,17 +307,12 @@ export interface Insert_Replace {
   } | Select;
   set?: SetList[];
   partition: string[] | null;
-  prefix: string;
+  prefix: "" | "ignore" | "into" | "ignore into";
   on_duplicate_update: {
     keyword: "on duplicate key update",
     set: SetList[];
   } | null;
   loc?: LocationRange;
-  returning?: Returning
-}
-export interface Returning {
-  type: 'returning';
-  columns: Column[];
 }
 export interface Update {
   with: With[] | null;
@@ -328,7 +323,6 @@ export interface Update {
   orderby: OrderBy[] | null;
   limit: Limit | null;
   loc?: LocationRange;
-  returning?: Returning
 }
 export interface Delete {
   with: With[] | null;
@@ -339,7 +333,6 @@ export interface Delete {
   orderby: OrderBy[] | null;
   limit: Limit | null;
   loc?: LocationRange;
-  returning?: Returning
 }
 
 export interface Alter {

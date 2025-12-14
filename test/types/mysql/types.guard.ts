@@ -2,7 +2,7 @@
  * Generated type guards for "types.d.ts".
  * WARNING: Do not manually change this file.
  */
-import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, SortDirection, ColumnRefItem, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionName, Function, Column, Interval, Param, Var, Value, Binary, Unary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Returning, Update, Delete, Alter, AlterExpr, AlterAddColumn, AlterDropColumn, AlterModifyColumn, AlterChangeColumn, AlterRenameTable, AlterRenameColumn, AlterAddIndex, AlterDropIndex, AlterDropKey, AlterAddConstraint, AlterDropConstraint, AlterAddPartition, AlterDropPartition, AlterAlgorithm, AlterLock, AlterTableOption, Use, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, CreateTable, CreateDatabase, CreateSchema, CreateIndex, CreateView, CreateTrigger, CreateUser, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, DropTable, DropDatabase, DropView, DropIndex, DropTrigger, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
+import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, SortDirection, ColumnRefItem, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionName, Function, Column, Interval, Param, Var, Value, Binary, Unary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Update, Delete, Alter, AlterExpr, AlterAddColumn, AlterDropColumn, AlterModifyColumn, AlterChangeColumn, AlterRenameTable, AlterRenameColumn, AlterAddIndex, AlterDropIndex, AlterDropKey, AlterAddConstraint, AlterDropConstraint, AlterAddPartition, AlterDropPartition, AlterAlgorithm, AlterLock, AlterTableOption, Use, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, CreateTable, CreateDatabase, CreateSchema, CreateIndex, CreateView, CreateTrigger, CreateUser, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, DropTable, DropDatabase, DropView, DropIndex, DropTrigger, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
 
 export function isWith(obj: unknown): obj is With {
     const typedObj = obj as With
@@ -1471,7 +1471,10 @@ export function isInsert_Replace(obj: unknown): obj is Insert_Replace {
             typedObj["partition"].every((e: any) =>
                 typeof e === "string"
             )) &&
-        typeof typedObj["prefix"] === "string" &&
+        (typedObj["prefix"] === "" ||
+            typedObj["prefix"] === "ignore" ||
+            typedObj["prefix"] === "into" ||
+            typedObj["prefix"] === "ignore into") &&
         (typedObj["on_duplicate_update"] === null ||
             (typedObj["on_duplicate_update"] !== null &&
                 typeof typedObj["on_duplicate_update"] === "object" ||
@@ -1496,23 +1499,7 @@ export function isInsert_Replace(obj: unknown): obj is Insert_Replace {
                 typeof typedObj["loc"]["end"] === "function") &&
             typeof typedObj["loc"]["end"]["line"] === "number" &&
             typeof typedObj["loc"]["end"]["column"] === "number" &&
-            typeof typedObj["loc"]["end"]["offset"] === "number") &&
-        (typeof typedObj["returning"] === "undefined" ||
-            isReturning(typedObj["returning"]) as boolean)
-    )
-}
-
-export function isReturning(obj: unknown): obj is Returning {
-    const typedObj = obj as Returning
-    return (
-        (typedObj !== null &&
-            typeof typedObj === "object" ||
-            typeof typedObj === "function") &&
-        typedObj["type"] === "returning" &&
-        Array.isArray(typedObj["columns"]) &&
-        typedObj["columns"].every((e: any) =>
-            isColumn(e) as boolean
-        )
+            typeof typedObj["loc"]["end"]["offset"] === "number")
     )
 }
 
@@ -1563,9 +1550,7 @@ export function isUpdate(obj: unknown): obj is Update {
                 typeof typedObj["loc"]["end"] === "function") &&
             typeof typedObj["loc"]["end"]["line"] === "number" &&
             typeof typedObj["loc"]["end"]["column"] === "number" &&
-            typeof typedObj["loc"]["end"]["offset"] === "number") &&
-        (typeof typedObj["returning"] === "undefined" ||
-            isReturning(typedObj["returning"]) as boolean)
+            typeof typedObj["loc"]["end"]["offset"] === "number")
     )
 }
 
@@ -1643,9 +1628,7 @@ export function isDelete(obj: unknown): obj is Delete {
                 typeof typedObj["loc"]["end"] === "function") &&
             typeof typedObj["loc"]["end"]["line"] === "number" &&
             typeof typedObj["loc"]["end"]["column"] === "number" &&
-            typeof typedObj["loc"]["end"]["offset"] === "number") &&
-        (typeof typedObj["returning"] === "undefined" ||
-            isReturning(typedObj["returning"]) as boolean)
+            typeof typedObj["loc"]["end"]["offset"] === "number")
     )
 }
 
