@@ -379,9 +379,6 @@ export interface Use {
   loc?: LocationRange;
 }
 
-export type KW_UNSIGNED = "UNSIGNED";
-export type KW_ZEROFILL = "ZEROFILL";
-
 export type Timezone = ["WITHOUT" | "WITH", "TIME", "ZONE"];
 
 export type KeywordComment = {
@@ -408,7 +405,7 @@ export type DataType = {
   length?: number;
   parentheses?: true;
   scale?: number;
-  suffix?: Timezone | (KW_UNSIGNED | KW_ZEROFILL)[] | OnUpdateCurrentTimestamp | null;
+  suffix?: Timezone | ("UNSIGNED" | "ZEROFILL")[] | OnUpdateCurrentTimestamp | null;
   array?: "one" | "two";
   expr?: Expr | ExprList;
   quoted?: string;
