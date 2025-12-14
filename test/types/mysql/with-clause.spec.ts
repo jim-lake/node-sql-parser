@@ -22,10 +22,10 @@ test('WITH clause columns type', () => {
 
 test('WITH clause without columns', () => {
   const sql = 'WITH cte AS (SELECT id, name FROM users) SELECT * FROM cte';
-  const ast = parser.astify(sql) as Select;
+  const ast = parser.astify(sql);
   
+  assert.ok(isSelect(ast), 'AST should be a Select type');
   const withClause = ast.with![0] as With;
-  console.log('WITH without columns - columns value:', withClause.columns);
   assert.strictEqual('columns' in withClause, true, 'columns should be present');
   assert.strictEqual('name' in withClause, true, 'name should be present');
   assert.strictEqual('stmt' in withClause, true, 'stmt should be present');

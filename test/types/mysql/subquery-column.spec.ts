@@ -31,6 +31,7 @@ describe('Subquery in SELECT Column', () => {
   test('Multiple subqueries in SELECT', () => {
     const ast = parser.astify("SELECT (SELECT COUNT(*) FROM orders WHERE orders.user_id = u.id) as order_count, (SELECT MAX(created_at) FROM orders WHERE orders.user_id = u.id) as last_order FROM users u");
     
+    assert.ok(isSelect(ast), 'Should be Select');
     assert.ok(isTableColumnAst(ast.columns[0].expr), 'First subquery should be TableColumnAst');
     assert.ok(isTableColumnAst(ast.columns[1].expr), 'Second subquery should be TableColumnAst');
   });

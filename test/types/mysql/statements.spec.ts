@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Show, Explain, Call, Set, Lock, Unlock, Transaction, LockTable } from '../../types.d.ts';
-import { isShow, isCall, isSet, isLock, isUnlock } from './types.guard.ts';
+import { isShow, isCall, isSet, isLock, isUnlock, isExplain, isTransaction } from './types.guard.ts';
 
 const parser = new Parser();
 
@@ -16,10 +16,13 @@ test('SHOW statement', () => {
   assert.strictEqual(showAst.keyword, 'tables');
 });
 
-test('Explain type exists', () => {
-  // Explain type is defined in types.d.ts
-  const explain: Explain | null = null;
-  assert.ok(true);
+test('EXPLAIN statement', () => {
+  const sql = 'EXPLAIN SELECT * FROM users';
+  const ast = parser.astify(sql);
+  
+  assert.ok(isExplain(ast), 'AST should be an Explain type');
+  const explainAst = ast as Explain;
+  assert.strictEqual(explainAst.type, 'explain');
 });
 
 test('CALL statement', () => {
@@ -65,8 +68,11 @@ test('UNLOCK TABLES statement', () => {
   assert.strictEqual(unlockAst.keyword, 'tables');
 });
 
-test('Transaction type exists', () => {
-  // Transaction type is defined in types.d.ts
-  const transaction: Transaction | null = null;
-  assert.ok(true);
+test('Transaction statement', () => {
+  const sql = 'START TRANSACTION';
+  const ast = parser.astify(sql);
+  
+  assert.ok(isTransaction(ast), 'AST should be a Transaction type');
+  const txAst = ast as Transaction;
+  assert.strictEqual(txAst.type, 'transaction');
 });
