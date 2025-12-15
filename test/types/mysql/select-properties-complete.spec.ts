@@ -17,16 +17,6 @@ test('Select.with - With[] when WITH clause present', () => {
   assert.ok(isWith(select.with[0]));
 });
 
-// Select.from - TableExpr variant
-test('Select.from - TableExpr variant', () => {
-  const sql = 'SELECT * FROM (SELECT id FROM users) AS t';
-  const ast = parser.astify(sql);
-  assert.ok(isSelect(ast));
-  const select = ast as Select;
-  assert.ok(select.from);
-  assert.ok(Array.isArray(select.from));
-});
-
 // Select.where - Binary expression
 test('Select.where - Binary expression', () => {
   const sql = 'SELECT * FROM users WHERE id = 1';

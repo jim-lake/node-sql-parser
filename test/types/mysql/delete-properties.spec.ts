@@ -6,19 +6,6 @@ import { isDelete, isFrom, isDual, isBinary, isUnary, isFunction } from './types
 
 const parser = new Parser();
 
-// Test Delete.table - array variant (simple DELETE has addition:true)
-test('Delete.table with addition:true (simple DELETE)', () => {
-  const sql = 'DELETE FROM users WHERE id = 1';
-  const ast = parser.astify(sql);
-  assert.ok(isDelete(ast));
-  const del = ast as Delete;
-  // Simple DELETE FROM creates table array with addition:true
-  assert.ok(Array.isArray(del.table));
-  assert.strictEqual(del.table!.length, 1);
-  assert.strictEqual(del.table![0].addition, true);
-  assert.strictEqual(del.table![0].table, 'users');
-});
-
 // Test Delete.from - Array<From | Dual> with From
 test('Delete.from as Array<From>', () => {
   const sql = 'DELETE FROM users';

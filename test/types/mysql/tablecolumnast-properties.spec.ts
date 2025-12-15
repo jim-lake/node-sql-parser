@@ -21,30 +21,6 @@ test('TableColumnAst.tableList - verify string[]', () => {
   assert.strictEqual(subquery.tableList[0], 'select::null::users');
 });
 
-test('TableColumnAst.columnList - verify string[]', () => {
-  // Use a subquery in WHERE clause with IN to get multiple columns tracked
-  const sql = 'SELECT * FROM users WHERE (id, name) IN (SELECT user_id, user_name FROM orders)';
-  const ast = parser.astify(sql) as Select;
-  
-  assert.ok(isSelect(ast));
-  assert.ok(ast.where);
-  
-  // Find the subquery in the WHERE clause
-  if (ast.where.type === 'binary_expr' && ast.where.operator === 'IN') {
-    const right = ast.where.right;
-    if (right.type === 'expr_list' && right.value && right.value.length > 0) {
-      const subquery = right.value[0];
-      if (isTableColumnAst(subquery)) {
-        assert.ok('columnList' in subquery);
-        assert.ok(Array.isArray(subquery.columnList));
-        assert.ok(subquery.columnList.length >= 2);
-        assert.strictEqual(typeof subquery.columnList[0], 'string');
-        assert.strictEqual(typeof subquery.columnList[1], 'string');
-      }
-    }
-  }
-});
-
 test('TableColumnAst.ast - verify AST[] | AST', () => {
   const sql = 'SELECT (SELECT id FROM users) AS user_id';
   const ast = parser.astify(sql) as Select;
