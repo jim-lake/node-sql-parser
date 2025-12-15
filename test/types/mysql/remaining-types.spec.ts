@@ -1,50 +1,24 @@
 import { test } from 'node:test';
-import assert from 'node:assert';
+import { assertType } from './assert-type';
 import { Parser } from './parser-loader.mjs';
 import { isCreate, isCreateColumnDefinition, isCreateConstraintPrimary } from './types.guard.js';
 
 const parser = new Parser();
 
 test('ConstraintName in PRIMARY KEY', () => {
-  const sql = 'CREATE TABLE users (id INT, CONSTRAINT pk_users PRIMARY KEY (id))';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast), 'Should be Create');
-  
-  
-  const constraint = ast.create_definitions.find(def => 
-    'constraint_type' in def && def.constraint_type === 'primary key'
-  );
-  
-  assert.ok(isCreateConstraintPrimary(constraint), 'Should be CreateConstraintPrimary');
-  
-  if ('constraint' in constraint && constraint.constraint) {
-  }
-  if ('keyword' in constraint && constraint.keyword) {
-  }
+  const ast = parser.astify('CREATE TABLE users (id INT, CONSTRAINT pk_users PRIMARY KEY (id))');
+  assertType(isCreate, ast);
+  assertType(isCreateConstraintPrimary, ast.create_definitions[1]);
 });
 
 test('LiteralNull in column definition', () => {
-  const sql = 'CREATE TABLE users (name VARCHAR(50) NULL)';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast), 'Should be Create');
-  
-  
-  const colDef = ast.create_definitions[0];
-  assert.ok(isCreateColumnDefinition(colDef), 'Should be CreateColumnDefinition');
-  
-  if ('nullable' in colDef && colDef.nullable) {
-  }
+  const ast = parser.astify('CREATE TABLE users (name VARCHAR(50) NULL)');
+  assertType(isCreate, ast);
+  assertType(isCreateColumnDefinition, ast.create_definitions[0]);
 });
 
 test('LiteralNotNull in column definition', () => {
-  const sql = 'CREATE TABLE users (name VARCHAR(50) NOT NULL)';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast), 'Should be Create');
-  
-  
-  const colDef = ast.create_definitions[0];
-  assert.ok(isCreateColumnDefinition(colDef), 'Should be CreateColumnDefinition');
-  
-  if ('nullable' in colDef && colDef.nullable) {
-  }
+  const ast = parser.astify('CREATE TABLE users (name VARCHAR(50) NOT NULL)');
+  assertType(isCreate, ast);
+  assertType(isCreateColumnDefinition, ast.create_definitions[0]);
 });

@@ -1,41 +1,30 @@
 import { test } from 'node:test';
-import assert from 'node:assert';
+import { assertType } from './assert-type';
 import { Parser } from './parser-loader.mjs';
-import type { CreateTable, CreateColumnDefinition } from '../../types.d.ts';
 import { isCreate, isCreateColumnDefinition } from './types.guard.ts';
 
 const parser = new Parser();
 
 test('DataType suffix - UNSIGNED', () => {
-  const sql = 'CREATE TABLE t (id INT UNSIGNED)';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast));
-  const createTable = ast as CreateTable;
-  const colDef = createTable.create_definitions?.[0] as CreateColumnDefinition;
-  assert.ok(isCreateColumnDefinition(colDef));
+  const ast = parser.astify('CREATE TABLE t (id INT UNSIGNED)');
+  assertType(isCreate, ast);
+  assertType(isCreateColumnDefinition, ast.create_definitions[0]);
 });
 
 test('DataType suffix - ZEROFILL', () => {
-  const sql = 'CREATE TABLE t (id INT ZEROFILL)';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast));
-  const createTable = ast as CreateTable;
-  const colDef = createTable.create_definitions?.[0] as CreateColumnDefinition;
-  assert.ok(isCreateColumnDefinition(colDef));
+  const ast = parser.astify('CREATE TABLE t (id INT ZEROFILL)');
+  assertType(isCreate, ast);
+  assertType(isCreateColumnDefinition, ast.create_definitions[0]);
 });
 
 test('DataType suffix - UNSIGNED ZEROFILL', () => {
-  const sql = 'CREATE TABLE t (id INT UNSIGNED ZEROFILL)';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast));
-  const createTable = ast as CreateTable;
-  const colDef = createTable.create_definitions?.[0] as CreateColumnDefinition;
-  assert.ok(isCreateColumnDefinition(colDef));
+  const ast = parser.astify('CREATE TABLE t (id INT UNSIGNED ZEROFILL)');
+  assertType(isCreate, ast);
+  assertType(isCreateColumnDefinition, ast.create_definitions[0]);
 });
 
 test('DataType suffix - Timezone NOT in MySQL', () => {
-  const sql = 'CREATE TABLE t (created_at TIMESTAMP)';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast));
-  assert.ok(isCreateColumnDefinition((ast as CreateTable).create_definitions?.[0]));
+  const ast = parser.astify('CREATE TABLE t (created_at TIMESTAMP)');
+  assertType(isCreate, ast);
+  assertType(isCreateColumnDefinition, ast.create_definitions[0]);
 });

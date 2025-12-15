@@ -1,61 +1,42 @@
 import { test } from 'node:test';
-import assert from 'node:assert';
+import { assertType } from './assert-type';
 import { Parser } from './parser-loader.mjs';
-import type { CreateColumnDefinition, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition } from '../../types.d.ts';
 import { isCreate, isCreateColumnDefinition, isCreateIndexDefinition, isCreateFulltextSpatialIndexDefinition } from './types.guard.ts';
 
 const parser = new Parser();
 
 test('CREATE TABLE with column definition - INT NOT NULL', () => {
-  const sql = 'CREATE TABLE users (id INT NOT NULL)';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast), 'Should be Create');
-  const colDef = ast.create_definitions![0] as CreateColumnDefinition;
-  
-  assert.ok(isCreateColumnDefinition(colDef), 'Should be CreateColumnDefinition');
+  const ast = parser.astify('CREATE TABLE users (id INT NOT NULL)');
+  assertType(isCreate, ast);
+  assertType(isCreateColumnDefinition, ast.create_definitions[0]);
 });
 
 test('CREATE TABLE with column definition - VARCHAR with DEFAULT', () => {
-  const sql = "CREATE TABLE users (name VARCHAR(255) DEFAULT 'unknown')";
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast), 'Should be Create');
-  const colDef = ast.create_definitions![0] as CreateColumnDefinition;
-  
-  assert.ok(isCreateColumnDefinition(colDef), 'Should be CreateColumnDefinition');
+  const ast = parser.astify("CREATE TABLE users (name VARCHAR(255) DEFAULT 'unknown')");
+  assertType(isCreate, ast);
+  assertType(isCreateColumnDefinition, ast.create_definitions[0]);
 });
 
 test('CREATE TABLE with column definition - AUTO_INCREMENT', () => {
-  const sql = 'CREATE TABLE users (id INT AUTO_INCREMENT)';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast), 'Should be Create');
-  const colDef = ast.create_definitions![0] as CreateColumnDefinition;
-  
-  assert.ok(isCreateColumnDefinition(colDef), 'Should be CreateColumnDefinition');
+  const ast = parser.astify('CREATE TABLE users (id INT AUTO_INCREMENT)');
+  assertType(isCreate, ast);
+  assertType(isCreateColumnDefinition, ast.create_definitions[0]);
 });
 
 test('CREATE TABLE with INDEX definition', () => {
-  const sql = 'CREATE TABLE users (id INT, name VARCHAR(255), INDEX idx_name (name))';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast), 'Should be Create');
-  const indexDef = ast.create_definitions![2] as CreateIndexDefinition;
-  
-  assert.ok(isCreateIndexDefinition(indexDef), 'Should be CreateIndexDefinition');
+  const ast = parser.astify('CREATE TABLE users (id INT, name VARCHAR(255), INDEX idx_name (name))');
+  assertType(isCreate, ast);
+  assertType(isCreateIndexDefinition, ast.create_definitions[2]);
 });
 
 test('CREATE TABLE with KEY definition', () => {
-  const sql = 'CREATE TABLE users (id INT, KEY (id))';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast), 'Should be Create');
-  const indexDef = ast.create_definitions![1] as CreateIndexDefinition;
-  
-  assert.ok(isCreateIndexDefinition(indexDef), 'Should be CreateIndexDefinition');
+  const ast = parser.astify('CREATE TABLE users (id INT, KEY (id))');
+  assertType(isCreate, ast);
+  assertType(isCreateIndexDefinition, ast.create_definitions[1]);
 });
 
 test('CREATE TABLE with FULLTEXT INDEX', () => {
-  const sql = 'CREATE TABLE articles (id INT, content TEXT, FULLTEXT INDEX ft_content (content))';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast), 'Should be Create');
-  const ftIndex = ast.create_definitions![2] as CreateFulltextSpatialIndexDefinition;
-  
-  assert.ok(isCreateFulltextSpatialIndexDefinition(ftIndex), 'Should be CreateFulltextSpatialIndexDefinition');
+  const ast = parser.astify('CREATE TABLE articles (id INT, content TEXT, FULLTEXT INDEX ft_content (content))');
+  assertType(isCreate, ast);
+  assertType(isCreateFulltextSpatialIndexDefinition, ast.create_definitions[2]);
 });

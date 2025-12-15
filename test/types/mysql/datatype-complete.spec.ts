@@ -1,19 +1,14 @@
 import { test } from 'node:test';
-import assert from 'node:assert';
+import { assertType } from './assert-type';
 import { Parser } from './parser-loader.mjs';
-import type { Create, CreateColumnDefinition, DataType } from '../../../types.d.ts';
 import { isCreate, isCreateColumnDefinition } from './types.guard.ts';
 
 const parser = new Parser();
 
-// Phase 11.11: DataType Properties Complete Validation
-
 test('DataType.dataType - string value', () => {
-  const sql = 'CREATE TABLE users (id INT)';
-  const ast = parser.astify(sql);
-  assert.ok(isCreate(ast));
-  const colDef = (ast as Create).create_definitions[0] as CreateColumnDefinition;
-  assert.ok(isCreateColumnDefinition(colDef));
+  const ast = parser.astify('CREATE TABLE users (id INT)');
+  assertType(isCreate, ast);
+  assertType(isCreateColumnDefinition, ast.create_definitions[0]);
 });
 
 test('DataType.dataType - various types', () => {
@@ -33,19 +28,15 @@ test('DataType.dataType - various types', () => {
     sql += ')';
     
     const ast = parser.astify(sql);
-    assert.ok(isCreate(ast));
-    assert.ok(isCreateColumnDefinition(ast.create_definitions[0]));
+    assertType(isCreate, ast);
+    assertType(isCreateColumnDefinition, ast.create_definitions[0]);
   }
 });
 
 test('DataType.suffix - empty array or null when not present', () => {
-  // INT returns empty array
-  const sql1 = 'CREATE TABLE users (id INT)';
-  const ast1 = parser.astify(sql1);
-  assert.ok(isCreate(ast1));
+  const ast1 = parser.astify('CREATE TABLE users (id INT)');
+  assertType(isCreate, ast1);
   
-  // VARCHAR returns null
-  const sql2 = 'CREATE TABLE users (name VARCHAR(255))';
-  const ast2 = parser.astify(sql2);
-  assert.ok(isCreate(ast2));
+  const ast2 = parser.astify('CREATE TABLE users (name VARCHAR(255))');
+  assertType(isCreate, ast2);
 });

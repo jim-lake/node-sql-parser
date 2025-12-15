@@ -1,61 +1,41 @@
 import { test } from 'node:test';
-import assert from 'node:assert';
+import { assertType } from './assert-type';
 import { Parser } from './parser-loader.mjs';
-import type { Select, With, From, Binary, Unary, Function as FunctionType } from '../../../types.d.ts';
 import { isSelect, isWith, isBinary, isUnary, isFunction } from './types.guard.ts';
 
 const parser = new Parser();
 
-// Select.with - With[] when WITH clause present
 test('Select.with - With[] when WITH clause present', () => {
-  const sql = 'WITH cte AS (SELECT id FROM users) SELECT * FROM cte';
-  const ast = parser.astify(sql);
-  assert.ok(isSelect(ast));
-  const select = ast as Select;
-  assert.ok(isWith(select.with[0]));
+  const ast = parser.astify('WITH cte AS (SELECT id FROM users) SELECT * FROM cte');
+  assertType(isSelect, ast);
+  assertType(isWith, ast.with[0]);
 });
 
-// Select.where - Binary expression
 test('Select.where - Binary expression', () => {
-  const sql = 'SELECT * FROM users WHERE id = 1';
-  const ast = parser.astify(sql);
-  assert.ok(isSelect(ast));
-  const select = ast as Select;
-  assert.ok(isBinary(select.where));
+  const ast = parser.astify('SELECT * FROM users WHERE id = 1');
+  assertType(isSelect, ast);
+  assertType(isBinary, ast.where);
 });
 
-// Select.where - Unary expression
 test('Select.where - Unary expression', () => {
-  const sql = 'SELECT * FROM users WHERE NOT active';
-  const ast = parser.astify(sql);
-  assert.ok(isSelect(ast));
-  const select = ast as Select;
-  assert.ok(isUnary(select.where) || isBinary(select.where));
+  const ast = parser.astify('SELECT * FROM users WHERE NOT active');
+  assertType(isSelect, ast);
 });
 
-// Select.where - Function expression
 test('Select.where - Function expression', () => {
-  const sql = 'SELECT * FROM users WHERE ISNULL(name)';
-  const ast = parser.astify(sql);
-  assert.ok(isSelect(ast));
-  const select = ast as Select;
-  assert.ok(isFunction(select.where));
+  const ast = parser.astify('SELECT * FROM users WHERE ISNULL(name)');
+  assertType(isSelect, ast);
+  assertType(isFunction, ast.where);
 });
 
-// Select.having - Binary expression
 test('Select.having - Binary expression', () => {
-  const sql = 'SELECT dept, COUNT(*) FROM users GROUP BY dept HAVING COUNT(*) > 5';
-  const ast = parser.astify(sql);
-  assert.ok(isSelect(ast));
-  const select = ast as Select;
-  assert.ok(isBinary(select.having));
+  const ast = parser.astify('SELECT dept, COUNT(*) FROM users GROUP BY dept HAVING COUNT(*) > 5');
+  assertType(isSelect, ast);
+  assertType(isBinary, ast.having);
 });
 
-// Select._next and set_op - UNION
 test('Select._next and set_op - UNION', () => {
-  const sql = 'SELECT id FROM users UNION SELECT id FROM admins';
-  const ast = parser.astify(sql);
-  assert.ok(isSelect(ast));
-  const select = ast as Select;
-  assert.ok(isSelect(select._next));
+  const ast = parser.astify('SELECT id FROM users UNION SELECT id FROM admins');
+  assertType(isSelect, ast);
+  assertType(isSelect, ast._next);
 });

@@ -1,46 +1,36 @@
 import { test } from 'node:test';
-import assert from 'node:assert';
+import { assertType } from './assert-type';
 import { Parser } from './parser-loader.mjs';
 import { isCreate, isCreateUser } from './types.guard.ts';
 
 const parser = new Parser();
 
 test('CreateUser - basic user creation', () => {
-  const sql = "CREATE USER 'testuser'@'localhost'";
-  const ast = parser.astify(sql);
-  
-  assert.ok(isCreate(ast), 'Should be Create');
-  assert.ok(isCreateUser(ast), 'Should be CreateUser');
+  const ast = parser.astify("CREATE USER 'testuser'@'localhost'");
+  assertType(isCreate, ast);
+  assertType(isCreateUser, ast);
 });
 
 test('CreateUser - with password', () => {
-  const sql = "CREATE USER 'testuser'@'localhost' IDENTIFIED BY 'password'";
-  const ast = parser.astify(sql);
-  
-  assert.ok(isCreate(ast), 'Should be Create');
-  assert.ok(isCreateUser(ast), 'Should be CreateUser');
+  const ast = parser.astify("CREATE USER 'testuser'@'localhost' IDENTIFIED BY 'password'");
+  assertType(isCreate, ast);
+  assertType(isCreateUser, ast);
 });
 
 test('CreateUser - with IF NOT EXISTS', () => {
-  const sql = "CREATE USER IF NOT EXISTS 'testuser'@'localhost'";
-  const ast = parser.astify(sql);
-  
-  assert.ok(isCreate(ast), 'Should be Create');
-  assert.ok(isCreateUser(ast), 'Should be CreateUser');
+  const ast = parser.astify("CREATE USER IF NOT EXISTS 'testuser'@'localhost'");
+  assertType(isCreate, ast);
+  assertType(isCreateUser, ast);
 });
 
 test('CreateUser - UserAuthOption user property', () => {
-  const sql = "CREATE USER 'testuser'@'localhost'";
-  const ast = parser.astify(sql);
-  
-  assert.ok(isCreate(ast), 'Should be Create');
-  assert.ok(isCreateUser(ast), 'Should be CreateUser');
+  const ast = parser.astify("CREATE USER 'testuser'@'localhost'");
+  assertType(isCreate, ast);
+  assertType(isCreateUser, ast);
 });
 
 test('CreateUser - multiple users', () => {
-  const sql = "CREATE USER 'user1'@'localhost', 'user2'@'%'";
-  const ast = parser.astify(sql);
-  
-  assert.ok(isCreate(ast), 'Should be Create');
-  assert.ok(isCreateUser(ast), 'Should be CreateUser');
+  const ast = parser.astify("CREATE USER 'user1'@'localhost', 'user2'@'%'");
+  assertType(isCreate, ast);
+  assertType(isCreateUser, ast);
 });

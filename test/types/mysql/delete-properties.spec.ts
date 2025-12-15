@@ -1,47 +1,34 @@
 import { test } from 'node:test';
-import assert from 'node:assert';
+import { assertType } from './assert-type';
 import { Parser } from './parser-loader.mjs';
-import type { Delete, From, Dual, Binary, Unary, Function as FunctionType } from '../../../types.d.ts';
 import { isDelete, isFrom, isBinary, isUnary, isFunction } from './types.guard.ts';
 
 const parser = new Parser();
 
-// Test Delete.from - Array<From | Dual> with From
 test('Delete.from as Array<From>', () => {
-  const sql = 'DELETE FROM users';
-  const ast = parser.astify(sql);
-  assert.ok(isDelete(ast));
-  const del = ast as Delete;
-  assert.ok(isFrom(del.from[0]));
+  const ast = parser.astify('DELETE FROM users');
+  assertType(isDelete, ast);
+  assertType(isFrom, ast.from[0]);
 });
 
-// Test Delete.where - Binary variant
 test('Delete.where as Binary', () => {
-  const sql = 'DELETE FROM users WHERE id = 1';
-  const ast = parser.astify(sql);
-  assert.ok(isDelete(ast));
-  const del = ast as Delete;
-  assert.ok(isBinary(del.where));
+  const ast = parser.astify('DELETE FROM users WHERE id = 1');
+  assertType(isDelete, ast);
+  assertType(isBinary, ast.where);
 });
 
-// Test Delete.where - Unary variant
 test('Delete.where as Unary', () => {
-  const sql = 'DELETE FROM users WHERE NOT active';
-  const ast = parser.astify(sql);
-  assert.ok(isDelete(ast));
-  const del = ast as Delete;
-  if (del.where && 'type' in del.where && del.where.type === 'unary_expr') {
-    assert.ok(isUnary(del.where));
+  const ast = parser.astify('DELETE FROM users WHERE NOT active');
+  assertType(isDelete, ast);
+  if (ast.where && 'type' in ast.where && ast.where.type === 'unary_expr') {
+    assertType(isUnary, ast.where);
   }
 });
 
-// Test Delete.where - Function variant
 test('Delete.where as Function', () => {
-  const sql = 'DELETE FROM users WHERE ISNULL(deleted_at)';
-  const ast = parser.astify(sql);
-  assert.ok(isDelete(ast));
-  const del = ast as Delete;
-  if (del.where && 'type' in del.where && del.where.type === 'function') {
-    assert.ok(isFunction(del.where));
+  const ast = parser.astify('DELETE FROM users WHERE ISNULL(deleted_at)');
+  assertType(isDelete, ast);
+  if (ast.where && 'type' in ast.where && ast.where.type === 'function') {
+    assertType(isFunction, ast.where);
   }
 });
