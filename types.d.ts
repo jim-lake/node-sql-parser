@@ -47,14 +47,21 @@ export interface Join extends BaseFrom {
   using?: string[];
   on?: Binary;
 }
+export interface Values {
+  type: "values";
+  values: ExprList[];
+  prefix?: string;
+}
+
 export interface TableExpr {
   expr: {
     tableList: string[];
     columnList: string[];
     ast: Select;
     parentheses: boolean;
-  };
+  } | Values;
   as: string | null;
+  prefix?: string;
 }
 export interface Dual {
   type: "dual";
@@ -216,7 +223,7 @@ export interface Function {
   loc?: LocationRange;
 }
 export interface Column {
-  expr: ExpressionValue | Star;
+  expr: ExpressionValue | Extract | Star;
   as: string | null;
   type?: string;
   loc?: LocationRange;
@@ -251,6 +258,15 @@ export type Unary = {
 
 export type Expr = Binary | Unary;
 
+export interface Extract {
+  type: "extract";
+  args: {
+    field: string;
+    source: ExpressionValue;
+  };
+  loc?: LocationRange;
+}
+
 export type ExpressionValue =
   | ColumnRef
   | Param
@@ -267,7 +283,7 @@ export type ExpressionValue =
 
 export type ExprList = {
   type: "expr_list";
-  value: ExpressionValue[] | null;
+  value: (ExpressionValue | DataType)[] | null;
   loc?: LocationRange;
   parentheses?: boolean;
   separator?: string;
@@ -383,8 +399,11 @@ export type AlterExpr =
   | AlterDropKey
   | AlterAddConstraint
   | AlterDropConstraint
+  | AlterEnableConstraint
+  | AlterDisableConstraint
   | AlterAddPartition
   | AlterDropPartition
+  | AlterOperatePartition
   | AlterAlgorithm
   | AlterLock
   | AlterTableOption;
@@ -488,6 +507,21 @@ export type AlterDropConstraint = {
   constraint: string;
 };
 
+export type AlterEnableConstraint = {
+  type: 'alter';
+  resource: 'constraint';
+  action: 'with';
+  keyword: 'check check';
+  constraint: string;
+};
+
+export type AlterDisableConstraint = {
+  type: 'alter';
+  resource: 'constraint';
+  action: 'nocheck';
+  constraint: string;
+};
+
 export type AlterAddPartition = {
   type: 'alter';
   resource: 'partition';
@@ -509,6 +543,17 @@ export type AlterDropPartition = {
   action: 'drop';
   keyword: 'PARTITION';
   partitions: Column[];
+};
+
+export type AlterOperatePartition = {
+  type: 'alter';
+  resource: 'partition';
+  action: 'analyze' | 'check' | 'truncate' | 'discard' | 'import' | 'coalesce';
+  keyword: 'PARTITION';
+  partitions: Column[];
+  suffix?: {
+    keyword: string;
+  };
 };
 
 export type AlterAlgorithm = {
@@ -562,9 +607,9 @@ export type CollateExpr = {
 
 export type DataType = {
   dataType: string;
-  length?: number;
+  length?: number | null;
   parentheses?: true;
-  scale?: number;
+  scale?: number | null;
   suffix?: ("UNSIGNED" | "ZEROFILL")[] | null;
   expr?: Expr | ExprList;
 };
@@ -945,6 +990,8 @@ export interface Show {
     type: 'like';
     value: string;
   } | null;
+  in?: ExpressionValue | null;
+  limit?: LimitValue | null;
   loc?: LocationRange;
 }
 
@@ -1003,24 +1050,27 @@ export interface Unlock {
 
 export interface Grant {
   type: "grant";
-  keyword: "priv";
+  keyword: "priv" | "proxy" | "role";
   objects: Array<{
-    priv: OriginValue;
-    columns: ColumnRef[] | null;
+    priv: OriginValue | StringValue | { type: "string"; value: string };
+    columns?: ColumnRef[] | null;
   }>;
-  on: {
+  on?: {
     object_type: 'table' | 'function' | 'procedure' | OriginValue | null;
     priv_level: Array<{
       prefix: string;
       name: string;
     }>;
+  } | {
+    name: StringValue;
+    host: StringValue | null;
   };
   to_from: "TO" | "FROM";
   user_or_roles: Array<{
     name: StringValue;
     host: StringValue | null;
   }>;
-  with: OriginValue | null;
+  with?: OriginValue | null;
   loc?: LocationRange;
 }
 

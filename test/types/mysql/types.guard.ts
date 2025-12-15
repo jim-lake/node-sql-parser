@@ -2,7 +2,7 @@
  * Generated type guards for "types.d.ts".
  * WARNING: Do not manually change this file.
  */
-import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, StringValue, OriginValue, DefaultValue, NumberValue, IntervalExprValue, SeparatorValue, SortDirection, ColumnRefItem, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionNameValue, FunctionName, Function, Column, Interval, Param, Var, Binary, Unary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Update, Delete, Alter, AlterExpr, AlterAddColumn, AlterDropColumn, AlterModifyColumn, AlterChangeColumn, AlterRenameTable, AlterRenameColumn, AlterAddIndex, AlterDropIndex, AlterDropKey, AlterAddConstraint, AlterDropConstraint, AlterAddPartition, AlterDropPartition, AlterAlgorithm, AlterLock, AlterTableOption, Use, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, CreateTable, CreateDatabase, CreateSchema, CreateIndex, CreateView, CreateTrigger, CreateUser, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, DropTable, DropDatabase, DropView, DropIndex, DropTrigger, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
+import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, Values, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, StringValue, OriginValue, DefaultValue, NumberValue, IntervalExprValue, SeparatorValue, SortDirection, ColumnRefItem, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionNameValue, FunctionName, Function, Column, Interval, Param, Var, Binary, Unary, Expr, Extract, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Update, Delete, Alter, AlterExpr, AlterAddColumn, AlterDropColumn, AlterModifyColumn, AlterChangeColumn, AlterRenameTable, AlterRenameColumn, AlterAddIndex, AlterDropIndex, AlterDropKey, AlterAddConstraint, AlterDropConstraint, AlterEnableConstraint, AlterDisableConstraint, AlterAddPartition, AlterDropPartition, AlterOperatePartition, AlterAlgorithm, AlterLock, AlterTableOption, Use, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, CreateTable, CreateDatabase, CreateSchema, CreateIndex, CreateView, CreateTrigger, CreateUser, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, DropTable, DropDatabase, DropView, DropIndex, DropTrigger, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
 
 export function isWith(obj: unknown): obj is With {
     const typedObj = obj as With
@@ -189,27 +189,46 @@ export function isJoin(obj: unknown): obj is Join {
     )
 }
 
+export function isValues(obj: unknown): obj is Values {
+    const typedObj = obj as Values
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "values" &&
+        Array.isArray(typedObj["values"]) &&
+        typedObj["values"].every((e: any) =>
+            isExprList(e) as boolean
+        ) &&
+        (typeof typedObj["prefix"] === "undefined" ||
+            typeof typedObj["prefix"] === "string")
+    )
+}
+
 export function isTableExpr(obj: unknown): obj is TableExpr {
     const typedObj = obj as TableExpr
     return (
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        (typedObj["expr"] !== null &&
-            typeof typedObj["expr"] === "object" ||
-            typeof typedObj["expr"] === "function") &&
-        Array.isArray(typedObj["expr"]["tableList"]) &&
-        typedObj["expr"]["tableList"].every((e: any) =>
-            typeof e === "string"
-        ) &&
-        Array.isArray(typedObj["expr"]["columnList"]) &&
-        typedObj["expr"]["columnList"].every((e: any) =>
-            typeof e === "string"
-        ) &&
-        isSelect(typedObj["expr"]["ast"]) as boolean &&
-        typeof typedObj["expr"]["parentheses"] === "boolean" &&
+        (isValues(typedObj["expr"]) as boolean ||
+            (typedObj["expr"] !== null &&
+                typeof typedObj["expr"] === "object" ||
+                typeof typedObj["expr"] === "function") &&
+            Array.isArray(typedObj["expr"]["tableList"]) &&
+            typedObj["expr"]["tableList"].every((e: any) =>
+                typeof e === "string"
+            ) &&
+            Array.isArray(typedObj["expr"]["columnList"]) &&
+            typedObj["expr"]["columnList"].every((e: any) =>
+                typeof e === "string"
+            ) &&
+            isSelect(typedObj["expr"]["ast"]) as boolean &&
+            typeof typedObj["expr"]["parentheses"] === "boolean") &&
         (typedObj["as"] === null ||
-            typeof typedObj["as"] === "string")
+            typeof typedObj["as"] === "string") &&
+        (typeof typedObj["prefix"] === "undefined" ||
+            typeof typedObj["prefix"] === "string")
     )
 }
 
@@ -836,7 +855,8 @@ export function isColumn(obj: unknown): obj is Column {
             isParam(typedObj["expr"]) as boolean ||
             isVar(typedObj["expr"]) as boolean ||
             isBinary(typedObj["expr"]) as boolean ||
-            isUnary(typedObj["expr"]) as boolean) &&
+            isUnary(typedObj["expr"]) as boolean ||
+            isExtract(typedObj["expr"]) as boolean) &&
         (typedObj["as"] === null ||
             typeof typedObj["as"] === "string") &&
         (typeof typedObj["type"] === "undefined" ||
@@ -1026,6 +1046,37 @@ export function isExpr(obj: unknown): obj is Expr {
     )
 }
 
+export function isExtract(obj: unknown): obj is Extract {
+    const typedObj = obj as Extract
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "extract" &&
+        (typedObj["args"] !== null &&
+            typeof typedObj["args"] === "object" ||
+            typeof typedObj["args"] === "function") &&
+        typeof typedObj["args"]["field"] === "string" &&
+        isExpressionValue(typedObj["args"]["source"]) as boolean &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
 export function isExpressionValue(obj: unknown): obj is ExpressionValue {
     const typedObj = obj as ExpressionValue
     return (
@@ -1054,7 +1105,19 @@ export function isExprList(obj: unknown): obj is ExprList {
         (typedObj["value"] === null ||
             Array.isArray(typedObj["value"]) &&
             typedObj["value"].every((e: any) =>
-                isExpressionValue(e) as boolean
+            (isTableColumnAst(e) as boolean ||
+                isValueExpr(e) as boolean ||
+                isColumnRefItem(e) as boolean ||
+                isCase(e) as boolean ||
+                isCast(e) as boolean ||
+                isAggrFunc(e) as boolean ||
+                isFunction(e) as boolean ||
+                isInterval(e) as boolean ||
+                isParam(e) as boolean ||
+                isVar(e) as boolean ||
+                isBinary(e) as boolean ||
+                isUnary(e) as boolean ||
+                isDataType(e) as boolean)
             )) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
@@ -1596,8 +1659,11 @@ export function isAlterExpr(obj: unknown): obj is AlterExpr {
             isAlterDropKey(typedObj) as boolean ||
             isAlterAddConstraint(typedObj) as boolean ||
             isAlterDropConstraint(typedObj) as boolean ||
+            isAlterEnableConstraint(typedObj) as boolean ||
+            isAlterDisableConstraint(typedObj) as boolean ||
             isAlterAddPartition(typedObj) as boolean ||
             isAlterDropPartition(typedObj) as boolean ||
+            isAlterOperatePartition(typedObj) as boolean ||
             isAlterAlgorithm(typedObj) as boolean ||
             isAlterLock(typedObj) as boolean ||
             isAlterTableOption(typedObj) as boolean)
@@ -1805,6 +1871,33 @@ export function isAlterDropConstraint(obj: unknown): obj is AlterDropConstraint 
     )
 }
 
+export function isAlterEnableConstraint(obj: unknown): obj is AlterEnableConstraint {
+    const typedObj = obj as AlterEnableConstraint
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "alter" &&
+        typedObj["resource"] === "constraint" &&
+        typedObj["action"] === "with" &&
+        typedObj["keyword"] === "check check" &&
+        typeof typedObj["constraint"] === "string"
+    )
+}
+
+export function isAlterDisableConstraint(obj: unknown): obj is AlterDisableConstraint {
+    const typedObj = obj as AlterDisableConstraint
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "alter" &&
+        typedObj["resource"] === "constraint" &&
+        typedObj["action"] === "nocheck" &&
+        typeof typedObj["constraint"] === "string"
+    )
+}
+
 export function isAlterAddPartition(obj: unknown): obj is AlterAddPartition {
     const typedObj = obj as AlterAddPartition
     return (
@@ -1845,6 +1938,33 @@ export function isAlterDropPartition(obj: unknown): obj is AlterDropPartition {
         typedObj["partitions"].every((e: any) =>
             isColumn(e) as boolean
         )
+    )
+}
+
+export function isAlterOperatePartition(obj: unknown): obj is AlterOperatePartition {
+    const typedObj = obj as AlterOperatePartition
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "alter" &&
+        typedObj["resource"] === "partition" &&
+        (typedObj["action"] === "analyze" ||
+            typedObj["action"] === "check" ||
+            typedObj["action"] === "truncate" ||
+            typedObj["action"] === "discard" ||
+            typedObj["action"] === "import" ||
+            typedObj["action"] === "coalesce") &&
+        typedObj["keyword"] === "PARTITION" &&
+        Array.isArray(typedObj["partitions"]) &&
+        typedObj["partitions"].every((e: any) =>
+            isColumn(e) as boolean
+        ) &&
+        (typeof typedObj["suffix"] === "undefined" ||
+            (typedObj["suffix"] !== null &&
+                typeof typedObj["suffix"] === "object" ||
+                typeof typedObj["suffix"] === "function") &&
+            typeof typedObj["suffix"]["keyword"] === "string")
     )
 }
 
@@ -1968,10 +2088,12 @@ export function isDataType(obj: unknown): obj is DataType {
             typeof typedObj === "function") &&
         typeof typedObj["dataType"] === "string" &&
         (typeof typedObj["length"] === "undefined" ||
+            typedObj["length"] === null ||
             typeof typedObj["length"] === "number") &&
         (typeof typedObj["parentheses"] === "undefined" ||
             typedObj["parentheses"] === true) &&
         (typeof typedObj["scale"] === "undefined" ||
+            typedObj["scale"] === null ||
             typeof typedObj["scale"] === "number") &&
         (typeof typedObj["suffix"] === "undefined" ||
             typedObj["suffix"] === null ||
@@ -3195,6 +3317,23 @@ export function isShow(obj: unknown): obj is Show {
                 typeof typedObj["like"] === "function") &&
             typedObj["like"]["type"] === "like" &&
             typeof typedObj["like"]["value"] === "string") &&
+        (typeof typedObj["in"] === "undefined" ||
+            typedObj["in"] === null ||
+            isTableColumnAst(typedObj["in"]) as boolean ||
+            isValueExpr(typedObj["in"]) as boolean ||
+            isColumnRefItem(typedObj["in"]) as boolean ||
+            isCase(typedObj["in"]) as boolean ||
+            isCast(typedObj["in"]) as boolean ||
+            isAggrFunc(typedObj["in"]) as boolean ||
+            isFunction(typedObj["in"]) as boolean ||
+            isInterval(typedObj["in"]) as boolean ||
+            isParam(typedObj["in"]) as boolean ||
+            isVar(typedObj["in"]) as boolean ||
+            isBinary(typedObj["in"]) as boolean ||
+            isUnary(typedObj["in"]) as boolean) &&
+        (typeof typedObj["limit"] === "undefined" ||
+            typedObj["limit"] === null ||
+            isLimitValue(typedObj["limit"]) as boolean) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
                 typeof typedObj["loc"] === "object" ||
@@ -3423,35 +3562,51 @@ export function isGrant(obj: unknown): obj is Grant {
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         typedObj["type"] === "grant" &&
-        typedObj["keyword"] === "priv" &&
+        (typedObj["keyword"] === "priv" ||
+            typedObj["keyword"] === "proxy" ||
+            typedObj["keyword"] === "role") &&
         Array.isArray(typedObj["objects"]) &&
         typedObj["objects"].every((e: any) =>
             (e !== null &&
                 typeof e === "object" ||
                 typeof e === "function") &&
-            isOriginValue(e["priv"]) as boolean &&
-            (e["columns"] === null ||
+            (isStringValue(e["priv"]) as boolean ||
+                isOriginValue(e["priv"]) as boolean ||
+                (e["priv"] !== null &&
+                    typeof e["priv"] === "object" ||
+                    typeof e["priv"] === "function") &&
+                e["priv"]["type"] === "string" &&
+                typeof e["priv"]["value"] === "string") &&
+            (typeof e["columns"] === "undefined" ||
+                e["columns"] === null ||
                 Array.isArray(e["columns"]) &&
                 e["columns"].every((e: any) =>
                     isColumnRefItem(e) as boolean
                 ))
         ) &&
-        (typedObj["on"] !== null &&
-            typeof typedObj["on"] === "object" ||
-            typeof typedObj["on"] === "function") &&
-        (typedObj["on"]["object_type"] === null ||
-            typedObj["on"]["object_type"] === "function" ||
-            isOriginValue(typedObj["on"]["object_type"]) as boolean ||
-            typedObj["on"]["object_type"] === "table" ||
-            typedObj["on"]["object_type"] === "procedure") &&
-        Array.isArray(typedObj["on"]["priv_level"]) &&
-        typedObj["on"]["priv_level"].every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e["prefix"] === "string" &&
-            typeof e["name"] === "string"
-        ) &&
+        (typeof typedObj["on"] === "undefined" ||
+            (typedObj["on"] !== null &&
+                typeof typedObj["on"] === "object" ||
+                typeof typedObj["on"] === "function") &&
+            (typedObj["on"]["object_type"] === null ||
+                typedObj["on"]["object_type"] === "function" ||
+                isOriginValue(typedObj["on"]["object_type"]) as boolean ||
+                typedObj["on"]["object_type"] === "table" ||
+                typedObj["on"]["object_type"] === "procedure") &&
+            Array.isArray(typedObj["on"]["priv_level"]) &&
+            typedObj["on"]["priv_level"].every((e: any) =>
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                typeof e["prefix"] === "string" &&
+                typeof e["name"] === "string"
+            ) ||
+            (typedObj["on"] !== null &&
+                typeof typedObj["on"] === "object" ||
+                typeof typedObj["on"] === "function") &&
+            isStringValue(typedObj["on"]["name"]) as boolean &&
+            (typedObj["on"]["host"] === null ||
+                isStringValue(typedObj["on"]["host"]) as boolean)) &&
         (typedObj["to_from"] === "TO" ||
             typedObj["to_from"] === "FROM") &&
         Array.isArray(typedObj["user_or_roles"]) &&
@@ -3463,7 +3618,8 @@ export function isGrant(obj: unknown): obj is Grant {
             (e["host"] === null ||
                 isStringValue(e["host"]) as boolean)
         ) &&
-        (typedObj["with"] === null ||
+        (typeof typedObj["with"] === "undefined" ||
+            typedObj["with"] === null ||
             isOriginValue(typedObj["with"]) as boolean) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
