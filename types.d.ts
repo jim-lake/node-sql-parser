@@ -232,7 +232,7 @@ export interface FulltextSearch {
   as?: string | null;
 }
 export interface Column {
-  expr: ExpressionValue | Extract | Star | FulltextSearch;
+  expr: ExpressionValue | Extract | Star | FulltextSearch | Assign;
   as: string | null;
   type?: string;
   loc?: LocationRange;
@@ -247,6 +247,14 @@ export interface Interval {
 export type Param = { type: "param"; value: string; loc?: LocationRange };
 
 export type Var = { type: "var"; name: string; members: string[]; prefix: string; loc?: LocationRange };
+
+export type Assign = {
+  type: "assign";
+  left: Var;
+  symbol: ":=";
+  right: ExpressionValue;
+  loc?: LocationRange;
+};
 
 export type Binary = {
   type: "binary_expr";
@@ -335,7 +343,7 @@ export interface Select {
     position: 'column' | 'from' | 'end' | null;
   };
   from: From[] | TableExpr | { expr: From[], parentheses: { length: number }, joins: From[] } | null;
-  where: Binary | Unary | Function | FulltextSearch | null;
+  where: Binary | Unary | Function | FulltextSearch | ColumnRef | null;
   groupby: { columns: ColumnRef[] | null, modifiers: (OriginValue | null)[] } | null;
   having: Binary | null;
   orderby: OrderBy[] | null;

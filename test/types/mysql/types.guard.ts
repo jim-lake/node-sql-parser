@@ -2,7 +2,7 @@
  * Generated type guards for "types.d.ts".
  * WARNING: Do not manually change this file.
  */
-import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, Values, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, StringValue, OriginValue, DefaultValue, NumberValue, IntervalExprValue, SeparatorValue, SortDirection, ColumnRefItem, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionNameValue, FunctionName, Function, FulltextSearch, Column, Interval, Param, Var, Binary, Unary, Expr, Extract, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Update, Delete, Alter, AlterExpr, AlterAddColumn, AlterDropColumn, AlterModifyColumn, AlterChangeColumn, AlterRenameTable, AlterRenameColumn, AlterAddIndex, AlterDropIndex, AlterDropKey, AlterAddConstraint, AlterDropConstraint, AlterEnableConstraint, AlterDisableConstraint, AlterAddPartition, AlterDropPartition, AlterOperatePartition, AlterAlgorithm, AlterLock, AlterTableOption, Use, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, CreateTable, CreateDatabase, CreateSchema, CreateIndex, CreateView, CreateTrigger, CreateUser, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, DropTable, DropDatabase, DropView, DropIndex, DropTrigger, Drop, ShowLogs, ShowTables, ShowSimple, ShowProcedureFunctionStatus, ShowBinlogEvents, ShowCharacterSet, ShowCollationDatabases, ShowColumnsIndexes, ShowCreateTable, ShowCreateView, ShowCreateEvent, ShowCreateTrigger, ShowCreateProcedure, ShowGrants, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
+import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, Values, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, StringValue, OriginValue, DefaultValue, NumberValue, IntervalExprValue, SeparatorValue, SortDirection, ColumnRefItem, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionNameValue, FunctionName, Function, FulltextSearch, Column, Interval, Param, Var, Assign, Binary, Unary, Expr, Extract, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Update, Delete, Alter, AlterExpr, AlterAddColumn, AlterDropColumn, AlterModifyColumn, AlterChangeColumn, AlterRenameTable, AlterRenameColumn, AlterAddIndex, AlterDropIndex, AlterDropKey, AlterAddConstraint, AlterDropConstraint, AlterEnableConstraint, AlterDisableConstraint, AlterAddPartition, AlterDropPartition, AlterOperatePartition, AlterAlgorithm, AlterLock, AlterTableOption, Use, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, CreateTable, CreateDatabase, CreateSchema, CreateIndex, CreateView, CreateTrigger, CreateUser, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, DropTable, DropDatabase, DropView, DropIndex, DropTrigger, Drop, ShowLogs, ShowTables, ShowSimple, ShowProcedureFunctionStatus, ShowBinlogEvents, ShowCharacterSet, ShowCollationDatabases, ShowColumnsIndexes, ShowCreateTable, ShowCreateView, ShowCreateEvent, ShowCreateTrigger, ShowCreateProcedure, ShowGrants, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
 
 export function isWith(obj: unknown): obj is With {
     const typedObj = obj as With
@@ -932,6 +932,7 @@ export function isColumn(obj: unknown): obj is Column {
             isInterval(typedObj["expr"]) as boolean ||
             isParam(typedObj["expr"]) as boolean ||
             isVar(typedObj["expr"]) as boolean ||
+            isAssign(typedObj["expr"]) as boolean ||
             isBinary(typedObj["expr"]) as boolean ||
             isUnary(typedObj["expr"]) as boolean ||
             isExtract(typedObj["expr"]) as boolean) &&
@@ -1010,6 +1011,35 @@ export function isVar(obj: unknown): obj is Var {
             typeof e === "string"
         ) &&
         typeof typedObj["prefix"] === "string" &&
+        (typeof typedObj["loc"] === "undefined" ||
+            (typedObj["loc"] !== null &&
+                typeof typedObj["loc"] === "object" ||
+                typeof typedObj["loc"] === "function") &&
+            (typedObj["loc"]["start"] !== null &&
+                typeof typedObj["loc"]["start"] === "object" ||
+                typeof typedObj["loc"]["start"] === "function") &&
+            typeof typedObj["loc"]["start"]["line"] === "number" &&
+            typeof typedObj["loc"]["start"]["column"] === "number" &&
+            typeof typedObj["loc"]["start"]["offset"] === "number" &&
+            (typedObj["loc"]["end"] !== null &&
+                typeof typedObj["loc"]["end"] === "object" ||
+                typeof typedObj["loc"]["end"] === "function") &&
+            typeof typedObj["loc"]["end"]["line"] === "number" &&
+            typeof typedObj["loc"]["end"]["column"] === "number" &&
+            typeof typedObj["loc"]["end"]["offset"] === "number")
+    )
+}
+
+export function isAssign(obj: unknown): obj is Assign {
+    const typedObj = obj as Assign
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typedObj["type"] === "assign" &&
+        isVar(typedObj["left"]) as boolean &&
+        typedObj["symbol"] === ":=" &&
+        isExpressionValue(typedObj["right"]) as boolean &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
                 typeof typedObj["loc"] === "object" ||
@@ -1386,6 +1416,7 @@ export function isSelect(obj: unknown): obj is Select {
                 isFrom(e) as boolean
             )) &&
         (typedObj["where"] === null ||
+            isColumnRefItem(typedObj["where"]) as boolean ||
             isFunction(typedObj["where"]) as boolean ||
             isFulltextSearch(typedObj["where"]) as boolean ||
             isBinary(typedObj["where"]) as boolean ||
