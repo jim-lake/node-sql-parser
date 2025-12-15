@@ -980,20 +980,116 @@ export interface DropTrigger {
 
 export type Drop = DropTable | DropDatabase | DropView | DropIndex | DropTrigger;
 
-export interface Show {
+export interface ShowLogs {
   type: "show";
-  keyword: string;
-  suffix?: string;
-  from?: From[];
-  where?: Binary | Function | null;
-  like?: {
-    type: 'like';
-    value: string;
-  } | null;
-  in?: ExpressionValue | null;
-  limit?: LimitValue | null;
+  keyword: "binary" | "master";
+  suffix: "logs";
   loc?: LocationRange;
 }
+
+export interface ShowTables {
+  type: "show";
+  keyword: "tables";
+  loc?: LocationRange;
+}
+
+export interface ShowSimple {
+  type: "show";
+  keyword: "triggers" | "status" | "processlist";
+  loc?: LocationRange;
+}
+
+export interface ShowProcedureFunctionStatus {
+  type: "show";
+  keyword: "procedure" | "function";
+  suffix: "status";
+  loc?: LocationRange;
+}
+
+export interface ShowBinlogEvents {
+  type: "show";
+  keyword: "binlog";
+  suffix: "events";
+  in: { op: "IN" | "NOT IN"; right: ExpressionValue } | null;
+  from: From[] | null;
+  limit: Limit | null;
+  loc?: LocationRange;
+}
+
+export interface ShowCharacterSet {
+  type: "show";
+  keyword: "character";
+  suffix: "set";
+  expr: { op: "LIKE" | "NOT LIKE"; right: ExpressionValue } | Binary | null;
+  loc?: LocationRange;
+}
+
+export interface ShowCollationDatabases {
+  type: "show";
+  keyword: "collation" | "databases";
+  expr: { op: "LIKE" | "NOT LIKE"; right: ExpressionValue } | Binary | null;
+  loc?: LocationRange;
+}
+
+export interface ShowColumnsIndexes {
+  type: "show";
+  keyword: "columns" | "indexes" | "index";
+  from: From[];
+  loc?: LocationRange;
+}
+
+export interface ShowCreateTable {
+  type: "show";
+  keyword: "create";
+  suffix: "table";
+  table: { db: string | null; table: string };
+  loc?: LocationRange;
+}
+
+export interface ShowCreateView {
+  type: "show";
+  keyword: "create";
+  suffix: "view";
+  view: { db: string | null; table: string };
+  loc?: LocationRange;
+}
+
+export interface ShowCreateEvent {
+  type: "show";
+  keyword: "create";
+  suffix: "event";
+  event: { db: string | null; table: string };
+  loc?: LocationRange;
+}
+
+export interface ShowCreateTrigger {
+  type: "show";
+  keyword: "create";
+  suffix: "trigger";
+  trigger: { db: string | null; table: string };
+  loc?: LocationRange;
+}
+
+export interface ShowCreateProcedure {
+  type: "show";
+  keyword: "create";
+  suffix: "procedure";
+  procedure: { db: string | null; table: string };
+  loc?: LocationRange;
+}
+
+export interface ShowGrants {
+  type: "show";
+  keyword: "grants";
+  for: {
+    user: string;
+    host: string | null;
+    role_list: string[] | null;
+  } | null;
+  loc?: LocationRange;
+}
+
+export type Show = ShowLogs | ShowTables | ShowSimple | ShowProcedureFunctionStatus | ShowBinlogEvents | ShowCharacterSet | ShowCollationDatabases | ShowColumnsIndexes | ShowCreateTable | ShowCreateView | ShowCreateEvent | ShowCreateTrigger | ShowCreateProcedure | ShowGrants;
 
 export interface Desc {
   type: "desc";
