@@ -460,7 +460,7 @@ export type AlterRenameTable = {
   type: 'alter';
   resource: 'table';
   action: 'rename';
-  keyword: string;
+  keyword: string | null;
   table: string;
 };
 
@@ -569,7 +569,7 @@ export type AlterAlgorithm = {
   type: 'alter';
   resource: 'algorithm';
   keyword: 'algorithm';
-  symbol: string;
+  symbol: string | null;
   algorithm: string;
 };
 
@@ -577,7 +577,7 @@ export type AlterLock = {
   type: 'alter';
   resource: 'lock';
   keyword: 'lock';
-  symbol: string;
+  symbol: string | null;
   lock: string;
 };
 
@@ -585,7 +585,7 @@ export type AlterTableOption = {
   type: 'alter';
   resource: string;
   keyword: string;
-  symbol: string;
+  symbol: string | null;
   engine?: string;
 };
 
@@ -699,7 +699,7 @@ export type IndexType = {
 
 export type IndexOption = {
   type: "key_block_size";
-  symbol?: "=";
+  symbol?: "=" | null;
   expr: NumberValue;
 } | {
   keyword: "using";

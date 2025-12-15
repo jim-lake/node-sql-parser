@@ -1814,7 +1814,8 @@ export function isAlterRenameTable(obj: unknown): obj is AlterRenameTable {
         typedObj["type"] === "alter" &&
         typedObj["resource"] === "table" &&
         typedObj["action"] === "rename" &&
-        typeof typedObj["keyword"] === "string" &&
+        (typedObj["keyword"] === null ||
+            typeof typedObj["keyword"] === "string") &&
         typeof typedObj["table"] === "string"
     )
 }
@@ -2030,7 +2031,8 @@ export function isAlterAlgorithm(obj: unknown): obj is AlterAlgorithm {
         typedObj["type"] === "alter" &&
         typedObj["resource"] === "algorithm" &&
         typedObj["keyword"] === "algorithm" &&
-        typeof typedObj["symbol"] === "string" &&
+        (typedObj["symbol"] === null ||
+            typeof typedObj["symbol"] === "string") &&
         typeof typedObj["algorithm"] === "string"
     )
 }
@@ -2044,7 +2046,8 @@ export function isAlterLock(obj: unknown): obj is AlterLock {
         typedObj["type"] === "alter" &&
         typedObj["resource"] === "lock" &&
         typedObj["keyword"] === "lock" &&
-        typeof typedObj["symbol"] === "string" &&
+        (typedObj["symbol"] === null ||
+            typeof typedObj["symbol"] === "string") &&
         typeof typedObj["lock"] === "string"
     )
 }
@@ -2058,7 +2061,8 @@ export function isAlterTableOption(obj: unknown): obj is AlterTableOption {
         typedObj["type"] === "alter" &&
         typeof typedObj["resource"] === "string" &&
         typeof typedObj["keyword"] === "string" &&
-        typeof typedObj["symbol"] === "string" &&
+        (typedObj["symbol"] === null ||
+            typeof typedObj["symbol"] === "string") &&
         (typeof typedObj["engine"] === "undefined" ||
             typeof typedObj["engine"] === "string")
     )
@@ -2371,6 +2375,7 @@ export function isIndexOption(obj: unknown): obj is IndexOption {
                 typeof typedObj === "function") &&
             typedObj["type"] === "key_block_size" &&
             (typeof typedObj["symbol"] === "undefined" ||
+                typedObj["symbol"] === null ||
                 typedObj["symbol"] === "=") &&
             isNumberValue(typedObj["expr"]) as boolean ||
             (typedObj !== null &&
