@@ -1047,6 +1047,7 @@ export function isBinary(obj: unknown): obj is Binary {
             isVar(typedObj["left"]) as boolean ||
             isBinary(typedObj["left"]) as boolean ||
             isUnary(typedObj["left"]) as boolean ||
+            isExtract(typedObj["left"]) as boolean ||
             isExprList(typedObj["left"]) as boolean) &&
         (isTableColumnAst(typedObj["right"]) as boolean ||
             isValueExpr(typedObj["right"]) as boolean ||
@@ -1060,6 +1061,7 @@ export function isBinary(obj: unknown): obj is Binary {
             isVar(typedObj["right"]) as boolean ||
             isBinary(typedObj["right"]) as boolean ||
             isUnary(typedObj["right"]) as boolean ||
+            isExtract(typedObj["right"]) as boolean ||
             isExprList(typedObj["right"]) as boolean) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
@@ -1193,6 +1195,7 @@ export function isExprList(obj: unknown): obj is ExprList {
                 isVar(e) as boolean ||
                 isBinary(e) as boolean ||
                 isUnary(e) as boolean ||
+                isExprList(e) as boolean ||
                 isDataType(e) as boolean)
             )) &&
         (typeof typedObj["loc"] === "undefined" ||
@@ -1627,6 +1630,7 @@ export function isDelete(obj: unknown): obj is Delete {
         ) &&
         (typedObj["where"] === null ||
             isFunction(typedObj["where"]) as boolean ||
+            isFulltextSearch(typedObj["where"]) as boolean ||
             isBinary(typedObj["where"]) as boolean ||
             isUnary(typedObj["where"]) as boolean) &&
         (typedObj["orderby"] === null ||

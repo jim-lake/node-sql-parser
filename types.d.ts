@@ -251,8 +251,8 @@ export type Var = { type: "var"; name: string; members: string[]; prefix: string
 export type Binary = {
   type: "binary_expr";
   operator: string;
-  left: ExpressionValue | ExprList;
-  right: ExpressionValue | ExprList;
+  left: ExpressionValue | ExprList | Extract;
+  right: ExpressionValue | ExprList | Extract;
   loc?: LocationRange;
   parentheses?: boolean;
 };
@@ -292,7 +292,7 @@ export type ExpressionValue =
 
 export type ExprList = {
   type: "expr_list";
-  value: (ExpressionValue | DataType)[] | null;
+  value: (ExpressionValue | DataType | ExprList)[] | null;
   loc?: LocationRange;
   parentheses?: boolean;
   separator?: string;
@@ -383,7 +383,7 @@ export interface Delete {
   type: "delete";
   table: (From & { addition?: boolean })[] | null;
   from: Array<From | Dual>;
-  where: Binary | Unary | Function | null;
+  where: Binary | Unary | Function | FulltextSearch | null;
   orderby: OrderBy[] | null;
   limit: Limit | null;
   loc?: LocationRange;
