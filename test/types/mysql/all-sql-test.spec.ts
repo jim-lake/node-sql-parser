@@ -22,7 +22,23 @@ function astify(sql: string) {
 
 function readSqlFile(filename: string): string[] {
   const content = readFileSync(join(__dirname, filename), 'utf8');
-  return content.split(';\n').filter(s => s.trim().length > 0);
+  const statements = content.split(';\n').filter(s => s.trim().length > 0);
+
+  const bad_list = [];
+  for(const sql of statements) {
+    try {
+      parser.astify(sql);
+    } catch (e) {
+      bad_list.push(sql);
+    }
+  }
+  if (bad_list.length > 0) {
+    for( const sql of bad_list) {
+      console.log("parse failed:", sql);
+    }
+    assert.ok(false, `${bad_list.length} statements failed to parse`);
+  }
+  return statements;
 }
 
 test('alter.sql statements', () => {
