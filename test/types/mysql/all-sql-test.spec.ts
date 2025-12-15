@@ -1,4 +1,5 @@
 import { test } from 'node:test';
+import assert from 'node:assert';
 import { assertType } from './assert-type';
 import { readFileSync } from 'fs';
 import { join } from 'path';
@@ -10,6 +11,15 @@ import {
 
 const parser = new Parser();
 
+function astify(sql: string) {
+  try {
+    return parser.astify(sql);
+  } catch (e) {
+    console.log("astify failed:", sql, e);
+  }
+  assert.ok(false, sql);
+}
+
 function readSqlFile(filename: string): string[] {
   const content = readFileSync(join(__dirname, filename), 'utf8');
   return content.split(';\n').filter(s => s.trim().length > 0);
@@ -18,7 +28,7 @@ function readSqlFile(filename: string): string[] {
 test('alter.sql statements', () => {
   const statements = readSqlFile('alter.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isAlter, ast, `isAlter: ${sql}`);
   }
 });
@@ -26,7 +36,7 @@ test('alter.sql statements', () => {
 test('call.sql statements', () => {
   const statements = readSqlFile('call.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isCall, ast, `isCall: ${sql}`);
   }
 });
@@ -34,7 +44,7 @@ test('call.sql statements', () => {
 test('create.sql statements', () => {
   const statements = readSqlFile('create.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     const checkAst = Array.isArray(ast) ? ast[0] : ast;
     assertType(isCreate, checkAst, `isCreate: ${sql}`);
   }
@@ -43,7 +53,7 @@ test('create.sql statements', () => {
 test('delete.sql statements', () => {
   const statements = readSqlFile('delete.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isDelete, ast, `isDelete: ${sql}`);
   }
 });
@@ -51,7 +61,7 @@ test('delete.sql statements', () => {
 test('desc.sql statements', () => {
   const statements = readSqlFile('desc.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isDesc, ast, `isDesc: ${sql}`);
   }
 });
@@ -59,7 +69,7 @@ test('desc.sql statements', () => {
 test('drop.sql statements', () => {
   const statements = readSqlFile('drop.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isDrop, ast, `isDrop: ${sql}`);
   }
 });
@@ -67,7 +77,7 @@ test('drop.sql statements', () => {
 test('explain.sql statements', () => {
   const statements = readSqlFile('explain.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isExplain, ast, `isExplain: ${sql}`);
   }
 });
@@ -75,7 +85,7 @@ test('explain.sql statements', () => {
 test('grant.sql statements', () => {
   const statements = readSqlFile('grant.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isGrant, ast, `isGrant: ${sql}`);
   }
 });
@@ -83,7 +93,7 @@ test('grant.sql statements', () => {
 test('insert.sql statements', () => {
   const statements = readSqlFile('insert.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isInsert_Replace, ast, `isInsert_Replace: ${sql}`);
   }
 });
@@ -91,7 +101,7 @@ test('insert.sql statements', () => {
 test('load.sql statements', () => {
   const statements = readSqlFile('load.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isLoadData, ast, `isLoadData: ${sql}`);
   }
 });
@@ -99,7 +109,7 @@ test('load.sql statements', () => {
 test('lock.sql statements', () => {
   const statements = readSqlFile('lock.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isLock, ast, `isLock: ${sql}`);
   }
 });
@@ -107,7 +117,7 @@ test('lock.sql statements', () => {
 test('rename.sql statements', () => {
   const statements = readSqlFile('rename.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isRename, ast, `isRename: ${sql}`);
   }
 });
@@ -115,7 +125,7 @@ test('rename.sql statements', () => {
 test('replace.sql statements', () => {
   const statements = readSqlFile('replace.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isInsert_Replace, ast, `isInsert_Replace: ${sql}`);
   }
 });
@@ -123,7 +133,7 @@ test('replace.sql statements', () => {
 test('select.sql statements', () => {
   const statements = readSqlFile('select.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isSelect, ast, `isSelect: ${sql}`);
   }
 });
@@ -131,7 +141,7 @@ test('select.sql statements', () => {
 test('set.sql statements', () => {
   const statements = readSqlFile('set.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isSet, ast, `isSet: ${sql}`);
   }
 });
@@ -139,7 +149,7 @@ test('set.sql statements', () => {
 test('show.sql statements', () => {
   const statements = readSqlFile('show.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isShow, ast, `isShow: ${sql}`);
   }
 });
@@ -147,7 +157,7 @@ test('show.sql statements', () => {
 test('truncate.sql statements', () => {
   const statements = readSqlFile('truncate.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isTruncate, ast, `isTruncate: ${sql}`);
   }
 });
@@ -155,7 +165,7 @@ test('truncate.sql statements', () => {
 test('unlock.sql statements', () => {
   const statements = readSqlFile('unlock.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isUnlock, ast, `isUnlock: ${sql}`);
   }
 });
@@ -163,7 +173,7 @@ test('unlock.sql statements', () => {
 test('update.sql statements', () => {
   const statements = readSqlFile('update.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isUpdate, ast, `isUpdate: ${sql}`);
   }
 });
@@ -171,7 +181,7 @@ test('update.sql statements', () => {
 test('use.sql statements', () => {
   const statements = readSqlFile('use.sql');
   for (const sql of statements) {
-    const ast = parser.astify(sql);
+    const ast = astify(sql);
     assertType(isUse, ast, `isUse: ${sql}`);
   }
 });
