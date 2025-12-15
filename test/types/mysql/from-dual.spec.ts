@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Select, Dual } from '../../../types.d.ts';
-import { isSelect, isDual, isUpdate, isDelete } from './types.guard.ts';
+import { isSelect, isDual } from './types.guard.ts';
 
 const parser = new Parser();
 
