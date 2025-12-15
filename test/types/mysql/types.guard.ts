@@ -341,26 +341,23 @@ export function isValueExpr(obj: unknown): obj is ValueExpr {
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        (typedObj["type"] === "string" ||
-            typedObj["type"] === "number" ||
-            typedObj["type"] === "boolean" ||
-            typedObj["type"] === "backticks_quote_string" ||
-            typedObj["type"] === "hex_string" ||
-            typedObj["type"] === "full_hex_string" ||
-            typedObj["type"] === "natural_string" ||
-            typedObj["type"] === "bit_string" ||
-            typedObj["type"] === "double_quote_string" ||
+        (typedObj["type"] === "number" ||
             typedObj["type"] === "single_quote_string" ||
+            typedObj["type"] === "double_quote_string" ||
             typedObj["type"] === "bool" ||
             typedObj["type"] === "null" ||
-            typedObj["type"] === "star" ||
-            typedObj["type"] === "param" ||
-            typedObj["type"] === "origin" ||
+            typedObj["type"] === "hex_string" ||
+            typedObj["type"] === "full_hex_string" ||
+            typedObj["type"] === "bit_string" ||
+            typedObj["type"] === "natural_string" ||
             typedObj["type"] === "date" ||
-            typedObj["type"] === "datetime" ||
-            typedObj["type"] === "default" ||
             typedObj["type"] === "time" ||
-            typedObj["type"] === "timestamp") &&
+            typedObj["type"] === "datetime" ||
+            typedObj["type"] === "timestamp" ||
+            typedObj["type"] === "param" ||
+            typedObj["type"] === "star" ||
+            typedObj["type"] === "origin" ||
+            typedObj["type"] === "default") &&
         (typedObj["value"] === null ||
             typeof typedObj["value"] === "string" ||
             typeof typedObj["value"] === "number" ||
@@ -375,8 +372,8 @@ export function isStringValue(obj: unknown): obj is StringValue {
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        (typedObj["type"] === "double_quote_string" ||
-            typedObj["type"] === "single_quote_string") &&
+        (typedObj["type"] === "single_quote_string" ||
+            typedObj["type"] === "double_quote_string") &&
         typeof typedObj["value"] === "string"
     )
 }
@@ -421,8 +418,8 @@ export function isIntervalExprValue(obj: unknown): obj is IntervalExprValue {
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         (typedObj["type"] === "number" ||
-            typedObj["type"] === "double_quote_string" ||
-            typedObj["type"] === "single_quote_string") &&
+            typedObj["type"] === "single_quote_string" ||
+            typedObj["type"] === "double_quote_string") &&
         (typeof typedObj["value"] === "string" ||
             typeof typedObj["value"] === "number") &&
         (typeof typedObj["loc"] === "undefined" ||
@@ -450,8 +447,8 @@ export function isSeparatorValue(obj: unknown): obj is SeparatorValue {
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        (typedObj["type"] === "double_quote_string" ||
-            typedObj["type"] === "single_quote_string") &&
+        (typedObj["type"] === "single_quote_string" ||
+            typedObj["type"] === "double_quote_string") &&
         typeof typedObj["value"] === "string"
     )
 }

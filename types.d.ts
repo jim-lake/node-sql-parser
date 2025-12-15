@@ -79,26 +79,23 @@ export interface OrderBy {
 
 export interface ValueExpr {
   type:
-    | "backticks_quote_string"
-    | "string"
-    | "number"
-    | "hex_string"
-    | "full_hex_string"
-    | "natural_string"
-    | "bit_string"
-    | "double_quote_string"
     | "single_quote_string"
-    | "boolean"
+    | "double_quote_string"
+    | "number"
     | "bool"
     | "null"
-    | "star"
-    | "param"
-    | "origin"
+    | "hex_string"
+    | "full_hex_string"
+    | "bit_string"
+    | "natural_string"
     | "date"
-    | "datetime"
-    | "default"
     | "time"
-    | "timestamp";
+    | "datetime"
+    | "timestamp"
+    | "param"
+    | "star"
+    | "origin"
+    | "default";
   value: string | number | boolean | null;
 }
 
