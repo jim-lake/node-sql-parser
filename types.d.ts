@@ -77,7 +77,7 @@ export interface OrderBy {
   loc?: LocationRange;
 }
 
-export interface ValueExpr<T = string | number | boolean> {
+export interface ValueExpr {
   type:
     | "backticks_quote_string"
     | "string"
@@ -99,7 +99,7 @@ export interface ValueExpr<T = string | number | boolean> {
     | "default"
     | "time"
     | "timestamp";
-  value: T;
+  value: string | number | boolean | null;
 }
 
 export type StringValue = {
@@ -191,7 +191,7 @@ export interface AggrFunc {
     distinct?: "DISTINCT" | null;
     orderby?: OrderBy[] | null;
     parentheses?: boolean;
-    separator?: { keyword: string; value: Value } | string | null;
+    separator?: { keyword: string; value: ValueExpr } | string | null;
   };
   loc?: LocationRange;
   over: { type: 'window'; as_window_specification: AsWindowSpec } | null;
@@ -230,8 +230,6 @@ export type Param = { type: "param"; value: string; loc?: LocationRange };
 
 export type Var = { type: "var"; name: string; members: string[]; prefix: string; loc?: LocationRange };
 
-export type Value = { type: string; value: string | number | boolean | null; loc?: LocationRange };
-
 export type Binary = {
   type: "binary_expr";
   operator: string;
@@ -258,7 +256,7 @@ export type ExpressionValue =
   | Function
   | Case
   | AggrFunc
-  | Value
+  | ValueExpr
   | Binary
   | Unary
   | Cast
@@ -307,7 +305,7 @@ export interface Select {
   into: {
     keyword?: string;
     type?: string;
-    expr?: Var[] | Value;
+    expr?: Var[] | ValueExpr;
     position: 'column' | 'from' | 'end' | null;
   };
   from: From[] | TableExpr | { expr: From[], parentheses: { length: number }, joins: From[] } | null;
@@ -498,7 +496,7 @@ export type AlterAddPartition = {
     name: DefaultValue;
     value: {
       type: string;
-      expr: Value;
+      expr: ValueExpr;
       parentheses: boolean;
     };
   }>;
@@ -646,7 +644,7 @@ export type IndexType = {
 export type IndexOption = {
   type: "key_block_size";
   symbol?: "=";
-  expr: Value;
+  expr: ValueExpr;
 } | {
   keyword: "using";
   type: "btree" | "hash";

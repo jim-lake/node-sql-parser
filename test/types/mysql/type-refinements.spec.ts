@@ -1,43 +1,43 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
-import type { Select, Update, OrderBy, SetList, Value, Column } from '../../types.d.ts';
+import type { Select, Update, OrderBy, SetList, ValueExpr, Column } from '../../types.d.ts';
 import { isSelect, isUpdate } from './types.guard.ts';
 
 const parser = new Parser();
 
-test('Value type with string', () => {
+test('ValueExpr type with string', () => {
   const sql = "SELECT 'hello' FROM dual";
   const ast = parser.astify(sql);
   
   assert.ok(isSelect(ast), 'AST should be a Select type');
   const selectAst = ast as Select;
   const col = (selectAst.columns as Column[])[0];
-  const value = col.expr as Value;
+  const value = col.expr as ValueExpr;
   assert.strictEqual(value.type, 'single_quote_string');
   assert.strictEqual(typeof value.value, 'string');
 });
 
-test('Value type with number', () => {
+test('ValueExpr type with number', () => {
   const sql = 'SELECT 42 FROM dual';
   const ast = parser.astify(sql);
   
   assert.ok(isSelect(ast), 'AST should be a Select type');
   const selectAst = ast as Select;
   const col = (selectAst.columns as Column[])[0];
-  const value = col.expr as Value;
+  const value = col.expr as ValueExpr;
   assert.strictEqual(value.type, 'number');
   assert.strictEqual(typeof value.value, 'number');
 });
 
-test('Value type with boolean', () => {
+test('ValueExpr type with boolean', () => {
   const sql = 'SELECT TRUE FROM dual';
   const ast = parser.astify(sql);
   
   assert.ok(isSelect(ast), 'AST should be a Select type');
   const selectAst = ast as Select;
   const col = (selectAst.columns as Column[])[0];
-  const value = col.expr as Value;
+  const value = col.expr as ValueExpr;
   assert.strictEqual(value.type, 'bool');
   assert.strictEqual(typeof value.value, 'boolean');
 });
