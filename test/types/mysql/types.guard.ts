@@ -584,7 +584,19 @@ export function isSetList(obj: unknown): obj is SetList {
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         typeof typedObj["column"] === "string" &&
-        isExpressionValue(typedObj["value"]) as boolean &&
+        (isTableColumnAst(typedObj["value"]) as boolean ||
+            isValueExpr(typedObj["value"]) as boolean ||
+            isColumnRefItem(typedObj["value"]) as boolean ||
+            isCase(typedObj["value"]) as boolean ||
+            isCast(typedObj["value"]) as boolean ||
+            isAggrFunc(typedObj["value"]) as boolean ||
+            isFunction(typedObj["value"]) as boolean ||
+            isInterval(typedObj["value"]) as boolean ||
+            isParam(typedObj["value"]) as boolean ||
+            isVar(typedObj["value"]) as boolean ||
+            isBinary(typedObj["value"]) as boolean ||
+            isUnary(typedObj["value"]) as boolean ||
+            isExtract(typedObj["value"]) as boolean) &&
         (typedObj["table"] === null ||
             typeof typedObj["table"] === "string") &&
         (typeof typedObj["loc"] === "undefined" ||
@@ -1536,6 +1548,7 @@ export function isUpdate(obj: unknown): obj is Update {
         ) &&
         (typedObj["where"] === null ||
             isFunction(typedObj["where"]) as boolean ||
+            isFulltextSearch(typedObj["where"]) as boolean ||
             isBinary(typedObj["where"]) as boolean ||
             isUnary(typedObj["where"]) as boolean) &&
         (typedObj["orderby"] === null ||

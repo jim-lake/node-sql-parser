@@ -151,7 +151,7 @@ export interface ColumnRefItem {
 export type ColumnRef = ColumnRefItem;
 export interface SetList {
   column: string;
-  value: ExpressionValue;
+  value: ExpressionValue | Extract;
   table: string | null;
   loc?: LocationRange;
 }
@@ -373,7 +373,7 @@ export interface Update {
   type: "update";
   table: Array<From | Dual> | null;
   set: SetList[];
-  where: Binary | Unary | Function | null;
+  where: Binary | Unary | Function | FulltextSearch | null;
   orderby: OrderBy[] | null;
   limit: Limit | null;
   loc?: LocationRange;

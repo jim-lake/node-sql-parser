@@ -575,3 +575,4 @@ SELECT CASE type WHEN 1 THEN 'type1' WHEN 2 THEN 'type2' WHEN 3 THEN 'type3' END
 SELECT CASE WHEN EXISTS (SELECT 1 FROM orders WHERE user_id = users.id) THEN 'has_orders' ELSE 'no_orders' END FROM users;
 SELECT CASE WHEN age BETWEEN 18 AND 65 THEN 'working_age' ELSE 'other' END FROM users;
 SELECT CASE WHEN NOT active THEN 'inactive' WHEN verified THEN 'verified' ELSE 'pending' END FROM users;
+SELECT EXTRACT(YEAR FROM created_at) FROM users;
