@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Select, Function, FunctionName, ExprList, OnUpdateCurrentTimestamp, AsWindowSpec, CreateTable, AggrFunc } from '../../../types.d.ts';
-import { isSelect, isFunction, isExprList, isCreateTable, isAggrFunc } from './types.guard.ts';
+import { isSelect, isFunction, isExprList, isAggrFunc } from './types.guard.ts';
 
 const parser = new Parser();
 
@@ -16,7 +16,6 @@ test('Function.name - FunctionName structure with name array', () => {
   assert.ok(isFunction(func));
   
   // Verify FunctionName structure
-  const funcName = func.name as FunctionName;
 });
 
 test('Function.name - FunctionName with schema property', () => {
@@ -26,7 +25,6 @@ test('Function.name - FunctionName with schema property', () => {
   const func = (ast as Select).columns[0].expr as Function;
   assert.ok(isFunction(func));
   
-  const funcName = func.name as FunctionName;
 });
 
 test('Function.args - ExprList with single argument', () => {
@@ -63,20 +61,6 @@ test('Function.args - ExprList with empty array (no arguments)', () => {
   assert.ok(isExprList(args));
 });
 
-test('Function.over - OnUpdateCurrentTimestamp type', () => {
-  const sql = 'CREATE TABLE t (updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)';
-  const ast = parser.astify(sql);
-  
-  // Direct check without type guard
-  
-  const defaultVal = ast.create_definitions[0].default_val;
-  
-  const func = defaultVal.value;
-  
-  // Verify over is OnUpdateCurrentTimestamp (not suffix!)
-  const onUpdate = func.over;
-});
-
 test('Function.over - null when no ON UPDATE or window', () => {
   const sql = 'SELECT UPPER(name) FROM users';
   const ast = parser.astify(sql);
@@ -96,7 +80,6 @@ test('Function.over - window specification with AsWindowSpec', () => {
   
   // Verify over property
   
-  const asWindowSpec = func.over.as_window_specification as AsWindowSpec;
 });
 
 test('Function.over - null for non-window functions', () => {

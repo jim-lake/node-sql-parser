@@ -1,7 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
-import type { CreateTrigger, TriggerEvent } from '../../../types.d.ts';
 import { isCreate, isCreateTrigger, isBinary } from './types.guard.ts';
 
 const parser = new Parser();
@@ -101,7 +100,6 @@ test('CreateTrigger - TriggerEvent type', () => {
   
   assert.ok(isCreate(ast), 'Should be Create');
   assert.ok(isCreateTrigger(ast), 'Should be CreateTrigger');
-  const event = ast.events![0] as TriggerEvent;
 });
 
 test('CreateTrigger - if_not_exists property', () => {
@@ -137,9 +135,5 @@ test('CreateTrigger - order null', () => {
 });
 
 test('CreateTrigger - time property values', () => {
-  const sql1 = 'CREATE TRIGGER t1 BEFORE INSERT ON users FOR EACH ROW SET x = 1';
-  const ast1 = parser.astify(sql1);
   
-  const sql2 = 'CREATE TRIGGER t2 AFTER INSERT ON users FOR EACH ROW SET x = 1';
-  const ast2 = parser.astify(sql2);
 });

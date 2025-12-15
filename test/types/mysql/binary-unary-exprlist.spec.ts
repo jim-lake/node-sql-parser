@@ -51,7 +51,6 @@ describe('Binary, Unary, and ExprList Types', () => {
   test('Unary expression with NOT', () => {
     const ast = parser.astify("SELECT * FROM t WHERE NOT active");
     assert.ok(isSelect(ast), 'Should be Select');
-    const where = ast.where;
   });
 
   test('ExprList in IN clause', () => {
@@ -81,6 +80,5 @@ describe('Binary, Unary, and ExprList Types', () => {
   test('EXISTS is a Function type', () => {
     const ast = parser.astify("SELECT * FROM t WHERE EXISTS (SELECT 1 FROM users)");
     assert.ok(isSelect(ast), 'Should be Select');
-    const where = ast.where;
   });
 });

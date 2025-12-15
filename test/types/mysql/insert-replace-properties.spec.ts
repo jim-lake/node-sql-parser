@@ -40,7 +40,6 @@ test('Insert_Replace.values as Select', () => {
   if (insert.values && typeof insert.values === 'object' && 'type' in insert.values) {
     if (insert.values.type === 'select') {
       assert.ok(isSelect(insert.values));
-      const selectVal = insert.values as Select;
     }
   }
 });

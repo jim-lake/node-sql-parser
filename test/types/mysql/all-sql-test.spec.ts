@@ -32,10 +32,6 @@ function readSqlFile(filename: string): string[] {
   return content.split(';\n').filter(s => s.trim().length > 0);
 }
 
-function getAst(sql: string) {
-  const ast = parser.astify(sql);
-  return Array.isArray(ast) ? ast[0] : ast;
-}
 
 test('alter.sql statements', () => {
   const statements = readSqlFile('alter.sql');

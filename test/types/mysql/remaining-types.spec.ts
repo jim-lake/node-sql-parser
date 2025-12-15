@@ -1,7 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
-import type { Create, CreateColumnDefinition, CreateConstraintPrimary } from '../../types.d.ts';
 import { isCreate, isCreateColumnDefinition, isCreateConstraintPrimary } from './types.guard.js';
 
 const parser = new Parser();

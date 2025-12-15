@@ -1,8 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
-import type { CreateUser, UserAuthOption } from '../../../types.d.ts';
-import { isCreate, isCreateUser, isValueExpr } from './types.guard.ts';
+import { isCreate, isCreateUser } from './types.guard.ts';
 
 const parser = new Parser();
 
@@ -20,7 +19,6 @@ test('CreateUser - with password', () => {
   
   assert.ok(isCreate(ast), 'Should be Create');
   assert.ok(isCreateUser(ast), 'Should be CreateUser');
-  const user = ast.user![0] as UserAuthOption;
 });
 
 test('CreateUser - with IF NOT EXISTS', () => {
@@ -37,7 +35,6 @@ test('CreateUser - UserAuthOption user property', () => {
   
   assert.ok(isCreate(ast), 'Should be Create');
   assert.ok(isCreateUser(ast), 'Should be CreateUser');
-  const user = ast.user![0] as UserAuthOption;
 });
 
 test('CreateUser - multiple users', () => {

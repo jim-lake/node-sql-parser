@@ -13,7 +13,6 @@ test('AggrFunc - with DISTINCT', () => {
   const select = ast as Select;
   const col = select.columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc - without DISTINCT', () => {
@@ -23,7 +22,6 @@ test('AggrFunc - without DISTINCT', () => {
   const select = ast as Select;
   const col = select.columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc - with ORDER BY (GROUP_CONCAT)', () => {
@@ -33,7 +31,6 @@ test('AggrFunc - with ORDER BY (GROUP_CONCAT)', () => {
   const select = ast as Select;
   const col = select.columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc - with SEPARATOR (GROUP_CONCAT)', () => {
@@ -43,7 +40,6 @@ test('AggrFunc - with SEPARATOR (GROUP_CONCAT)', () => {
   const select = ast as Select;
   const col = select.columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc - with DISTINCT, ORDER BY, and SEPARATOR', () => {
@@ -53,7 +49,6 @@ test('AggrFunc - with DISTINCT, ORDER BY, and SEPARATOR', () => {
   const select = ast as Select;
   const col = select.columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc - with OVER clause', () => {
@@ -63,5 +58,4 @@ test('AggrFunc - with OVER clause', () => {
   const select = ast as Select;
   const col = select.columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });

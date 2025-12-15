@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Delete, From, Dual, Binary, Unary, Function as FunctionType } from '../../../types.d.ts';
-import { isDelete, isFrom, isDual, isBinary, isUnary, isFunction } from './types.guard.ts';
+import { isDelete, isFrom, isBinary, isUnary, isFunction } from './types.guard.ts';
 
 const parser = new Parser();
 
@@ -13,7 +13,6 @@ test('Delete.from as Array<From>', () => {
   assert.ok(isDelete(ast));
   const del = ast as Delete;
   assert.ok(isFrom(del.from[0]));
-  const from = del.from[0] as From;
 });
 
 // Test Delete.where - Binary variant
@@ -23,7 +22,6 @@ test('Delete.where as Binary', () => {
   assert.ok(isDelete(ast));
   const del = ast as Delete;
   assert.ok(isBinary(del.where));
-  const binary = del.where as Binary;
 });
 
 // Test Delete.where - Unary variant

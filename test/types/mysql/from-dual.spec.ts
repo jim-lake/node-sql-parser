@@ -13,7 +13,6 @@ test('FROM DUAL - basic usage', () => {
   const select = ast as Select;
   const from = select.from[0];
   assert.ok(isDual(from));
-  const dual = from as Dual;
 });
 
 test('FROM DUAL - with expression', () => {

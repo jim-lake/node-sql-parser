@@ -16,7 +16,6 @@ test('DataType with UNSIGNED suffix', () => {
   const colDef = createAst.create_definitions[0] as CreateColumnDefinition;
   assert.ok(isCreateColumnDefinition(colDef), 'Should be CreateColumnDefinition');
   
-  const dataType = colDef.definition;
 });
 
 test('DataType with UNSIGNED ZEROFILL suffix', () => {
@@ -29,7 +28,6 @@ test('DataType with UNSIGNED ZEROFILL suffix', () => {
   const colDef = createAst.create_definitions[0] as CreateColumnDefinition;
   assert.ok(isCreateColumnDefinition(colDef), 'Should be CreateColumnDefinition');
   
-  const dataType = colDef.definition;
 });
 
 test('DataType with ON UPDATE in reference_definition', () => {
@@ -42,11 +40,8 @@ test('DataType with ON UPDATE in reference_definition', () => {
   const colDef = createAst.create_definitions[0] as CreateColumnDefinition;
   assert.ok(isCreateColumnDefinition(colDef), 'Should be CreateColumnDefinition');
   
-  const dataType = colDef.definition;
   
   // ON UPDATE CURRENT_TIMESTAMP is stored in reference_definition.on_action, not in DataType.suffix
   if ('reference_definition' in colDef && colDef.reference_definition) {
-    const refDef = colDef.reference_definition as any;
-    const onUpdate = refDef.on_action[0];
   }
 });

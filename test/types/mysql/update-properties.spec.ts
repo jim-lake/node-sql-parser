@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { Parser } from './parser-loader.mjs';
 import type { Update, From, Dual, Binary, Unary, Function as FunctionType } from '../../../types.d.ts';
-import { isUpdate, isFrom, isDual, isBinary, isUnary, isFunction } from './types.guard.ts';
+import { isUpdate, isFrom, isBinary, isUnary, isFunction } from './types.guard.ts';
 
 const parser = new Parser();
 
@@ -13,7 +13,6 @@ test('Update.table as Array<From>', () => {
   assert.ok(isUpdate(ast));
   const update = ast as Update;
   assert.ok(isFrom(update.table![0]));
-  const from = update.table![0] as From;
 });
 
 // Test Update.where - Binary variant
@@ -23,7 +22,6 @@ test('Update.where as Binary', () => {
   assert.ok(isUpdate(ast));
   const update = ast as Update;
   assert.ok(isBinary(update.where));
-  const binary = update.where as Binary;
 });
 
 // Test Update.where - Unary variant

@@ -13,7 +13,6 @@ test('DataType suffix - UNSIGNED', () => {
   const createTable = ast as CreateTable;
   const colDef = createTable.create_definitions?.[0] as CreateColumnDefinition;
   assert.ok(isCreateColumnDefinition(colDef));
-  const dataType = colDef.definition;
 });
 
 test('DataType suffix - ZEROFILL', () => {
@@ -23,7 +22,6 @@ test('DataType suffix - ZEROFILL', () => {
   const createTable = ast as CreateTable;
   const colDef = createTable.create_definitions?.[0] as CreateColumnDefinition;
   assert.ok(isCreateColumnDefinition(colDef));
-  const dataType = colDef.definition;
 });
 
 test('DataType suffix - UNSIGNED ZEROFILL', () => {
@@ -33,7 +31,6 @@ test('DataType suffix - UNSIGNED ZEROFILL', () => {
   const createTable = ast as CreateTable;
   const colDef = createTable.create_definitions?.[0] as CreateColumnDefinition;
   assert.ok(isCreateColumnDefinition(colDef));
-  const dataType = colDef.definition;
 });
 
 test('DataType suffix - Timezone NOT in MySQL', () => {

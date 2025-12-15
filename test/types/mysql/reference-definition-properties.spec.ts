@@ -12,5 +12,4 @@ test('ReferenceDefinition.definition - column reference in inline REFERENCES', (
   assert.ok(isCreate(ast));
   const colDef = (ast as Create).create_definitions[0] as CreateColumnDefinition;
   assert.ok(isCreateColumnDefinition(colDef));
-  const refDef = colDef.reference_definition;
 });

@@ -14,7 +14,6 @@ test('AggrFunc.name - string value', () => {
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc.name - all aggregate function names', () => {
@@ -25,7 +24,6 @@ test('AggrFunc.name - all aggregate function names', () => {
     assert.ok(isSelect(ast));
     const col = (ast as Select).columns[0];
     assert.ok(isAggrFunc(col.expr));
-    const aggr = col.expr as AggrFunc;
   }
 });
 
@@ -35,7 +33,6 @@ test('AggrFunc.args.expr - ExpressionValue', () => {
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc.args.expr - star expression', () => {
@@ -44,7 +41,6 @@ test('AggrFunc.args.expr - star expression', () => {
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc.args.distinct - DISTINCT present', () => {
@@ -53,7 +49,6 @@ test('AggrFunc.args.distinct - DISTINCT present', () => {
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc.args.distinct - null when not present', () => {
@@ -62,7 +57,6 @@ test('AggrFunc.args.distinct - null when not present', () => {
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc.args.orderby - OrderBy[] present', () => {
@@ -71,7 +65,6 @@ test('AggrFunc.args.orderby - OrderBy[] present', () => {
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc.args.orderby - null when not present', () => {
@@ -80,7 +73,6 @@ test('AggrFunc.args.orderby - null when not present', () => {
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc.args.parentheses - boolean (always true for function calls)', () => {
@@ -89,7 +81,6 @@ test('AggrFunc.args.parentheses - boolean (always true for function calls)', () 
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
   // parentheses property may not be present or may be true
 });
 
@@ -110,7 +101,6 @@ test('AggrFunc.args.separator - null when not present', () => {
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc.over - window specification present', () => {
@@ -119,7 +109,6 @@ test('AggrFunc.over - window specification present', () => {
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc.over - null when not present', () => {
@@ -128,7 +117,6 @@ test('AggrFunc.over - null when not present', () => {
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
 });
 
 test('AggrFunc - all properties combined', () => {
@@ -137,7 +125,6 @@ test('AggrFunc - all properties combined', () => {
   assert.ok(isSelect(ast));
   const col = (ast as Select).columns[0];
   assert.ok(isAggrFunc(col.expr));
-  const aggr = col.expr as AggrFunc;
   
   // Verify all properties
 });
