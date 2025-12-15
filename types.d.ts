@@ -570,9 +570,10 @@ export type DataType = {
 };
 
 export type OnUpdateCurrentTimestamp = {
-  type: 'on_update_current_timestamp';
-  keyword: 'on update';
-  expr: Function;
+  type: 'on update';
+  keyword: 'CURRENT_TIMESTAMP';
+  parentheses: boolean;
+  expr: null;
 };
 
 export type LiteralNotNull = {
@@ -628,7 +629,7 @@ export type ReferenceDefinition = {
 
 export type OnReference = {
   type: 'on update' | 'on delete';
-  value: OriginValue;
+  value: OriginValue | Function;
 };
 
 export type CreateColumnDefinition = {

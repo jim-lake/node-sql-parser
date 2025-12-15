@@ -1987,19 +1987,7 @@ export function isOnUpdateCurrentTimestamp(obj: unknown): obj is OnUpdateCurrent
         typedObj["type"] === "on update" &&
         typedObj["keyword"] === "CURRENT_TIMESTAMP" &&
         typeof typedObj["parentheses"] === "boolean" &&
-        (typedObj["expr"] === null ||
-            isTableColumnAst(typedObj["expr"]) as boolean ||
-            isValueExpr(typedObj["expr"]) as boolean ||
-            isColumnRefItem(typedObj["expr"]) as boolean ||
-            isCase(typedObj["expr"]) as boolean ||
-            isCast(typedObj["expr"]) as boolean ||
-            isAggrFunc(typedObj["expr"]) as boolean ||
-            isFunction(typedObj["expr"]) as boolean ||
-            isInterval(typedObj["expr"]) as boolean ||
-            isParam(typedObj["expr"]) as boolean ||
-            isVar(typedObj["expr"]) as boolean ||
-            isBinary(typedObj["expr"]) as boolean ||
-            isUnary(typedObj["expr"]) as boolean)
+        typedObj["expr"] === null
     )
 }
 
@@ -2159,7 +2147,8 @@ export function isOnReference(obj: unknown): obj is OnReference {
             typeof typedObj === "function") &&
         (typedObj["type"] === "on update" ||
             typedObj["type"] === "on delete") &&
-        isOriginValue(typedObj["value"]) as boolean
+        (isOriginValue(typedObj["value"]) as boolean ||
+            isFunction(typedObj["value"]) as boolean)
     )
 }
 
