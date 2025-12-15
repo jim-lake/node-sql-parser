@@ -128,12 +128,17 @@ export type IntervalExprValue = {
   loc?: LocationRange;
 };
 
+export type SeparatorValue = {
+  type: "single_quote_string" | "double_quote_string";
+  value: string;
+};
+
 export type SortDirection = 'ASC' | 'DESC' | 'asc' | 'desc';
 
 export interface ColumnRefItem {
   type: "column_ref";
   table?: string | null;
-  column: string | { expr: ValueExpr };
+  column: string;
   options?: ExprList;
   loc?: LocationRange;
   collate?: CollateExpr | null;
@@ -191,7 +196,7 @@ export interface AggrFunc {
     distinct?: "DISTINCT" | null;
     orderby?: OrderBy[] | null;
     parentheses?: boolean;
-    separator?: { keyword: string; value: ValueExpr } | string | null;
+    separator?: { keyword: string; value: SeparatorValue } | string | null;
   };
   loc?: LocationRange;
   over: { type: 'window'; as_window_specification: AsWindowSpec } | null;
@@ -305,7 +310,7 @@ export interface Select {
   into: {
     keyword?: string;
     type?: string;
-    expr?: Var[] | ValueExpr;
+    expr?: Var[] | StringValue;
     position: 'column' | 'from' | 'end' | null;
   };
   from: From[] | TableExpr | { expr: From[], parentheses: { length: number }, joins: From[] } | null;
@@ -496,7 +501,7 @@ export type AlterAddPartition = {
     name: DefaultValue;
     value: {
       type: string;
-      expr: ValueExpr;
+      expr: NumberValue;
       parentheses: boolean;
     };
   }>;
@@ -638,13 +643,13 @@ export type CreateColumnDefinition = {
 
 export type IndexType = {
   keyword: "using";
-  type: "btree" | "hash" | "gist" | "gin";
+  type: "btree" | "hash";
 };
 
 export type IndexOption = {
   type: "key_block_size";
   symbol?: "=";
-  expr: ValueExpr;
+  expr: NumberValue;
 } | {
   keyword: "using";
   type: "btree" | "hash";

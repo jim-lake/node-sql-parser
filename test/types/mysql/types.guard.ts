@@ -2,7 +2,7 @@
  * Generated type guards for "types.d.ts".
  * WARNING: Do not manually change this file.
  */
-import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, StringValue, OriginValue, DefaultValue, NumberValue, IntervalExprValue, SortDirection, ColumnRefItem, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionNameValue, FunctionName, Function, Column, Interval, Param, Var, Binary, Unary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Update, Delete, Alter, AlterExpr, AlterAddColumn, AlterDropColumn, AlterModifyColumn, AlterChangeColumn, AlterRenameTable, AlterRenameColumn, AlterAddIndex, AlterDropIndex, AlterDropKey, AlterAddConstraint, AlterDropConstraint, AlterAddPartition, AlterDropPartition, AlterAlgorithm, AlterLock, AlterTableOption, Use, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, CreateTable, CreateDatabase, CreateSchema, CreateIndex, CreateView, CreateTrigger, CreateUser, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, DropTable, DropDatabase, DropView, DropIndex, DropTrigger, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
+import { With, ParseOptions, Option, TableColumnAst, BaseFrom, Join, TableExpr, Dual, From, LimitValue, Limit, OrderBy, ValueExpr, StringValue, OriginValue, DefaultValue, NumberValue, IntervalExprValue, SeparatorValue, SortDirection, ColumnRefItem, ColumnRef, SetList, InsertReplaceValue, Star, Case, Cast, AggrFunc, FunctionNameValue, FunctionName, Function, Column, Interval, Param, Var, Binary, Unary, Expr, ExpressionValue, ExprList, PartitionBy, WindowSpec, WindowFrameClause, AsWindowSpec, NamedWindowExpr, WindowExpr, Select, Insert_Replace, Update, Delete, Alter, AlterExpr, AlterAddColumn, AlterDropColumn, AlterModifyColumn, AlterChangeColumn, AlterRenameTable, AlterRenameColumn, AlterAddIndex, AlterDropIndex, AlterDropKey, AlterAddConstraint, AlterDropConstraint, AlterAddPartition, AlterDropPartition, AlterAlgorithm, AlterLock, AlterTableOption, Use, KeywordComment, CollateExpr, DataType, OnUpdateCurrentTimestamp, LiteralNotNull, LiteralNull, ColumnConstraint, ColumnDefinitionOptList, ReferenceDefinition, OnReference, CreateColumnDefinition, IndexType, IndexOption, CreateIndexDefinition, CreateFulltextSpatialIndexDefinition, ConstraintName, CreateConstraintPrimary, CreateConstraintUnique, CreateConstraintForeign, CreateConstraintCheck, CreateConstraintDefinition, CreateDefinition, CreateTable, CreateDatabase, CreateSchema, CreateIndex, CreateView, CreateTrigger, CreateUser, Create, TriggerEvent, UserAuthOption, RequireOption, ResourceOption, PasswordOption, TableOption, DropTable, DropDatabase, DropView, DropIndex, DropTrigger, Drop, Show, Desc, Explain, Call, Set, Lock, LockTable, Unlock, Grant, LoadData, LoadDataField, LoadDataLine, Truncate, Rename, Transaction, AST } from "./types";
 
 export function isWith(obj: unknown): obj is With {
     const typedObj = obj as With
@@ -444,6 +444,18 @@ export function isIntervalExprValue(obj: unknown): obj is IntervalExprValue {
     )
 }
 
+export function isSeparatorValue(obj: unknown): obj is SeparatorValue {
+    const typedObj = obj as SeparatorValue
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        (typedObj["type"] === "double_quote_string" ||
+            typedObj["type"] === "single_quote_string") &&
+        typeof typedObj["value"] === "string"
+    )
+}
+
 export function isSortDirection(obj: unknown): obj is SortDirection {
     const typedObj = obj as SortDirection
     return (
@@ -464,11 +476,7 @@ export function isColumnRefItem(obj: unknown): obj is ColumnRefItem {
         (typeof typedObj["table"] === "undefined" ||
             typedObj["table"] === null ||
             typeof typedObj["table"] === "string") &&
-        (typeof typedObj["column"] === "string" ||
-            (typedObj["column"] !== null &&
-                typeof typedObj["column"] === "object" ||
-                typeof typedObj["column"] === "function") &&
-            isValueExpr(typedObj["column"]["expr"]) as boolean) &&
+        typeof typedObj["column"] === "string" &&
         (typeof typedObj["options"] === "undefined" ||
             isExprList(typedObj["options"]) as boolean) &&
         (typeof typedObj["loc"] === "undefined" ||
@@ -509,11 +517,7 @@ export function isColumnRef(obj: unknown): obj is ColumnRef {
         (typeof typedObj["table"] === "undefined" ||
             typedObj["table"] === null ||
             typeof typedObj["table"] === "string") &&
-        (typeof typedObj["column"] === "string" ||
-            (typedObj["column"] !== null &&
-                typeof typedObj["column"] === "object" ||
-                typeof typedObj["column"] === "function") &&
-            isValueExpr(typedObj["column"]["expr"]) as boolean) &&
+        typeof typedObj["column"] === "string" &&
         (typeof typedObj["options"] === "undefined" ||
             isExprList(typedObj["options"]) as boolean) &&
         (typeof typedObj["loc"] === "undefined" ||
@@ -711,7 +715,7 @@ export function isAggrFunc(obj: unknown): obj is AggrFunc {
                 typeof typedObj["args"]["separator"] === "object" ||
                 typeof typedObj["args"]["separator"] === "function") &&
             typeof typedObj["args"]["separator"]["keyword"] === "string" &&
-            isValueExpr(typedObj["args"]["separator"]["value"]) as boolean) &&
+            isSeparatorValue(typedObj["args"]["separator"]["value"]) as boolean) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
                 typeof typedObj["loc"] === "object" ||
@@ -1220,7 +1224,7 @@ export function isSelect(obj: unknown): obj is Select {
         (typeof typedObj["into"]["type"] === "undefined" ||
             typeof typedObj["into"]["type"] === "string") &&
         (typeof typedObj["into"]["expr"] === "undefined" ||
-            isValueExpr(typedObj["into"]["expr"]) as boolean ||
+            isStringValue(typedObj["into"]["expr"]) as boolean ||
             Array.isArray(typedObj["into"]["expr"]) &&
             typedObj["into"]["expr"].every((e: any) =>
                 isVar(e) as boolean
@@ -1796,7 +1800,7 @@ export function isAlterAddPartition(obj: unknown): obj is AlterAddPartition {
                 typeof e["value"] === "object" ||
                 typeof e["value"] === "function") &&
             typeof e["value"]["type"] === "string" &&
-            isValueExpr(e["value"]["expr"]) as boolean &&
+            isNumberValue(e["value"]["expr"]) as boolean &&
             typeof e["value"]["parentheses"] === "boolean"
         )
     )
@@ -2151,9 +2155,7 @@ export function isIndexType(obj: unknown): obj is IndexType {
             typeof typedObj === "function") &&
         typedObj["keyword"] === "using" &&
         (typedObj["type"] === "btree" ||
-            typedObj["type"] === "hash" ||
-            typedObj["type"] === "gist" ||
-            typedObj["type"] === "gin")
+            typedObj["type"] === "hash")
     )
 }
 
@@ -2167,7 +2169,7 @@ export function isIndexOption(obj: unknown): obj is IndexOption {
             typedObj["type"] === "key_block_size" &&
             (typeof typedObj["symbol"] === "undefined" ||
                 typedObj["symbol"] === "=") &&
-            isValueExpr(typedObj["expr"]) as boolean ||
+            isNumberValue(typedObj["expr"]) as boolean ||
             (typedObj !== null &&
                 typeof typedObj === "object" ||
                 typeof typedObj === "function") &&
