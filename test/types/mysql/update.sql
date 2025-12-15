@@ -12,3 +12,7 @@ UPDATE users SET name = "John" ORDER BY id DESC;
 UPDATE users SET name = "John" LIMIT 10;
 UPDATE users SET name = 'Jane' WHERE id = 1;
 UPDATE users SET name = 'Jane', age = 30 WHERE id = 1;
+UPDATE users SET status = 'active' WHERE created_at < NOW();
+UPDATE users SET counter = counter + 1 WHERE id = 1;
+UPDATE users SET name = UPPER(name);
+UPDATE users SET updated_at = CURRENT_TIMESTAMP WHERE id = 1;

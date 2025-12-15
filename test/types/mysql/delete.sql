@@ -12,3 +12,6 @@ DELETE FROM users LIMIT 10;
 DELETE t1 FROM users t1 JOIN orders t2 ON t1.id = t2.user_id;
 DELETE t1 FROM t1, DUAL WHERE t1.id = 1;
 DELETE users FROM users JOIN orders ON users.id = orders.user_id WHERE orders.status = "cancelled";
+DELETE FROM users WHERE created_at < DATE_SUB(NOW(), INTERVAL 1 YEAR);
+DELETE FROM users WHERE id IN (SELECT user_id FROM banned_users);
+DELETE FROM users WHERE age < 18 OR status = 'inactive';

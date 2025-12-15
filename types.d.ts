@@ -450,11 +450,11 @@ export type AlterAddIndex = {
   type: 'alter';
   resource: 'index';
   action: 'add';
-  keyword: string;
+  keyword: "index" | "key" | "fulltext" | "spatial" | "fulltext key" | "spatial key" | "fulltext index" | "spatial index";
   index: string;
   definition: ColumnRef[];
-  index_type: IndexType | null;
-  index_options: IndexOption[] | null;
+  index_type?: IndexType | null;
+  index_options?: IndexOption[] | null;
 };
 
 export type AlterDropIndex = {
@@ -920,7 +920,7 @@ export interface DropIndex {
   type: "drop";
   keyword: "index";
   name: ColumnRef;
-  table: From;
+  table: { db: string | null; table: string };
   options: 'restrict' | 'cascade' | null;
   loc?: LocationRange;
 }
@@ -939,7 +939,7 @@ export interface Show {
   type: "show";
   keyword: string;
   suffix?: string;
-  from?: From;
+  from?: From[];
   where?: Binary | Function | null;
   like?: {
     type: 'like';
@@ -1009,7 +1009,7 @@ export interface Grant {
     columns: ColumnRef[] | null;
   }>;
   on: {
-    object_type: 'table' | 'function' | 'procedure' | null;
+    object_type: 'table' | 'function' | 'procedure' | OriginValue | null;
     priv_level: Array<{
       prefix: string;
       name: string;
@@ -1031,12 +1031,12 @@ export interface LoadData {
   file: StringValue;
   replace_ignore?: 'replace' | 'ignore' | null;
   table: { db: string | null; table: string };
-  partition?: StringValue[] | null;
-  character_set?: string | null;
+  partition?: string[] | null;
+  character_set?: [string, string[], DefaultValue] | null;
   fields?: LoadDataField | null;
   lines?: LoadDataLine | null;
-  ignore?: number | null;
-  column?: ColumnRef[] | null;
+  ignore?: { count: NumberValue; suffix: string } | null;
+  column?: Array<{ expr: ExpressionValue | Star | ExprList; as: string | null }> | null;
   set?: SetList[] | null;
   loc?: LocationRange;
 }
