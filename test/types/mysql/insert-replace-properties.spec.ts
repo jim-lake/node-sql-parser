@@ -14,19 +14,11 @@ test('Insert_Replace.table as From[] (array)', () => {
 test('Insert_Replace.table as From (single)', () => {
   const ast = parser.astify('INSERT INTO db.users (id) VALUES (1)');
   assertType(isInsert_Replace, ast);
-  if (!Array.isArray(ast.table)) {
-    assertType(isFrom, ast.table);
-  } else {
-    assertType(isFrom, ast.table[0]);
-  }
+  assertType(isFrom, ast.table[0]);
 });
 
 test('Insert_Replace.values as Select', () => {
   const ast = parser.astify('INSERT INTO users (id, name) SELECT id, name FROM temp_users');
   assertType(isInsert_Replace, ast);
-  if (ast.values && typeof ast.values === 'object' && 'type' in ast.values) {
-    if (ast.values.type === 'select') {
-      assertType(isSelect, ast.values);
-    }
-  }
+    assertType(isSelect, ast.values);
 });

@@ -20,15 +20,11 @@ test('Delete.where as Binary', () => {
 test('Delete.where as Unary', () => {
   const ast = parser.astify('DELETE FROM users WHERE NOT active');
   assertType(isDelete, ast);
-  if (ast.where && 'type' in ast.where && ast.where.type === 'unary_expr') {
-    assertType(isUnary, ast.where);
-  }
+  assertType(isUnary, ast.where);
 });
 
 test('Delete.where as Function', () => {
   const ast = parser.astify('DELETE FROM users WHERE ISNULL(deleted_at)');
   assertType(isDelete, ast);
-  if (ast.where && 'type' in ast.where && ast.where.type === 'function') {
-    assertType(isFunction, ast.where);
-  }
+  assertType(isFunction, ast.where);
 });

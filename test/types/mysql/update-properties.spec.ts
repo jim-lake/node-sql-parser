@@ -20,15 +20,11 @@ test('Update.where as Binary', () => {
 test('Update.where as Unary', () => {
   const ast = parser.astify('UPDATE users SET name = "John" WHERE NOT active');
   assertType(isUpdate, ast);
-  if (ast.where && 'type' in ast.where && ast.where.type === 'unary_expr') {
-    assertType(isUnary, ast.where);
-  }
+  assertType(isUnary, ast.where);
 });
 
 test('Update.where as Function', () => {
   const ast = parser.astify('UPDATE users SET name = "John" WHERE ISNULL(deleted_at)');
   assertType(isUpdate, ast);
-  if (ast.where && 'type' in ast.where && ast.where.type === 'function') {
-    assertType(isFunction, ast.where);
-  }
+  assertType(isFunction, ast.where);
 });
