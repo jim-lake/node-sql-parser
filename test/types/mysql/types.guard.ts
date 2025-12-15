@@ -3295,8 +3295,15 @@ export function isDropView(obj: unknown): obj is DropView {
         (typedObj["prefix"] === null ||
             typedObj["prefix"] === "if exists") &&
         (typedObj["options"] === null ||
-            typedObj["options"] === "restrict" ||
-            typedObj["options"] === "cascade") &&
+            Array.isArray(typedObj["options"]) &&
+            typedObj["options"].every((e: any) =>
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                e["type"] === "origin" &&
+                (e["value"] === "restrict" ||
+                    e["value"] === "cascade")
+            )) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
                 typeof typedObj["loc"] === "object" ||
@@ -3332,8 +3339,31 @@ export function isDropIndex(obj: unknown): obj is DropIndex {
             typeof typedObj["table"]["db"] === "string") &&
         typeof typedObj["table"]["table"] === "string" &&
         (typedObj["options"] === null ||
-            typedObj["options"] === "restrict" ||
-            typedObj["options"] === "cascade") &&
+            Array.isArray(typedObj["options"]) &&
+            typedObj["options"].every((e: any) =>
+            ((e !== null &&
+                typeof e === "object" ||
+                typeof e === "function") &&
+                e["type"] === "origin" &&
+                (e["value"] === "restrict" ||
+                    e["value"] === "cascade") ||
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                e["type"] === "alter" &&
+                e["keyword"] === "algorithm" &&
+                e["resource"] === "algorithm" &&
+                e["symbol"] === "=" &&
+                typeof e["algorithm"] === "string" ||
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                e["type"] === "alter" &&
+                e["keyword"] === "lock" &&
+                e["resource"] === "lock" &&
+                e["symbol"] === "=" &&
+                typeof e["lock"] === "string")
+            )) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
                 typeof typedObj["loc"] === "object" ||

@@ -972,7 +972,7 @@ export interface DropView {
   keyword: "view";
   name: From[];
   prefix: 'if exists' | null;
-  options: 'restrict' | 'cascade' | null;
+  options: Array<{ type: 'origin'; value: 'restrict' | 'cascade' }> | null;
   loc?: LocationRange;
 }
 
@@ -981,7 +981,11 @@ export interface DropIndex {
   keyword: "index";
   name: ColumnRef;
   table: { db: string | null; table: string };
-  options: 'restrict' | 'cascade' | null;
+  options: Array<
+    | { type: 'origin'; value: 'restrict' | 'cascade' }
+    | { type: 'alter'; keyword: 'algorithm'; resource: 'algorithm'; symbol: '='; algorithm: string }
+    | { type: 'alter'; keyword: 'lock'; resource: 'lock'; symbol: '='; lock: string }
+  > | null;
   loc?: LocationRange;
 }
 
