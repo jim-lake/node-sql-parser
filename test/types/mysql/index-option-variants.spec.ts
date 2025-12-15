@@ -6,7 +6,7 @@ import { isCreateIndex, isIndexOption } from './types.guard';
 const parser = new Parser();
 
 test('IndexOption Union Variants', async (t) => {
-  await t.test('IndexOption - KEY_BLOCK_SIZE variant', () => {
+  t.test('IndexOption - KEY_BLOCK_SIZE variant', () => {
     const sql = 'CREATE INDEX idx1 ON users (name) KEY_BLOCK_SIZE = 8';
     const ast = parser.astify(sql);
     
@@ -16,7 +16,7 @@ test('IndexOption Union Variants', async (t) => {
     assert.ok(isIndexOption(option));
   });
 
-  await t.test('IndexOption - USING BTREE variant', () => {
+  t.test('IndexOption - USING BTREE variant', () => {
     const sql = 'CREATE INDEX idx1 ON users (name) USING BTREE';
     const ast = parser.astify(sql);
     
@@ -26,7 +26,7 @@ test('IndexOption Union Variants', async (t) => {
     assert.ok(isIndexOption(option));
   });
 
-  await t.test('IndexOption - USING HASH variant', () => {
+  t.test('IndexOption - USING HASH variant', () => {
     const sql = 'CREATE INDEX idx1 ON users (name) USING HASH';
     const ast = parser.astify(sql);
     
@@ -36,7 +36,7 @@ test('IndexOption Union Variants', async (t) => {
     assert.ok(isIndexOption(option));
   });
 
-  await t.test('IndexOption - WITH PARSER variant (FULLTEXT only)', () => {
+  t.test('IndexOption - WITH PARSER variant (FULLTEXT only)', () => {
     const sql = 'CREATE FULLTEXT INDEX idx1 ON articles (content) WITH PARSER ngram';
     const ast = parser.astify(sql);
     
@@ -46,7 +46,7 @@ test('IndexOption Union Variants', async (t) => {
     assert.ok(isIndexOption(option));
   });
 
-  await t.test('IndexOption - VISIBLE variant', () => {
+  t.test('IndexOption - VISIBLE variant', () => {
     const sql = 'CREATE INDEX idx1 ON users (name) VISIBLE';
     const ast = parser.astify(sql);
     
@@ -56,7 +56,7 @@ test('IndexOption Union Variants', async (t) => {
     assert.ok(isIndexOption(option));
   });
 
-  await t.test('IndexOption - INVISIBLE variant', () => {
+  t.test('IndexOption - INVISIBLE variant', () => {
     const sql = 'CREATE INDEX idx1 ON users (name) INVISIBLE';
     const ast = parser.astify(sql);
     
@@ -66,7 +66,7 @@ test('IndexOption Union Variants', async (t) => {
     assert.ok(isIndexOption(option));
   });
 
-  await t.test('IndexOption - COMMENT variant', () => {
+  t.test('IndexOption - COMMENT variant', () => {
     const sql = "CREATE INDEX idx1 ON users (name) COMMENT 'my index'";
     const ast = parser.astify(sql);
     
@@ -76,7 +76,7 @@ test('IndexOption Union Variants', async (t) => {
     assert.ok(isIndexOption(option));
   });
 
-  await t.test('IndexOption - multiple options', () => {
+  t.test('IndexOption - multiple options', () => {
     const sql = 'CREATE INDEX idx1 ON users (name) USING BTREE KEY_BLOCK_SIZE = 8';
     const ast = parser.astify(sql);
     

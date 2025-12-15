@@ -6,7 +6,7 @@ import { isCreate, isCreateConstraintPrimary, isCreateConstraintUnique, isCreate
 const parser = new Parser();
 
 test('CreateConstraintPrimary - all properties', async (t) => {
-  await t.test('CreateConstraintPrimary - basic properties', () => {
+  t.test('CreateConstraintPrimary - basic properties', () => {
     const sql = 'CREATE TABLE users (id INT, PRIMARY KEY (id))';
     const ast = parser.astify(sql);
     
@@ -17,7 +17,7 @@ test('CreateConstraintPrimary - all properties', async (t) => {
     // Verify all properties
   });
 
-  await t.test('CreateConstraintPrimary - with constraint name', () => {
+  t.test('CreateConstraintPrimary - with constraint name', () => {
     const sql = 'CREATE TABLE users (id INT, CONSTRAINT pk_users PRIMARY KEY (id))';
     const ast = parser.astify(sql);
     
@@ -27,7 +27,7 @@ test('CreateConstraintPrimary - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintPrimary - without constraint name', () => {
+  t.test('CreateConstraintPrimary - without constraint name', () => {
     const sql = 'CREATE TABLE users (id INT, PRIMARY KEY (id))';
     const ast = parser.astify(sql);
     
@@ -37,7 +37,7 @@ test('CreateConstraintPrimary - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintPrimary - with index_type', () => {
+  t.test('CreateConstraintPrimary - with index_type', () => {
     const sql = 'CREATE TABLE users (id INT, PRIMARY KEY USING BTREE (id))';
     const ast = parser.astify(sql);
     
@@ -47,7 +47,7 @@ test('CreateConstraintPrimary - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintPrimary - without index_type', () => {
+  t.test('CreateConstraintPrimary - without index_type', () => {
     const sql = 'CREATE TABLE users (id INT, PRIMARY KEY (id))';
     const ast = parser.astify(sql);
     
@@ -57,7 +57,7 @@ test('CreateConstraintPrimary - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintPrimary - with index_options', () => {
+  t.test('CreateConstraintPrimary - with index_options', () => {
     const sql = 'CREATE TABLE users (id INT, PRIMARY KEY (id) KEY_BLOCK_SIZE = 8)';
     const ast = parser.astify(sql);
     
@@ -67,7 +67,7 @@ test('CreateConstraintPrimary - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintPrimary - without index_options', () => {
+  t.test('CreateConstraintPrimary - without index_options', () => {
     const sql = 'CREATE TABLE users (id INT, PRIMARY KEY (id))';
     const ast = parser.astify(sql);
     
@@ -77,7 +77,7 @@ test('CreateConstraintPrimary - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintPrimary - multiple columns', () => {
+  t.test('CreateConstraintPrimary - multiple columns', () => {
     const sql = 'CREATE TABLE users (id INT, email VARCHAR(255), PRIMARY KEY (id, email))';
     const ast = parser.astify(sql);
     
@@ -89,7 +89,7 @@ test('CreateConstraintPrimary - all properties', async (t) => {
 });
 
 test('CreateConstraintUnique - all properties', async (t) => {
-  await t.test('CreateConstraintUnique - basic properties', () => {
+  t.test('CreateConstraintUnique - basic properties', () => {
     const sql = 'CREATE TABLE users (email VARCHAR(255), UNIQUE KEY (email))';
     const ast = parser.astify(sql);
     
@@ -99,7 +99,7 @@ test('CreateConstraintUnique - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintUnique - constraint_type variants', () => {
+  t.test('CreateConstraintUnique - constraint_type variants', () => {
     // Test "unique key"
     const sql1 = 'CREATE TABLE users (email VARCHAR(255), UNIQUE KEY (email))';
     const ast1 = parser.astify(sql1);
@@ -122,7 +122,7 @@ test('CreateConstraintUnique - all properties', async (t) => {
     assert.ok(isCreateConstraintUnique(constraint3));
   });
 
-  await t.test('CreateConstraintUnique - with constraint name', () => {
+  t.test('CreateConstraintUnique - with constraint name', () => {
     const sql = 'CREATE TABLE users (email VARCHAR(255), CONSTRAINT uk_email UNIQUE KEY (email))';
     const ast = parser.astify(sql);
     
@@ -132,7 +132,7 @@ test('CreateConstraintUnique - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintUnique - with index name', () => {
+  t.test('CreateConstraintUnique - with index name', () => {
     const sql = 'CREATE TABLE users (email VARCHAR(255), UNIQUE KEY idx_email (email))';
     const ast = parser.astify(sql);
     
@@ -142,7 +142,7 @@ test('CreateConstraintUnique - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintUnique - without index name', () => {
+  t.test('CreateConstraintUnique - without index name', () => {
     const sql = 'CREATE TABLE users (email VARCHAR(255), UNIQUE KEY (email))';
     const ast = parser.astify(sql);
     
@@ -152,7 +152,7 @@ test('CreateConstraintUnique - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintUnique - with index_type', () => {
+  t.test('CreateConstraintUnique - with index_type', () => {
     const sql = 'CREATE TABLE users (email VARCHAR(255), UNIQUE KEY USING HASH (email))';
     const ast = parser.astify(sql);
     
@@ -162,7 +162,7 @@ test('CreateConstraintUnique - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintUnique - with index_options', () => {
+  t.test('CreateConstraintUnique - with index_options', () => {
     const sql = 'CREATE TABLE users (email VARCHAR(255), UNIQUE KEY (email) VISIBLE)';
     const ast = parser.astify(sql);
     
@@ -174,7 +174,7 @@ test('CreateConstraintUnique - all properties', async (t) => {
 });
 
 test('CreateConstraintForeign - all properties', async (t) => {
-  await t.test('CreateConstraintForeign - basic properties', () => {
+  t.test('CreateConstraintForeign - basic properties', () => {
     const sql = 'CREATE TABLE orders (user_id INT, FOREIGN KEY (user_id) REFERENCES users(id))';
     const ast = parser.astify(sql);
     
@@ -184,7 +184,7 @@ test('CreateConstraintForeign - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintForeign - with constraint name', () => {
+  t.test('CreateConstraintForeign - with constraint name', () => {
     const sql = 'CREATE TABLE orders (user_id INT, CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id))';
     const ast = parser.astify(sql);
     
@@ -194,7 +194,7 @@ test('CreateConstraintForeign - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintForeign - with index name', () => {
+  t.test('CreateConstraintForeign - with index name', () => {
     const sql = 'CREATE TABLE orders (user_id INT, FOREIGN KEY fk_user_id (user_id) REFERENCES users(id))';
     const ast = parser.astify(sql);
     
@@ -204,7 +204,7 @@ test('CreateConstraintForeign - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintForeign - without index name', () => {
+  t.test('CreateConstraintForeign - without index name', () => {
     const sql = 'CREATE TABLE orders (user_id INT, FOREIGN KEY (user_id) REFERENCES users(id))';
     const ast = parser.astify(sql);
     
@@ -214,7 +214,7 @@ test('CreateConstraintForeign - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintForeign - with reference_definition', () => {
+  t.test('CreateConstraintForeign - with reference_definition', () => {
     const sql = 'CREATE TABLE orders (user_id INT, FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE)';
     const ast = parser.astify(sql);
     
@@ -224,7 +224,7 @@ test('CreateConstraintForeign - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintForeign - without reference_definition', () => {
+  t.test('CreateConstraintForeign - without reference_definition', () => {
     const sql = 'CREATE TABLE orders (user_id INT, FOREIGN KEY (user_id) REFERENCES users(id))';
     const ast = parser.astify(sql);
     
@@ -237,7 +237,7 @@ test('CreateConstraintForeign - all properties', async (t) => {
 });
 
 test('CreateConstraintCheck - all properties', async (t) => {
-  await t.test('CreateConstraintCheck - basic properties', () => {
+  t.test('CreateConstraintCheck - basic properties', () => {
     const sql = 'CREATE TABLE products (price INT, CHECK (price > 0))';
     const ast = parser.astify(sql);
     
@@ -247,7 +247,7 @@ test('CreateConstraintCheck - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintCheck - with constraint name', () => {
+  t.test('CreateConstraintCheck - with constraint name', () => {
     const sql = 'CREATE TABLE products (price INT, CONSTRAINT chk_price CHECK (price > 0))';
     const ast = parser.astify(sql);
     
@@ -257,7 +257,7 @@ test('CreateConstraintCheck - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintCheck - without constraint name', () => {
+  t.test('CreateConstraintCheck - without constraint name', () => {
     const sql = 'CREATE TABLE products (price INT, CHECK (price > 0))';
     const ast = parser.astify(sql);
     
@@ -267,7 +267,7 @@ test('CreateConstraintCheck - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintCheck - definition is Binary array', () => {
+  t.test('CreateConstraintCheck - definition is Binary array', () => {
     const sql = 'CREATE TABLE products (price INT, CHECK (price > 0))';
     const ast = parser.astify(sql);
     
@@ -277,7 +277,7 @@ test('CreateConstraintCheck - all properties', async (t) => {
     
   });
 
-  await t.test('CreateConstraintCheck - index_type for NOT FOR REPLICATION', () => {
+  t.test('CreateConstraintCheck - index_type for NOT FOR REPLICATION', () => {
     // Note: NOT FOR REPLICATION is a SQL Server feature, may not work in MySQL
     // This test verifies the type structure if it were supported
     const sql = 'CREATE TABLE products (price INT, CHECK (price > 0))';
