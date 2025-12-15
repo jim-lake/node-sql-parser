@@ -207,7 +207,7 @@ export interface AggrFunc {
 }
 
 export type FunctionNameValue = {
-  type: "origin" | "default";
+  type: "origin" | "default" | "backticks_quote_string";
   value: string;
 };
 
@@ -218,7 +218,7 @@ export type FunctionName = {
 export interface Function {
   type: "function";
   name: FunctionName;
-  args?: ExprList;
+  args?: ExprList | null;
   over?: { type: 'window'; as_window_specification: AsWindowSpec } | OnUpdateCurrentTimestamp | null;
   loc?: LocationRange;
 }

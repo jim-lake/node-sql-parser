@@ -825,7 +825,8 @@ export function isFunctionNameValue(obj: unknown): obj is FunctionNameValue {
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         (typedObj["type"] === "origin" ||
-            typedObj["type"] === "default") &&
+            typedObj["type"] === "default" ||
+            typedObj["type"] === "backticks_quote_string") &&
         typeof typedObj["value"] === "string"
     )
 }
@@ -858,6 +859,7 @@ export function isFunction(obj: unknown): obj is Function {
         typedObj["type"] === "function" &&
         isFunctionName(typedObj["name"]) as boolean &&
         (typeof typedObj["args"] === "undefined" ||
+            typedObj["args"] === null ||
             isExprList(typedObj["args"]) as boolean) &&
         (typeof typedObj["over"] === "undefined" ||
             typedObj["over"] === null ||
