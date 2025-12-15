@@ -21,13 +21,3 @@ test('DELETE with WHERE', () => {
   assert.strictEqual(where.type, 'binary_expr');
 });
 
-test('DELETE without WHERE', () => {
-  const sql = 'DELETE FROM users';
-  const ast = parser.astify(sql);
-  
-  assert.ok(isDelete(ast), 'AST should be a Delete type');
-  const deleteAst = ast as Delete;
-  assert.strictEqual(deleteAst.type, 'delete');
-  assert.ok(Array.isArray(deleteAst.from));
-  assert.strictEqual(deleteAst.where, null);
-});

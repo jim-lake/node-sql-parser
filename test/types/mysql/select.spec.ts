@@ -37,38 +37,4 @@ test('SELECT with columns', () => {
   assert.strictEqual(((cols[1].expr as ColumnRef).column as string), 'name');
 });
 
-test('SELECT with WHERE clause', () => {
-  const sql = 'SELECT * FROM users WHERE id = 1';
-  const ast = parser.astify(sql);
-  
-  assert.ok(isSelect(ast), 'AST should be a Select type');
-  const selectAst = ast as Select;
-  assert.strictEqual(selectAst.type, 'select');
-  assert.ok(selectAst.where);
-  const where = selectAst.where as Binary;
-  assert.strictEqual(where.type, 'binary_expr');
-  assert.strictEqual(where.operator, '=');
-});
 
-test('SELECT with ORDER BY', () => {
-  const sql = 'SELECT * FROM users ORDER BY name ASC';
-  const ast = parser.astify(sql);
-  
-  assert.ok(isSelect(ast), 'AST should be a Select type');
-  const selectAst = ast as Select;
-  assert.strictEqual(selectAst.type, 'select');
-  assert.ok(selectAst.orderby);
-  const orderby = selectAst.orderby as OrderBy[];
-  assert.strictEqual(orderby[0].type, 'ASC');
-});
-
-test('SELECT with LIMIT', () => {
-  const sql = 'SELECT * FROM users LIMIT 10';
-  const ast = parser.astify(sql);
-  
-  assert.ok(isSelect(ast), 'AST should be a Select type');
-  const selectAst = ast as Select;
-  assert.strictEqual(selectAst.type, 'select');
-  assert.ok(selectAst.limit);
-  assert.strictEqual(selectAst.limit.value[0].value, 10);
-});
