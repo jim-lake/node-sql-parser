@@ -169,10 +169,10 @@ export interface Star {
 }
 export interface Case {
   type: "case";
-  expr: null;
+  expr: ExpressionValue | null;
   args: Array<
     | {
-        cond: Binary;
+        cond: ExpressionValue | ExprList;
         result: ExpressionValue;
         type: "when";
       }
@@ -222,8 +222,17 @@ export interface Function {
   over?: { type: 'window'; as_window_specification: AsWindowSpec } | OnUpdateCurrentTimestamp | null;
   loc?: LocationRange;
 }
+export interface FulltextSearch {
+  type: "fulltext_search";
+  match: "match";
+  columns: ColumnRef[];
+  against: "against";
+  expr: ExpressionValue;
+  mode: { type: "origin"; value: string } | null;
+  as?: string | null;
+}
 export interface Column {
-  expr: ExpressionValue | Extract | Star;
+  expr: ExpressionValue | Extract | Star | FulltextSearch;
   as: string | null;
   type?: string;
   loc?: LocationRange;
@@ -298,7 +307,7 @@ export type WindowSpec = {
   window_frame_clause: WindowFrameClause | null;
 };
 
-export type WindowFrameClause = Binary;
+export type WindowFrameClause = Binary | { type: "rows"; expr: OriginValue | { type: "number"; value: string } };
 
 export type AsWindowSpec = string | { window_specification: WindowSpec; parentheses: boolean };
 
@@ -326,7 +335,7 @@ export interface Select {
     position: 'column' | 'from' | 'end' | null;
   };
   from: From[] | TableExpr | { expr: From[], parentheses: { length: number }, joins: From[] } | null;
-  where: Binary | Unary | Function | null;
+  where: Binary | Unary | Function | FulltextSearch | null;
   groupby: { columns: ColumnRef[] | null, modifiers: (OriginValue | null)[] } | null;
   having: Binary | null;
   orderby: OrderBy[] | null;
