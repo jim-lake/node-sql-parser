@@ -1,0 +1,4 @@
+GRANT SELECT ON mydb.* TO user1;
+GRANT SELECT, INSERT ON mydb.* TO user1;
+GRANT SELECT ON mydb.* TO user1@localhost;
+GRANT SELECT ON mydb.* TO user1 WITH GRANT OPTION;

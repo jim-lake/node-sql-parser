@@ -1,0 +1,14 @@
+UPDATE users SET name = "John" WHERE id = 1;
+UPDATE users SET users.name = "John" WHERE id = 1;
+UPDATE t1, DUAL SET t1.col = 1;
+UPDATE users SET name = "John", age = 30;
+WITH cte AS (SELECT id FROM temp) UPDATE users SET name = "John" WHERE id IN (SELECT id FROM cte);
+UPDATE users SET name = "John";
+UPDATE users u JOIN orders o ON u.id = o.user_id SET u.name = "John";
+UPDATE users SET name = "John", age = 30, email = "john@example.com";
+UPDATE users SET name = "John" WHERE NOT active;
+UPDATE users SET name = "John" WHERE ISNULL(deleted_at);
+UPDATE users SET name = "John" ORDER BY id DESC;
+UPDATE users SET name = "John" LIMIT 10;
+UPDATE users SET name = 'Jane' WHERE id = 1;
+UPDATE users SET name = 'Jane', age = 30 WHERE id = 1;

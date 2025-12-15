@@ -1,0 +1,6 @@
+LOAD DATA INFILE '/tmp/data.csv' INTO TABLE users;
+LOAD DATA INFILE '/tmp/data.csv' INTO TABLE mydb.users;
+LOAD DATA INFILE '/tmp/data.csv' INTO TABLE users FIELDS TERMINATED BY ',';
+LOAD DATA INFILE '/tmp/data.csv' INTO TABLE users LINES TERMINATED BY '\\n';
+LOAD DATA INFILE '/tmp/data.csv' INTO TABLE users FIELDS TERMINATED BY ',' ENCLOSED BY '"' ESCAPED BY '\\\\';
+LOAD DATA INFILE '/tmp/data.csv' INTO TABLE users LINES STARTING BY 'xxx' TERMINATED BY '\\n';

@@ -1,0 +1,14 @@
+DELETE FROM users WHERE id = 1;
+DELETE t1, t2 FROM users t1 JOIN orders t2 ON t1.id = t2.user_id WHERE t1.id = 1;
+DELETE FROM users AS u WHERE u.id = 1;
+WITH cte AS (SELECT id FROM temp) DELETE FROM users WHERE id IN (SELECT id FROM cte);
+DELETE FROM users;
+DELETE t1, t2 FROM t1 INNER JOIN t2 WHERE t1.id = t2.id;
+DELETE FROM users u JOIN orders o ON u.id = o.user_id WHERE u.id = 1;
+DELETE FROM users WHERE NOT active;
+DELETE FROM users WHERE ISNULL(deleted_at);
+DELETE FROM users ORDER BY id DESC;
+DELETE FROM users LIMIT 10;
+DELETE t1 FROM users t1 JOIN orders t2 ON t1.id = t2.user_id;
+DELETE t1 FROM t1, DUAL WHERE t1.id = 1;
+DELETE users FROM users JOIN orders ON users.id = orders.user_id WHERE orders.status = "cancelled";
