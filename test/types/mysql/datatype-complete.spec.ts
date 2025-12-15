@@ -37,6 +37,7 @@ test('DataType.dataType - various types', () => {
     
     const ast = parser.astify(sql);
     assert.ok(isCreate(ast));
+    assert.ok(isCreateColumnDefinition(ast.create_definitions[0]));
     const colDef = (ast as Create).create_definitions[0] as CreateColumnDefinition;
     const dataType = colDef.definition;
     assert.strictEqual(dataType.dataType, type);
