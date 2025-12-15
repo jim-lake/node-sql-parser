@@ -189,7 +189,7 @@ export interface AggrFunc {
   type: "aggr_func";
   name: string;
   args: {
-    expr: ExpressionValue;
+    expr: ExpressionValue | Star;
     distinct?: "DISTINCT" | null;
     orderby?: OrderBy[] | null;
     parentheses?: boolean;
@@ -216,7 +216,7 @@ export interface Function {
   loc?: LocationRange;
 }
 export interface Column {
-  expr: ExpressionValue;
+  expr: ExpressionValue | Star;
   as: string | null;
   type?: string;
   loc?: LocationRange;
@@ -263,7 +263,6 @@ export type ExpressionValue =
   | Unary
   | Cast
   | Interval
-  | Star
   | TableColumnAst;
 
 export type ExprList = {
@@ -607,7 +606,7 @@ export type ColumnDefinitionOptList = {
     constraint_type: 'check';
     keyword: 'constraint' | null;
     constraint: string | null;
-    definition: ExpressionValue[];
+    definition: Binary[];
     enforced: 'enforced' | 'not enforced' | '';
     resource: 'constraint';
   };

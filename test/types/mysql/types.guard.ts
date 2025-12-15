@@ -692,7 +692,19 @@ export function isAggrFunc(obj: unknown): obj is AggrFunc {
         (typedObj["args"] !== null &&
             typeof typedObj["args"] === "object" ||
             typeof typedObj["args"] === "function") &&
-        isExpressionValue(typedObj["args"]["expr"]) as boolean &&
+        (isTableColumnAst(typedObj["args"]["expr"]) as boolean ||
+            isValueExpr(typedObj["args"]["expr"]) as boolean ||
+            isColumnRefItem(typedObj["args"]["expr"]) as boolean ||
+            isStar(typedObj["args"]["expr"]) as boolean ||
+            isCase(typedObj["args"]["expr"]) as boolean ||
+            isCast(typedObj["args"]["expr"]) as boolean ||
+            isAggrFunc(typedObj["args"]["expr"]) as boolean ||
+            isFunction(typedObj["args"]["expr"]) as boolean ||
+            isInterval(typedObj["args"]["expr"]) as boolean ||
+            isParam(typedObj["args"]["expr"]) as boolean ||
+            isVar(typedObj["args"]["expr"]) as boolean ||
+            isBinary(typedObj["args"]["expr"]) as boolean ||
+            isUnary(typedObj["args"]["expr"]) as boolean) &&
         (typeof typedObj["args"]["distinct"] === "undefined" ||
             typedObj["args"]["distinct"] === null ||
             typedObj["args"]["distinct"] === "DISTINCT") &&
@@ -812,7 +824,19 @@ export function isColumn(obj: unknown): obj is Column {
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        isExpressionValue(typedObj["expr"]) as boolean &&
+        (isTableColumnAst(typedObj["expr"]) as boolean ||
+            isValueExpr(typedObj["expr"]) as boolean ||
+            isColumnRefItem(typedObj["expr"]) as boolean ||
+            isStar(typedObj["expr"]) as boolean ||
+            isCase(typedObj["expr"]) as boolean ||
+            isCast(typedObj["expr"]) as boolean ||
+            isAggrFunc(typedObj["expr"]) as boolean ||
+            isFunction(typedObj["expr"]) as boolean ||
+            isInterval(typedObj["expr"]) as boolean ||
+            isParam(typedObj["expr"]) as boolean ||
+            isVar(typedObj["expr"]) as boolean ||
+            isBinary(typedObj["expr"]) as boolean ||
+            isUnary(typedObj["expr"]) as boolean) &&
         (typedObj["as"] === null ||
             typeof typedObj["as"] === "string") &&
         (typeof typedObj["type"] === "undefined" ||
@@ -918,7 +942,6 @@ export function isBinary(obj: unknown): obj is Binary {
         (isTableColumnAst(typedObj["left"]) as boolean ||
             isValueExpr(typedObj["left"]) as boolean ||
             isColumnRefItem(typedObj["left"]) as boolean ||
-            isStar(typedObj["left"]) as boolean ||
             isCase(typedObj["left"]) as boolean ||
             isCast(typedObj["left"]) as boolean ||
             isAggrFunc(typedObj["left"]) as boolean ||
@@ -932,7 +955,6 @@ export function isBinary(obj: unknown): obj is Binary {
         (isTableColumnAst(typedObj["right"]) as boolean ||
             isValueExpr(typedObj["right"]) as boolean ||
             isColumnRefItem(typedObj["right"]) as boolean ||
-            isStar(typedObj["right"]) as boolean ||
             isCase(typedObj["right"]) as boolean ||
             isCast(typedObj["right"]) as boolean ||
             isAggrFunc(typedObj["right"]) as boolean ||
@@ -1010,7 +1032,6 @@ export function isExpressionValue(obj: unknown): obj is ExpressionValue {
         (isTableColumnAst(typedObj) as boolean ||
             isValueExpr(typedObj) as boolean ||
             isColumnRefItem(typedObj) as boolean ||
-            isStar(typedObj) as boolean ||
             isCase(typedObj) as boolean ||
             isCast(typedObj) as boolean ||
             isAggrFunc(typedObj) as boolean ||
@@ -1100,7 +1121,6 @@ export function isWindowFrameClause(obj: unknown): obj is WindowFrameClause {
         (isTableColumnAst(typedObj["left"]) as boolean ||
             isValueExpr(typedObj["left"]) as boolean ||
             isColumnRefItem(typedObj["left"]) as boolean ||
-            isStar(typedObj["left"]) as boolean ||
             isCase(typedObj["left"]) as boolean ||
             isCast(typedObj["left"]) as boolean ||
             isAggrFunc(typedObj["left"]) as boolean ||
@@ -1114,7 +1134,6 @@ export function isWindowFrameClause(obj: unknown): obj is WindowFrameClause {
         (isTableColumnAst(typedObj["right"]) as boolean ||
             isValueExpr(typedObj["right"]) as boolean ||
             isColumnRefItem(typedObj["right"]) as boolean ||
-            isStar(typedObj["right"]) as boolean ||
             isCase(typedObj["right"]) as boolean ||
             isCast(typedObj["right"]) as boolean ||
             isAggrFunc(typedObj["right"]) as boolean ||
@@ -2070,7 +2089,7 @@ export function isColumnDefinitionOptList(obj: unknown): obj is ColumnDefinition
                 typeof typedObj["check"]["constraint"] === "string") &&
             Array.isArray(typedObj["check"]["definition"]) &&
             typedObj["check"]["definition"].every((e: any) =>
-                isExpressionValue(e) as boolean
+                isBinary(e) as boolean
             ) &&
             (typedObj["check"]["enforced"] === "" ||
                 typedObj["check"]["enforced"] === "enforced" ||
@@ -2941,7 +2960,6 @@ export function isTableOption(obj: unknown): obj is TableOption {
             isTableColumnAst(typedObj["value"]) as boolean ||
             isValueExpr(typedObj["value"]) as boolean ||
             isColumnRefItem(typedObj["value"]) as boolean ||
-            isStar(typedObj["value"]) as boolean ||
             isCase(typedObj["value"]) as boolean ||
             isCast(typedObj["value"]) as boolean ||
             isAggrFunc(typedObj["value"]) as boolean ||
