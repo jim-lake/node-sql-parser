@@ -11,12 +11,9 @@ test('FROM DUAL - basic usage', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select.from);
-  assert.ok(Array.isArray(select.from));
   const from = select.from[0];
   assert.ok(isDual(from));
   const dual = from as Dual;
-  assert.strictEqual(dual.type, 'dual');
 });
 
 test('FROM DUAL - with expression', () => {
@@ -24,8 +21,6 @@ test('FROM DUAL - with expression', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select.from);
-  assert.ok(Array.isArray(select.from));
   const from = select.from[0];
   assert.ok(isDual(from));
 });

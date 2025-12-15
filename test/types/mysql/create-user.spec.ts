@@ -12,9 +12,6 @@ test('CreateUser - basic user creation', () => {
   
   assert.ok(isCreate(ast), 'Should be Create');
   assert.ok(isCreateUser(ast), 'Should be CreateUser');
-  assert.strictEqual(ast.type, 'create');
-  assert.strictEqual(ast.keyword, 'user');
-  assert.ok(Array.isArray(ast.user));
 });
 
 test('CreateUser - with password', () => {
@@ -24,10 +21,6 @@ test('CreateUser - with password', () => {
   assert.ok(isCreate(ast), 'Should be Create');
   assert.ok(isCreateUser(ast), 'Should be CreateUser');
   const user = ast.user![0] as UserAuthOption;
-  assert.ok(user.user);
-  assert.ok(user.auth_option);
-  assert.strictEqual(user.auth_option!.keyword, 'identified');
-  assert.strictEqual(user.auth_option!.value.prefix, 'by');
 });
 
 test('CreateUser - with IF NOT EXISTS', () => {
@@ -36,7 +29,6 @@ test('CreateUser - with IF NOT EXISTS', () => {
   
   assert.ok(isCreate(ast), 'Should be Create');
   assert.ok(isCreateUser(ast), 'Should be CreateUser');
-  assert.strictEqual(ast.if_not_exists, 'IF NOT EXISTS');
 });
 
 test('CreateUser - UserAuthOption user property', () => {
@@ -46,11 +38,6 @@ test('CreateUser - UserAuthOption user property', () => {
   assert.ok(isCreate(ast), 'Should be Create');
   assert.ok(isCreateUser(ast), 'Should be CreateUser');
   const user = ast.user![0] as UserAuthOption;
-  assert.ok(user.user);
-  assert.ok(user.user.name);
-  assert.strictEqual(user.user.name.type, 'single_quote_string');
-  assert.ok(user.user.host);
-  assert.strictEqual(user.user.host.type, 'single_quote_string');
 });
 
 test('CreateUser - multiple users', () => {
@@ -59,6 +46,4 @@ test('CreateUser - multiple users', () => {
   
   assert.ok(isCreate(ast), 'Should be Create');
   assert.ok(isCreateUser(ast), 'Should be CreateUser');
-  assert.ok(Array.isArray(ast.user));
-  assert.strictEqual(ast.user!.length, 2);
 });

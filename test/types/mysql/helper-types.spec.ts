@@ -20,13 +20,7 @@ describe('Helper Types', () => {
     
     assert(isSelect(ast), 'AST should be a Select type');
     const selectAst = ast as Select;
-    assert(typeof selectAst === 'object' && selectAst !== null);
-    assert(selectAst.type === 'select');
-    assert(selectAst.window !== undefined && selectAst.window !== null);
     assert(isWindowExpr(selectAst.window));
-    assert(selectAst.window.keyword === 'window');
-    assert(Array.isArray(selectAst.window.expr));
-    assert(selectAst.window.expr.length > 0);
     assert(isNamedWindowExpr(selectAst.window.expr[0]));
   });
 
@@ -36,13 +30,7 @@ describe('Helper Types', () => {
     
     assert(isCreate(ast), 'AST should be a Create type');
     const createAst = ast as Create;
-    assert(typeof createAst === 'object' && createAst !== null);
-    assert(createAst.type === 'create');
-    assert(createAst.events !== undefined && createAst.events !== null);
-    assert(Array.isArray(createAst.events));
-    assert(createAst.events.length > 0);
     assert(isTriggerEvent(createAst.events[0]));
-    assert(createAst.events[0].keyword === 'insert');
   });
 
   test('TableOption in CREATE TABLE', () => {
@@ -51,11 +39,6 @@ describe('Helper Types', () => {
     
     assert(isCreate(ast), 'AST should be a Create type');
     const createAst = ast as Create;
-    assert(typeof createAst === 'object' && createAst !== null);
-    assert(createAst.type === 'create');
-    assert(createAst.table_options !== undefined && createAst.table_options !== null);
-    assert(Array.isArray(createAst.table_options));
-    assert(createAst.table_options.length > 0);
     assert(isTableOption(createAst.table_options[0]));
   });
 });

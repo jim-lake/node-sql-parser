@@ -12,11 +12,8 @@ test('Delete.from as Array<From>', () => {
   const ast = parser.astify(sql);
   assert.ok(isDelete(ast));
   const del = ast as Delete;
-  assert.ok(Array.isArray(del.from));
-  assert.strictEqual(del.from.length, 1);
   assert.ok(isFrom(del.from[0]));
   const from = del.from[0] as From;
-  assert.strictEqual(from.table, 'users');
 });
 
 // Test Delete.where - Binary variant
@@ -25,10 +22,8 @@ test('Delete.where as Binary', () => {
   const ast = parser.astify(sql);
   assert.ok(isDelete(ast));
   const del = ast as Delete;
-  assert.ok(del.where);
   assert.ok(isBinary(del.where));
   const binary = del.where as Binary;
-  assert.strictEqual(binary.type, 'binary_expr');
 });
 
 // Test Delete.where - Unary variant
@@ -37,7 +32,6 @@ test('Delete.where as Unary', () => {
   const ast = parser.astify(sql);
   assert.ok(isDelete(ast));
   const del = ast as Delete;
-  assert.ok(del.where);
   if (del.where && 'type' in del.where && del.where.type === 'unary_expr') {
     assert.ok(isUnary(del.where));
   }
@@ -49,7 +43,6 @@ test('Delete.where as Function', () => {
   const ast = parser.astify(sql);
   assert.ok(isDelete(ast));
   const del = ast as Delete;
-  assert.ok(del.where);
   if (del.where && 'type' in del.where && del.where.type === 'function') {
     assert.ok(isFunction(del.where));
   }

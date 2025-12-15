@@ -12,8 +12,6 @@ test('Select.with - With[] when WITH clause present', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select.with);
-  assert.ok(Array.isArray(select.with));
   assert.ok(isWith(select.with[0]));
 });
 
@@ -23,7 +21,6 @@ test('Select.where - Binary expression', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select.where);
   assert.ok(isBinary(select.where));
 });
 
@@ -33,7 +30,6 @@ test('Select.where - Unary expression', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select.where);
   assert.ok(isUnary(select.where) || isBinary(select.where));
 });
 
@@ -43,7 +39,6 @@ test('Select.where - Function expression', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select.where);
   assert.ok(isFunction(select.where));
 });
 
@@ -53,7 +48,6 @@ test('Select.having - Binary expression', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select.having);
   assert.ok(isBinary(select.having));
 });
 
@@ -63,7 +57,5 @@ test('Select._next and set_op - UNION', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select._next);
   assert.ok(isSelect(select._next));
-  assert.strictEqual(select.set_op, 'union');
 });

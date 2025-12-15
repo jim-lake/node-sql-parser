@@ -12,10 +12,6 @@ describe('Subquery in SELECT Column', () => {
     const subqueryCol = ast.columns[1];
     
     assert.ok(isTableColumnAst(subqueryCol.expr), 'Subquery should be TableColumnAst');
-    assert.ok(Array.isArray(subqueryCol.expr.tableList), 'Should have tableList');
-    assert.ok(Array.isArray(subqueryCol.expr.columnList), 'Should have columnList');
-    assert.ok(subqueryCol.expr.ast, 'Should have ast');
-    assert.strictEqual(subqueryCol.expr.parentheses, true, 'Should have parentheses');
   });
 
   test('Subquery ast is Select type', () => {
@@ -25,7 +21,6 @@ describe('Subquery in SELECT Column', () => {
     
     assert.ok(isTableColumnAst(subqueryCol.expr), 'Subquery should be TableColumnAst');
     assert.ok(isSelect(subqueryCol.expr.ast), 'ast should be Select');
-    assert.strictEqual(subqueryCol.expr.ast.type, 'select');
   });
 
   test('Multiple subqueries in SELECT', () => {

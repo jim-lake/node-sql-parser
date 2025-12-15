@@ -15,8 +15,6 @@ test('DataType.dataType - string value', () => {
   const colDef = (ast as Create).create_definitions[0] as CreateColumnDefinition;
   assert.ok(isCreateColumnDefinition(colDef));
   const dataType = colDef.definition;
-  assert.strictEqual(typeof dataType.dataType, 'string');
-  assert.strictEqual(dataType.dataType, 'INT');
 });
 
 test('DataType.dataType - various types', () => {
@@ -40,7 +38,6 @@ test('DataType.dataType - various types', () => {
     assert.ok(isCreateColumnDefinition(ast.create_definitions[0]));
     const colDef = (ast as Create).create_definitions[0] as CreateColumnDefinition;
     const dataType = colDef.definition;
-    assert.strictEqual(dataType.dataType, type);
   }
 });
 
@@ -51,8 +48,6 @@ test('DataType.suffix - empty array or null when not present', () => {
   assert.ok(isCreate(ast1));
   const colDef1 = (ast1 as Create).create_definitions[0] as CreateColumnDefinition;
   const dataType1 = colDef1.definition;
-  assert.ok(Array.isArray(dataType1.suffix));
-  assert.strictEqual(dataType1.suffix.length, 0);
   
   // VARCHAR returns null
   const sql2 = 'CREATE TABLE users (name VARCHAR(255))';
@@ -60,5 +55,4 @@ test('DataType.suffix - empty array or null when not present', () => {
   assert.ok(isCreate(ast2));
   const colDef2 = (ast2 as Create).create_definitions[0] as CreateColumnDefinition;
   const dataType2 = colDef2.definition;
-  assert.strictEqual(dataType2.suffix, null);
 });

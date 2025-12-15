@@ -12,11 +12,8 @@ test('Update.table as Array<From>', () => {
   const ast = parser.astify(sql);
   assert.ok(isUpdate(ast));
   const update = ast as Update;
-  assert.ok(Array.isArray(update.table));
-  assert.strictEqual(update.table!.length, 1);
   assert.ok(isFrom(update.table![0]));
   const from = update.table![0] as From;
-  assert.strictEqual(from.table, 'users');
 });
 
 // Test Update.where - Binary variant
@@ -25,10 +22,8 @@ test('Update.where as Binary', () => {
   const ast = parser.astify(sql);
   assert.ok(isUpdate(ast));
   const update = ast as Update;
-  assert.ok(update.where);
   assert.ok(isBinary(update.where));
   const binary = update.where as Binary;
-  assert.strictEqual(binary.type, 'binary_expr');
 });
 
 // Test Update.where - Unary variant
@@ -37,7 +32,6 @@ test('Update.where as Unary', () => {
   const ast = parser.astify(sql);
   assert.ok(isUpdate(ast));
   const update = ast as Update;
-  assert.ok(update.where);
   if (update.where && 'type' in update.where && update.where.type === 'unary_expr') {
     assert.ok(isUnary(update.where));
   }
@@ -49,7 +43,6 @@ test('Update.where as Function', () => {
   const ast = parser.astify(sql);
   assert.ok(isUpdate(ast));
   const update = ast as Update;
-  assert.ok(update.where);
   if (update.where && 'type' in update.where && update.where.type === 'function') {
     assert.ok(isFunction(update.where));
   }

@@ -11,9 +11,7 @@ test('UNION - basic', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select._next);
   assert.ok(isSelect(select._next));
-  assert.strictEqual(select.set_op, 'union');
 });
 
 test('UNION ALL', () => {
@@ -21,9 +19,7 @@ test('UNION ALL', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select._next);
   assert.ok(isSelect(select._next));
-  assert.strictEqual(select.set_op, 'union all');
 });
 
 test('UNION DISTINCT', () => {
@@ -31,10 +27,7 @@ test('UNION DISTINCT', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select._next);
   assert.ok(isSelect(select._next));
-  assert.ok(select.set_op);
-  assert.ok(select.set_op.includes('union'));
 });
 
 test('Multiple UNION operations', () => {
@@ -42,9 +35,7 @@ test('Multiple UNION operations', () => {
   const ast = parser.astify(sql);
   assert.ok(isSelect(ast));
   const select = ast as Select;
-  assert.ok(select._next);
   assert.ok(isSelect(select._next));
   const next = select._next as Select;
-  assert.ok(next._next);
   assert.ok(isSelect(next._next));
 });

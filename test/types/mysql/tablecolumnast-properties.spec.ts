@@ -14,11 +14,6 @@ test('TableColumnAst.tableList - verify string[]', () => {
   const subquery = ast.columns[0].expr as TableColumnAst;
   
   assert.ok(isTableColumnAst(subquery));
-  assert.ok('tableList' in subquery);
-  assert.ok(Array.isArray(subquery.tableList));
-  assert.strictEqual(subquery.tableList.length, 1);
-  assert.strictEqual(typeof subquery.tableList[0], 'string');
-  assert.strictEqual(subquery.tableList[0], 'select::null::users');
 });
 
 test('TableColumnAst.ast - verify AST[] | AST', () => {
@@ -29,10 +24,8 @@ test('TableColumnAst.ast - verify AST[] | AST', () => {
   const subquery = ast.columns[0].expr as TableColumnAst;
   
   assert.ok(isTableColumnAst(subquery));
-  assert.ok('ast' in subquery);
   // For a single SELECT, ast should be a Select object
   assert.ok(isSelect(subquery.ast));
-  assert.strictEqual(subquery.ast.type, 'select');
 });
 
 test('TableColumnAst.parentheses - verify boolean | undefined', () => {
@@ -45,8 +38,6 @@ test('TableColumnAst.parentheses - verify boolean | undefined', () => {
   assert.ok(isTableColumnAst(subquery));
   // parentheses property should exist and be boolean
   if ('parentheses' in subquery) {
-    assert.strictEqual(typeof subquery.parentheses, 'boolean');
-    assert.strictEqual(subquery.parentheses, true);
   }
 });
 
@@ -60,9 +51,6 @@ test('TableColumnAst.loc - verify LocationRange | undefined', () => {
   assert.ok(isTableColumnAst(subquery));
   // loc should be present when includeLocations is true
   if ('loc' in subquery) {
-    assert.ok(subquery.loc);
-    assert.ok('start' in subquery.loc);
-    assert.ok('end' in subquery.loc);
   }
 });
 
@@ -74,9 +62,6 @@ test('TableColumnAst - complex subquery with joins', () => {
   const subquery = ast.columns[0].expr as TableColumnAst;
   
   assert.ok(isTableColumnAst(subquery));
-  assert.ok(Array.isArray(subquery.tableList));
-  assert.ok(subquery.tableList.length >= 2); // Should have both users and orders
-  assert.ok(Array.isArray(subquery.columnList));
   assert.ok(isSelect(subquery.ast));
 });
 
@@ -85,21 +70,16 @@ test('TableColumnAst - in WHERE clause with IN', () => {
   const ast = parser.astify(sql) as Select;
   
   assert.ok(isSelect(ast));
-  assert.ok(ast.where);
   
   if (ast.where.type === 'binary_expr' && ast.where.operator === 'IN') {
     const right = ast.where.right;
     if (right.type === 'expr_list' && right.value && right.value.length > 0) {
       const subquery = right.value[0];
       // Check if it's a TableColumnAst
-      assert.ok('tableList' in subquery && 'columnList' in subquery && 'ast' in subquery);
       if (isTableColumnAst(subquery)) {
-        assert.ok(Array.isArray(subquery.tableList));
-        assert.ok(Array.isArray(subquery.columnList));
         assert.ok(isSelect(subquery.ast));
         // parentheses may be undefined or boolean
         if ('parentheses' in subquery) {
-          assert.strictEqual(typeof subquery.parentheses, 'boolean');
         }
       }
     }

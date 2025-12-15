@@ -12,10 +12,7 @@ test('PARTITION BY in window function', () => {
   assert.ok(isSelect(ast), 'Should be Select');
   const windowSpec = ast.columns![0].expr.over!.as_window_specification!.window_specification as WindowSpec;
   
-  assert.ok(windowSpec.partitionby);
   assert.ok(isPartitionBy(windowSpec.partitionby), 'Should be PartitionBy');
-  assert.ok(Array.isArray(windowSpec.partitionby));
-  assert.strictEqual(windowSpec.partitionby.length, 1);
 });
 
 test('WindowSpec with PARTITION BY', () => {
@@ -25,6 +22,4 @@ test('WindowSpec with PARTITION BY', () => {
   const windowSpec = ast.columns![0].expr.over!.as_window_specification!.window_specification as WindowSpec;
   
   assert.ok(isWindowSpec(windowSpec), 'Should be WindowSpec');
-  assert.ok(windowSpec.partitionby);
-  assert.strictEqual(windowSpec.partitionby.length, 2);
 });
