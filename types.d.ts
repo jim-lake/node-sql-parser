@@ -619,7 +619,7 @@ export type DataType = {
   length?: number | null;
   parentheses?: true;
   scale?: number | null;
-  suffix?: ("UNSIGNED" | "ZEROFILL")[] | null;
+  suffix?: ("UNSIGNED" | "ZEROFILL" | "SIGNED")[] | null;
   expr?: Expr | ExprList;
 };
 
@@ -834,7 +834,7 @@ export interface CreateIndex {
   index: string;
   on_kw?: "on" | null;
   table?: { db: string | null; table: string }[] | { db: string | null, table: string };
-  index_columns?: ColumnRefItem[] | null;
+  index_columns?: (ColumnRefItem | (Function & { order_by?: SortDirection | null }))[] | null;
   index_type?: "unique" | "fulltext" | "spatial" | null;
   index_options?: IndexOption[] | null;
   algorithm_option?: {
@@ -891,13 +891,19 @@ export interface CreateUser {
   keyword: "user";
   if_not_exists?: "IF NOT EXISTS" | null;
   user?: UserAuthOption[] | null;
-  default_role?: string[] | null;
+  default_role?: {
+    keyword: string;
+    value: Array<{
+      name: StringValue;
+      host: StringValue | null;
+    }>;
+  } | null;
   require?: RequireOption | null;
   resource_options?: ResourceOption | null;
-  password_options?: PasswordOption | null;
+  password_options?: PasswordOption[] | null;
   lock_option_user?: 'account lock' | 'account unlock' | null;
   comment_user?: string | null;
-  attribute?: string | null;
+  attribute?: StringValue & { prefix?: string } | null;
   loc?: LocationRange;
 }
 
@@ -916,13 +922,13 @@ export type UserAuthOption = {
   auth_option?: {
     keyword: string;
     auth_plugin?: string | null;
-    value: StringValue & { prefix?: string };
+    value: (StringValue | OriginValue) & { prefix?: string };
   } | null;
 };
 
 export type RequireOption = {
   keyword: 'require';
-  value: OriginValue;
+  value: ((StringValue | OriginValue) & { prefix?: string }) | Binary;
 };
 
 export type ResourceOption = {
@@ -935,14 +941,14 @@ export type ResourceOption = {
 };
 
 export type PasswordOption = {
-  type: 'password_expire' | 'password_history' | 'password_reuse_interval' | 'password_require_current';
-  value: number | string | null;
+  keyword: 'password expire' | 'password history' | 'password reuse interval' | 'password reuse' | 'password require current' | 'failed_login_attempts' | 'password_lock_time';
+  value: OriginValue | NumberValue | Interval;
 };
 
 export type TableOption = {
   keyword: string;
-  symbol?: '=';
-  value: ExpressionValue | string | number;
+  symbol?: '=' | null;
+  value: ExpressionValue | DefaultValue | string | number;
 };
 
 export interface DropTable {

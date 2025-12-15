@@ -2153,7 +2153,8 @@ export function isDataType(obj: unknown): obj is DataType {
             Array.isArray(typedObj["suffix"]) &&
             typedObj["suffix"].every((e: any) =>
             (e === "UNSIGNED" ||
-                e === "ZEROFILL")
+                e === "ZEROFILL" ||
+                e === "SIGNED")
             )) &&
         (typeof typedObj["expr"] === "undefined" ||
             isBinary(typedObj["expr"]) as boolean ||
@@ -2790,7 +2791,17 @@ export function isCreateIndex(obj: unknown): obj is CreateIndex {
             typedObj["index_columns"] === null ||
             Array.isArray(typedObj["index_columns"]) &&
             typedObj["index_columns"].every((e: any) =>
-                isColumnRefItem(e) as boolean
+            (isColumnRefItem(e) as boolean ||
+                isFunction(e) as boolean &&
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                (typeof e["order_by"] === "undefined" ||
+                    e["order_by"] === null ||
+                    e["order_by"] === "ASC" ||
+                    e["order_by"] === "DESC" ||
+                    e["order_by"] === "asc" ||
+                    e["order_by"] === "desc"))
             )) &&
         (typeof typedObj["index_type"] === "undefined" ||
             typedObj["index_type"] === null ||
@@ -2985,9 +2996,18 @@ export function isCreateUser(obj: unknown): obj is CreateUser {
             )) &&
         (typeof typedObj["default_role"] === "undefined" ||
             typedObj["default_role"] === null ||
-            Array.isArray(typedObj["default_role"]) &&
-            typedObj["default_role"].every((e: any) =>
-                typeof e === "string"
+            (typedObj["default_role"] !== null &&
+                typeof typedObj["default_role"] === "object" ||
+                typeof typedObj["default_role"] === "function") &&
+            typeof typedObj["default_role"]["keyword"] === "string" &&
+            Array.isArray(typedObj["default_role"]["value"]) &&
+            typedObj["default_role"]["value"].every((e: any) =>
+                (e !== null &&
+                    typeof e === "object" ||
+                    typeof e === "function") &&
+                isStringValue(e["name"]) as boolean &&
+                (e["host"] === null ||
+                    isStringValue(e["host"]) as boolean)
             )) &&
         (typeof typedObj["require"] === "undefined" ||
             typedObj["require"] === null ||
@@ -2997,7 +3017,10 @@ export function isCreateUser(obj: unknown): obj is CreateUser {
             isResourceOption(typedObj["resource_options"]) as boolean) &&
         (typeof typedObj["password_options"] === "undefined" ||
             typedObj["password_options"] === null ||
-            isPasswordOption(typedObj["password_options"]) as boolean) &&
+            Array.isArray(typedObj["password_options"]) &&
+            typedObj["password_options"].every((e: any) =>
+                isPasswordOption(e) as boolean
+            )) &&
         (typeof typedObj["lock_option_user"] === "undefined" ||
             typedObj["lock_option_user"] === null ||
             typedObj["lock_option_user"] === "account lock" ||
@@ -3007,7 +3030,12 @@ export function isCreateUser(obj: unknown): obj is CreateUser {
             typeof typedObj["comment_user"] === "string") &&
         (typeof typedObj["attribute"] === "undefined" ||
             typedObj["attribute"] === null ||
-            typeof typedObj["attribute"] === "string") &&
+            isStringValue(typedObj["attribute"]) as boolean &&
+            (typedObj["attribute"] !== null &&
+                typeof typedObj["attribute"] === "object" ||
+                typeof typedObj["attribute"] === "function") &&
+            (typeof typedObj["attribute"]["prefix"] === "undefined" ||
+                typeof typedObj["attribute"]["prefix"] === "string")) &&
         (typeof typedObj["loc"] === "undefined" ||
             (typedObj["loc"] !== null &&
                 typeof typedObj["loc"] === "object" ||
@@ -3077,12 +3105,18 @@ export function isUserAuthOption(obj: unknown): obj is UserAuthOption {
             (typeof typedObj["auth_option"]["auth_plugin"] === "undefined" ||
                 typedObj["auth_option"]["auth_plugin"] === null ||
                 typeof typedObj["auth_option"]["auth_plugin"] === "string") &&
-            isStringValue(typedObj["auth_option"]["value"]) as boolean &&
-            (typedObj["auth_option"]["value"] !== null &&
-                typeof typedObj["auth_option"]["value"] === "object" ||
-                typeof typedObj["auth_option"]["value"] === "function") &&
-            (typeof typedObj["auth_option"]["value"]["prefix"] === "undefined" ||
-                typeof typedObj["auth_option"]["value"]["prefix"] === "string"))
+            (isStringValue(typedObj["auth_option"]["value"]) as boolean &&
+                (typedObj["auth_option"]["value"] !== null &&
+                    typeof typedObj["auth_option"]["value"] === "object" ||
+                    typeof typedObj["auth_option"]["value"] === "function") &&
+                (typeof typedObj["auth_option"]["value"]["prefix"] === "undefined" ||
+                    typeof typedObj["auth_option"]["value"]["prefix"] === "string") ||
+                isOriginValue(typedObj["auth_option"]["value"]) as boolean &&
+                (typedObj["auth_option"]["value"] !== null &&
+                    typeof typedObj["auth_option"]["value"] === "object" ||
+                    typeof typedObj["auth_option"]["value"] === "function") &&
+                (typeof typedObj["auth_option"]["value"]["prefix"] === "undefined" ||
+                    typeof typedObj["auth_option"]["value"]["prefix"] === "string")))
     )
 }
 
@@ -3093,7 +3127,19 @@ export function isRequireOption(obj: unknown): obj is RequireOption {
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
         typedObj["keyword"] === "require" &&
-        isOriginValue(typedObj["value"]) as boolean
+        (isBinary(typedObj["value"]) as boolean ||
+            isStringValue(typedObj["value"]) as boolean &&
+            (typedObj["value"] !== null &&
+                typeof typedObj["value"] === "object" ||
+                typeof typedObj["value"] === "function") &&
+            (typeof typedObj["value"]["prefix"] === "undefined" ||
+                typeof typedObj["value"]["prefix"] === "string") ||
+            isOriginValue(typedObj["value"]) as boolean &&
+            (typedObj["value"] !== null &&
+                typeof typedObj["value"] === "object" ||
+                typeof typedObj["value"] === "function") &&
+            (typeof typedObj["value"]["prefix"] === "undefined" ||
+                typeof typedObj["value"]["prefix"] === "string"))
     )
 }
 
@@ -3122,13 +3168,16 @@ export function isPasswordOption(obj: unknown): obj is PasswordOption {
         (typedObj !== null &&
             typeof typedObj === "object" ||
             typeof typedObj === "function") &&
-        (typedObj["type"] === "password_expire" ||
-            typedObj["type"] === "password_history" ||
-            typedObj["type"] === "password_reuse_interval" ||
-            typedObj["type"] === "password_require_current") &&
-        (typedObj["value"] === null ||
-            typeof typedObj["value"] === "string" ||
-            typeof typedObj["value"] === "number")
+        (typedObj["keyword"] === "password expire" ||
+            typedObj["keyword"] === "password history" ||
+            typedObj["keyword"] === "password reuse interval" ||
+            typedObj["keyword"] === "password reuse" ||
+            typedObj["keyword"] === "password require current" ||
+            typedObj["keyword"] === "failed_login_attempts" ||
+            typedObj["keyword"] === "password_lock_time") &&
+        (isOriginValue(typedObj["value"]) as boolean ||
+            isNumberValue(typedObj["value"]) as boolean ||
+            isInterval(typedObj["value"]) as boolean)
     )
 }
 
@@ -3140,11 +3189,13 @@ export function isTableOption(obj: unknown): obj is TableOption {
             typeof typedObj === "function") &&
         typeof typedObj["keyword"] === "string" &&
         (typeof typedObj["symbol"] === "undefined" ||
+            typedObj["symbol"] === null ||
             typedObj["symbol"] === "=") &&
         (typeof typedObj["value"] === "string" ||
             typeof typedObj["value"] === "number" ||
             isTableColumnAst(typedObj["value"]) as boolean ||
             isValueExpr(typedObj["value"]) as boolean ||
+            isDefaultValue(typedObj["value"]) as boolean ||
             isColumnRefItem(typedObj["value"]) as boolean ||
             isCase(typedObj["value"]) as boolean ||
             isCast(typedObj["value"]) as boolean ||
