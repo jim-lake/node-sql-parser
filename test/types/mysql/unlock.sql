@@ -1,1 +1,2 @@
 UNLOCK TABLES;
+unlock tables;
