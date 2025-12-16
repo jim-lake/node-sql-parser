@@ -1175,13 +1175,13 @@ export interface Grant {
   type: "grant";
   keyword: "priv" | "proxy" | "role";
   objects: Array<{
-    priv: OriginValue | StringValue | { type: "string"; value: string };
+    priv: OriginValue | StringValue | { type: "string"; value: string } | { type: "origin"; value: [string, undefined] };
     columns?: ColumnRef[] | null;
   }>;
   on?: {
     object_type: 'table' | 'function' | 'procedure' | OriginValue | null;
     priv_level: Array<{
-      prefix: string;
+      prefix: string | null;
       name: string;
     }>;
   } | {

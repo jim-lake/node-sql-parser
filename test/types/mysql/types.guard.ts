@@ -4176,7 +4176,14 @@ export function isGrant(obj: unknown): obj is Grant {
                     typeof e["priv"] === "object" ||
                     typeof e["priv"] === "function") &&
                 e["priv"]["type"] === "string" &&
-                typeof e["priv"]["value"] === "string") &&
+                typeof e["priv"]["value"] === "string" ||
+                (e["priv"] !== null &&
+                    typeof e["priv"] === "object" ||
+                    typeof e["priv"] === "function") &&
+                e["priv"]["type"] === "origin" &&
+                Array.isArray(e["priv"]["value"]) &&
+                typeof e["priv"]["value"][0] === "string" &&
+                typeof e["priv"]["value"][1] === "undefined") &&
             (typeof e["columns"] === "undefined" ||
                 e["columns"] === null ||
                 Array.isArray(e["columns"]) &&
@@ -4198,7 +4205,8 @@ export function isGrant(obj: unknown): obj is Grant {
                 (e !== null &&
                     typeof e === "object" ||
                     typeof e === "function") &&
-                typeof e["prefix"] === "string" &&
+                (e["prefix"] === null ||
+                    typeof e["prefix"] === "string") &&
                 typeof e["name"] === "string"
             ) ||
             (typedObj["on"] !== null &&
