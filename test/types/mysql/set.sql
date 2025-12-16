@@ -219,3 +219,10 @@ SET SESSION var1 = 1, var2 = 2;
 SET LOCAL var1 = 1, var2 = 2;
 SET PERSIST var1 = 1, var2 = 2;
 SET PERSIST_ONLY var1 = 1, var2 = 2;
+
+SET @var = current_timestamp() ON UPDATE current_timestamp();
+SET @var = Current_Timestamp() ON UPDATE Current_Timestamp();
+SET @var = CuRrEnT_tImEsTaMp() ON UPDATE CuRrEnT_tImEsTaMp();
+SET @var = now() ON UPDATE now();
+SET @var = Now() ON UPDATE Now();
+SET @var = NoW() ON UPDATE NoW();

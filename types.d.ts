@@ -633,9 +633,9 @@ export type DataType = {
 
 export type OnUpdateCurrentTimestamp = {
   type: 'on update';
-  keyword: 'CURRENT_TIMESTAMP';
+  keyword: string;
   parentheses: boolean;
-  expr: null;
+  expr?: ExprList | null;
 };
 
 export type LiteralNotNull = {
@@ -1137,15 +1137,22 @@ export interface Call {
   loc?: LocationRange;
 }
 
+export interface SetAssign {
+  type: "assign";
+  left: {
+    type: "var";
+    name: string;
+    members: string[];
+    prefix: string | null;
+  };
+  symbol: string;
+  right: ExpressionValue | Extract | FulltextSearch;
+}
+
 export interface Set {
   type: "set";
   keyword?: string | null;
-  expr: Array<{
-    type: "assign";
-    left: Var;
-    symbol: string;
-    right: ExpressionValue;
-  }>;
+  expr: SetAssign[];
   loc?: LocationRange;
 }
 
