@@ -2657,7 +2657,14 @@ export function isCreateTable(obj: unknown): obj is CreateTable {
                 typeof e === "function") &&
             (e["db"] === null ||
                 typeof e["db"] === "string") &&
-            typeof e["table"] === "string"
+            typeof e["table"] === "string" &&
+            (typeof e["type"] === "undefined" ||
+                e["type"] === "var") &&
+            (typeof e["name"] === "undefined" ||
+                typeof e["name"] === "string") &&
+            (typeof e["prefix"] === "undefined" ||
+                e["prefix"] === "@" ||
+                e["prefix"] === "@@")
         ) &&
         (typedObj["if_not_exists"] === null ||
             typedObj["if_not_exists"] === "IF NOT EXISTS") &&

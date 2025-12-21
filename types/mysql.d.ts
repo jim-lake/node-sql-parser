@@ -802,7 +802,7 @@ export interface CreateTable {
   type: "create";
   keyword: "table";
   temporary: "temporary" | null;
-  table: { db: string | null; table: string }[];
+  table: ({ db: string | null; table: string; type?: "var"; name?: string; prefix?: "@" | "@@" })[];
   if_not_exists: "IF NOT EXISTS" | null;
   like?: {
     type: "like";
